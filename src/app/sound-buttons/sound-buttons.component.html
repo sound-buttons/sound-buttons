@@ -1,0 +1,13 @@
+<div class="container" role="main">
+  <div class="card border-primary mb-3"
+       *ngFor="let buttonGroup of buttonGroups">
+    <div class="card-header">{{buttonGroup.name}}</div>
+    <div class="card-body">
+      <button type="button" class="btn btn-primary"
+              *ngFor="let btn of buttonGroup.buttons"
+              (click)="btn.onclick($event)">
+        {{btn.text}}
+      </button>
+    </div>
+  </div>
+</div>

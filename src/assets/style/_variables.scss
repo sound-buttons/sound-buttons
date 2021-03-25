@@ -27,6 +27,7 @@ $yellow:  #efa31d !default;
 $green:   #13b955 !default;
 $teal:    #20c997 !default;
 $cyan:    #009cdc !default;
+$light-blue: #3DACDD;
 
 $primary:       $purple !default;
 $secondary:     #a991d4 !default;
@@ -74,7 +75,7 @@ $nav-tabs-link-hover-border-color:  $primary !default;
 
 // Navbar
 
-$navbar-padding-y:                  1.2rem !default;
+$navbar-padding-y:                  0.5rem 1rem !default;
 $navbar-dark-hover-color:           rgba($white, .9) !default;
 $navbar-dark-active-color:          rgba($white, .9) !default;
 $navbar-light-color:                rgba($black, .4) !default;

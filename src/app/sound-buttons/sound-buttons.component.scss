@@ -1,0 +1,22 @@
+@import 'variables';
+
+.container {
+  margin: 5px;
+}
+
+.btn {
+  cursor: pointer;
+  outline: none;
+  border-radius: .3rem;
+  border: none;
+  margin: 0.3em;
+
+  &:hover {
+    background-color: $secondary;
+  }
+
+  &:active {
+    background-color: $primary;
+    transform: translateY(.3em);
+  }
+}

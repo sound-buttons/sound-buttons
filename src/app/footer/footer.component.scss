@@ -1,0 +1,89 @@
+@import 'variables';
+
+$footer-font-size: 1.2em;
+$social-width: 20%;
+$footer-height: 3rem;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+footer {
+  width: 100%;
+  display: inline-block;
+  background-color: $secondary;
+  line-height: $footer-height;
+
+  .copyright {
+    width: 50%;
+    float: left;
+    max-height: $footer-height;
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+
+    p {
+      padding-left: 10%;
+      color: $white;
+      font-size: 0.7em;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+
+      @media (max-width: 600px) {
+        text-align: center;
+        padding: 0;
+      }
+    }
+  }
+
+  .social {
+    width: 50%;
+    float: right;
+    font-size: $footer-font-size;
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+
+    a {
+      float: left;
+      text-decoration: none;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: $primary;
+      }
+    }
+  }
+}
+
+.youtube {
+  background-color: $red;
+  width: $social-width;
+}
+
+.blogger {
+  background-color: $orange;
+  width: $social-width;
+}
+
+.face {
+  background-color: $blue;
+  width: $social-width;
+}
+
+.tweet {
+  background-color: $light-blue;
+  width: $social-width;
+}
+
+.support {
+  background-color: $dark;
+  width: $social-width * 2;
+}

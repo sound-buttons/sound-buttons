@@ -1,5 +1,12 @@
-<div class="container" role="main" [style.margin.px]=5>
-    <button type="button" class="btn btn-primary" [style.margin.em]=0.3 *ngFor="let btn of buttons" (click)="btn.onclick($event)">
-    {{btn.filename}}
-  </button>
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-5">
+      <app-introduction></app-introduction>
+    </div>
+    <div class="col-12 col-md-7">
+      <app-sound-buttons></app-sound-buttons>
+    </div>
+  </div>
 </div>
+<app-footer [copyText]="'Website MIT Licensed; Voice copyright by source.'"></app-footer>
