@@ -10,6 +10,12 @@ $footer-height: 3rem;
   box-sizing: border-box;
 }
 
+@media only screen and (max-width: 768px) {
+  footer {
+    height: 0px;
+  }
+}
+
 footer {
   width: 100%;
   display: inline-block;

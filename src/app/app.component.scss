@@ -1,5 +1,11 @@
 @import 'variables';
 .container {
-  max-width: 80vw;
-  margin-top: 3vh;
+  margin: 3vh auto;
+  height: calc(94vh - 100px);
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    height: unset;
+  }
 }
