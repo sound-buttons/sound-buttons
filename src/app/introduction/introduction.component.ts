@@ -23,6 +23,8 @@ export class IntroductionComponent implements OnInit {
 
   @Input() public intro = '';
 
+  @Input() youtubeLink = '';
+
   constructor() {
   }
 

@@ -1,4 +1,7 @@
 <div class="container h-100">
-  <img class="mx-auto d-block" [src]="imgSrc" alt="intro image">
+  <a id='youtube' [href]="youtubeLink" target="_blank" *ngIf="youtubeLink">
+    <img src="assets/img/youtube.svg" alt="youtube">
+  </a>
+  <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image">
   <p [style.whiteSpace]="'pre-wrap'">{{intro}}</p>
 </div>

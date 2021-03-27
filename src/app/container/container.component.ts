@@ -15,7 +15,8 @@ export class ContainerComponent implements OnInit {
     imgSrc: '',
     intro: '',
     color: '',
-    buttonGroups: []
+    buttonGroups: [],
+    youtube: ''
   };
 
   constructor(
@@ -46,7 +47,7 @@ export class ContainerComponent implements OnInit {
       const buttons: Button[] = [];
       for (const b of bg.buttons) {
         // 重點在此處重建Button，這樣才會有click方法屬性
-        buttons.push(new Button(b.filename, b.text, b.baseRoute));
+        buttons.push(new Button(b.filename, b.text, b.baseRoute, b.source));
       }
       buttonGroups.push(
         new ButtonGroup(bg.name, bg.baseRoute, buttons)
@@ -63,4 +64,5 @@ interface iConfig {
   intro: string;
   color: string;
   buttonGroups: iButtonGroup[];
+  youtube: string;
 }

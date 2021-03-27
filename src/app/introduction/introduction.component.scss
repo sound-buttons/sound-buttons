@@ -1,4 +1,14 @@
-img{
-  max-height: 70%;
+img {
+  max-height: 100%;
   max-width: 100%;
+
+  &#chara {
+    max-height: 70%;
+  }
+}
+
+a#youtube {
+  position: absolute;
+  right: 0;
+  width: 20%;
 }

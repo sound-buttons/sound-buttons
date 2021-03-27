@@ -4,7 +4,9 @@ export class Button implements iButton {
   constructor(
     public filename: string,
     public text: string = filename,
-    public baseRoute = defaultBaseRoute) { }
+    public baseRoute = defaultBaseRoute,
+    public source?: string
+  ) { }
 
   // tslint:disable-next-line: variable-name
   click($event: MouseEvent): void {
@@ -21,5 +23,6 @@ export interface iButton {
   filename: string;
   text: string;
   baseRoute: string;
+  source?: string;
   click($event: MouseEvent): void;
 }

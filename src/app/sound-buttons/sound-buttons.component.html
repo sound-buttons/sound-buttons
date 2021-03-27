@@ -1,11 +1,12 @@
 <div class="container h-100" role="main">
+  <iframe *ngIf="youtubeEmbedLink" [src]="youtubeEmbedLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="w-100 h-100 mx-auto d-block"></iframe>
   <div class="card border-primary mb-3"
        *ngFor="let buttonGroup of buttonGroups">
     <div class="card-header">{{buttonGroup.name}}</div>
     <div class="card-body">
       <button type="button" class="btn btn-primary"
               *ngFor="let btn of buttonGroup.buttons"
-              (click)="btn.click($event)">
+              (click)="buttonClick($event,btn)">
         {{btn.text}}
       </button>
     </div>
