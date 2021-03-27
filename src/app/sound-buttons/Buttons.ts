@@ -1,17 +1,25 @@
-export class Button {
-  constructor(
-    public text: string,
-    public filename: string = text,
-    private baseRoute = 'assets/sound/') { }
+export const defaultBaseRoute = 'assets/sound/';
 
-  onclick(event: MouseEvent): void {
-    const audio = new Audio(`${this.baseRoute}${this.filename}`);
-    audio?.play();
+export class Button implements iButton {
+  constructor(
+    public filename: string,
+    public text: string = filename,
+    public baseRoute = defaultBaseRoute) { }
+
+  // tslint:disable-next-line: variable-name
+  click($event: MouseEvent): void {
+    let url = `${this.baseRoute}${this.filename}`;
+    if (url.includes('file.core.windows.net')) {
+      url += '&timestamp=' + Date.now();
+    }
+    new Audio(url)?.play();
   }
 }
 
-export class ButtonGroups {
-  constructor(
-    public name: string,
-    public buttons: Button[]) { }
+// tslint:disable-next-line: class-name
+export interface iButton {
+  filename: string;
+  text: string;
+  baseRoute: string;
+  click($event: MouseEvent): void;
 }

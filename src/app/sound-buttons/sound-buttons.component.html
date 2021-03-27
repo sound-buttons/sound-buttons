@@ -5,7 +5,7 @@
     <div class="card-body">
       <button type="button" class="btn btn-primary"
               *ngFor="let btn of buttonGroup.buttons"
-              (click)="btn.onclick($event)">
+              (click)="btn.click($event)">
         {{btn.text}}
       </button>
     </div>

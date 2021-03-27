@@ -1,0 +1,35 @@
+[{
+  "name": "template",
+  "imgSrc": "assets/img/480x600.png",
+  "intro": "Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es.",
+  "color": "#593196",
+  "buttonGroups": [{
+    "name": "Template",
+    "baseRoute": "",
+    "buttons": [{
+        "filename": "Windows Background.wav",
+        "text": "Windows Background.wav"
+      },
+      {
+        "filename": "Windows Foreground.wav",
+        "text": "Windows Foreground.wav"
+      },
+      {
+        "filename": "Windows Logon.wav",
+        "text": "Windows Logon.wav"
+      },
+      {
+        "filename": "Windows Message Nudge.wav",
+        "text": "Windows Message Nudge.wav"
+      },
+      {
+        "filename": "Windows Notify Calendar.wav",
+        "text": "Windows Notify Calendar.wav"
+      },
+      {
+        "filename": "Windows Notify Email.wav",
+        "text": "Windows Notify Email.wav"
+      }
+    ]
+  }]
+}]
