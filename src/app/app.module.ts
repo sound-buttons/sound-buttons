@@ -7,6 +7,8 @@ import { FooterComponent } from './footer/footer.component';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { SoundButtonsComponent } from './sound-buttons/sound-buttons.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { ContainerComponent } from './container/container.component';
 
 @NgModule({
   declarations: [
@@ -14,12 +16,14 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     FooterComponent,
     IntroductionComponent,
-    SoundButtonsComponent
+    SoundButtonsComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,
     ButtonsModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
