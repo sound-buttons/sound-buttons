@@ -1,3 +1,4 @@
+import { LanguageService } from './language.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -25,7 +26,7 @@ import { ContainerComponent } from './container/container.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [LanguageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

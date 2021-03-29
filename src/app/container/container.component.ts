@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonGroup, iButtonGroup } from '../sound-buttons/ButtonGroup';
 import { Button } from '../sound-buttons/Buttons';
@@ -33,6 +33,8 @@ export class ContainerComponent implements OnInit {
 
     this.http.get<iConfig>(url).subscribe((data) => {
       this.deepCopyConfigs(data, this.config);
+
+      // 套用config中的顏色設定
       for (const colorKey in this.config.color) {
         if (Object.prototype.hasOwnProperty.call(this.config.color, colorKey)) {
           const color = this.config.color as any;
@@ -66,7 +68,7 @@ export class ContainerComponent implements OnInit {
 
 // tslint:disable-next-line: class-name
 interface iConfig {
-  name: string;
+  name: string | any;
   imgSrc: string;
   intro: string;
   color?: {

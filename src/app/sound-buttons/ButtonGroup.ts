@@ -1,6 +1,7 @@
+import { LanguageService } from '../language.service';
 import { iButton, defaultBaseRoute } from './Buttons';
 
-export class ButtonGroup implements iButtonGroup{
+export class ButtonGroup implements iButtonGroup {
   constructor(
     public name: string,
     public baseRoute: string,
@@ -13,6 +14,11 @@ export class ButtonGroup implements iButtonGroup{
         btn.baseRoute = this.baseRoute;
       }
     });
+
+    // 套用name的多語系
+    if (typeof (this.name) !== 'string') {
+      this.name = LanguageService.GetTextFromObject(this.name);
+    }
   }
 }
 
