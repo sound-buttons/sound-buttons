@@ -8,3 +8,19 @@
 @import 'variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import 'bootswatch';
+
+:root{
+  --bs-primary: #000000;
+  --bs-secondary: #666666;
+}
+
+.bg-primary {
+  background-color: var(--bs-primary) !important;
+}
+
+.btn {
+  &-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+  }
+}

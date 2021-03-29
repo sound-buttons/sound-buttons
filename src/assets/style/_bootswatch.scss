@@ -34,7 +34,7 @@
   }
 
   &-primary:focus {
-    box-shadow: 0 0 5px lighten($primary, 10%);
+    box-shadow: 0 0 5px var(--primary);
   }
 
   &-secondary:focus {
@@ -78,8 +78,9 @@
 // Navs ========================================================================
 
 .nav-tabs {
+
   .nav-link,
-  .nav-link.active, {
+  .nav-link.active {
     border-width: 0 0 1px;
   }
 
@@ -87,10 +88,10 @@
   .nav-link.active,
   .nav-link.active:hover,
   .nav-link.active:focus {
-    border-bottom: 1px solid $primary;
+    border-bottom: 1px solid var(--primary);
   }
 
-  .nav-item + .nav-item {
+  .nav-item+.nav-item {
     margin-left: 0;
   }
 }

@@ -1,8 +1,8 @@
 @import 'variables';
 
 $footer-font-size: 1.2em;
-$social-width: 20%;
 $footer-height: 3rem;
+$social-width: 20%;
 
 * {
   margin: 0;
@@ -19,7 +19,7 @@ $footer-height: 3rem;
 footer {
   width: 100%;
   display: inline-block;
-  background-color: $secondary;
+  background-color: var(--bs-secondary);
   line-height: $footer-height;
 
   .copyright {
@@ -63,7 +63,7 @@ footer {
       transition: all 0.3s;
 
       &:hover {
-        background-color: $primary;
+        background-color: var(--bs-primary);
       }
     }
   }
