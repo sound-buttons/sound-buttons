@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { iButtonGroup } from './ButtonGroup';
-import { Button } from './Buttons';
+import { iButton } from './Buttons';
 
 @Component({
   selector: 'app-sound-buttons',
@@ -16,7 +16,7 @@ export class SoundButtonsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  buttonClick($event: MouseEvent, btn: Button): void {
+  buttonClick($event: MouseEvent, btn: iButton): void {
     btn.click($event);
     console.log(btn);
 
