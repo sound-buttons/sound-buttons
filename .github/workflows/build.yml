@@ -1,6 +1,7 @@
 name: Build and Deploy Github Page
 on:
   repository_dispatch:
+    types: [update_config]
   push:
     branches:
       - master
