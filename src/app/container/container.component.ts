@@ -23,10 +23,12 @@ export class ContainerComponent implements OnInit {
   ) {
     let url = '';
     const name = this.route.snapshot.url[0]?.path;
+
     if (name) {
       url = `assets/configs/${name}.json`;
     } else {
-      url = 'assets/configs/template.json';
+      // 暫時把預設設為tama
+      url = 'assets/configs/tama.json';
     }
 
     this.http.get<iConfig>(url).subscribe((data) => {
@@ -68,8 +70,8 @@ interface iConfig {
   imgSrc: string;
   intro: string;
   color?: {
-    primary: string,
-    secondary: string
+    primary: string;
+    secondary: string;
   };
   buttonGroups: iButtonGroup[];
   youtube?: string;
