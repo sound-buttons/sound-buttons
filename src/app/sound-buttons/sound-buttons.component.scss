@@ -13,11 +13,11 @@
   margin: 0.3em;
 
   &:hover {
-    background-color: $secondary;
+    background-color: var(--bs-secondary);
   }
 
   &:active {
-    background-color: $primary;
+    background-color: var(--bs-primary);
     transform: translateY(.3em);
   }
 }
