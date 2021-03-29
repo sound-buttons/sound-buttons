@@ -9,13 +9,8 @@ export class Button implements iButton {
   ) { }
 
   // tslint:disable-next-line: variable-name
-  click($event: MouseEvent): void {
-    let url = `${this.baseRoute}${this.filename}`;
-    if (url.includes('file.core.windows.net')) {
-      url += '&timestamp=' + Date.now();
-    }
-    new Audio(url)?.play();
-  }
+  click = ($event: MouseEvent) =>
+    new Audio(`${this.baseRoute}${this.filename}`)?.play();
 }
 
 // tslint:disable-next-line: class-name
