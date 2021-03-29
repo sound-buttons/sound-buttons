@@ -10,8 +10,8 @@
 @import 'bootswatch';
 
 :root{
-  --bs-primary: #000000;
-  --bs-secondary: #666666;
+  --bs-primary: #{$purple};
+  --bs-secondary: #{$purple-200};
 }
 
 .bg-primary {

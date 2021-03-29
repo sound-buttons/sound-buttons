@@ -14,9 +14,7 @@ export class ContainerComponent implements OnInit {
     name: '',
     imgSrc: '',
     intro: '',
-    color: '',
-    buttonGroups: [],
-    youtube: ''
+    buttonGroups: []
   };
 
   constructor(
@@ -33,6 +31,13 @@ export class ContainerComponent implements OnInit {
 
     this.http.get<iConfig>(url).subscribe((data) => {
       this.deepCopyConfigs(data, this.config);
+      for (const colorKey in this.config.color) {
+        if (Object.prototype.hasOwnProperty.call(this.config.color, colorKey)) {
+          const color = this.config.color as any;
+          const colorValue = color[colorKey] as string;
+          document.documentElement.style.setProperty('--bs-' + colorKey, colorValue);
+        }
+      }
     });
   }
 
@@ -62,7 +67,10 @@ interface iConfig {
   name: string;
   imgSrc: string;
   intro: string;
-  color: string;
+  color?: {
+    primary: string,
+    secondary: string
+  };
   buttonGroups: iButtonGroup[];
-  youtube: string;
+  youtube?: string;
 }
