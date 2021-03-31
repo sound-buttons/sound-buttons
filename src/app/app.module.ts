@@ -10,6 +10,7 @@ import { SoundButtonsComponent } from './sound-buttons/sound-buttons.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ContainerComponent } from './container/container.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ContainerComponent } from './container/container.component';
     FooterComponent,
     IntroductionComponent,
     SoundButtonsComponent,
-    ContainerComponent
+    ContainerComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
