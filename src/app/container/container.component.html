@@ -1,10 +1,14 @@
 <div class="container">
-  <div class="row h-100">
+  <div class="row h-100" *ngIf="config$ | async as config">
     <div class="col-12 col-md-5 h-100">
-      <app-introduction class="h-100" [imgSrc]="config.imgSrc" [intro]="config.intro" [youtubeLink]="config.youtube"></app-introduction>
+      <app-introduction class="h-100"
+                        [imgSrc]="config.imgSrc "
+                        [intro]="config.intro"
+                        [youtubeLink]="config.youtube"></app-introduction>
     </div>
     <div class="col-12 col-md-7 h-100">
-      <app-sound-buttons class="h-100" [buttonGroups]="config.buttonGroups"></app-sound-buttons>
+      <app-sound-buttons class="h-100"
+                         [buttonGroups]="config.buttonGroups"></app-sound-buttons>
     </div>
   </div>
 </div>
