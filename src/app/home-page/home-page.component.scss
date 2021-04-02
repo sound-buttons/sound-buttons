@@ -96,6 +96,7 @@ img {
   transition-property: z-index, top;
   transition-duration: .3s;
   padding: 5%;
+  cursor: pointer;
 
   &:hover {
     z-index: 4;

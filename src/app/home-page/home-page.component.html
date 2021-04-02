@@ -1,7 +1,7 @@
 <div class="outer">
 <div class="inner">
 <div class="container">
-  <div class="chara-card" *ngFor="let config of configs$ | async">
+  <div class="chara-card" *ngFor="let config of configs$ | async" [routerLink]="config.name">
     <div class="details">
       <img [src]="config.imgSrc">
       <h2>{{config.fullName}}</h2>
