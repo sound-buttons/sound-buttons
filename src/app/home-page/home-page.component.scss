@@ -1,0 +1,37 @@
+.card {
+  margin: 20px;
+  max-height: 30vh;
+  height: 300px;
+  border-radius: 20px;
+  cursor: pointer;
+
+  &-img-overlay {
+    z-index: 20;
+  }
+}
+
+.imgBox {
+  position: relative;
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+
+  &:after {
+    content: " ";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+button {
+  position: absolute;
+  bottom: 0;
+  z-index: 30;
+  margin: 20px;
+}

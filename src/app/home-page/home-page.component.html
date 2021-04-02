@@ -1,16 +1,20 @@
 <div class="container">
   <div class="row">
-    <div class="col" *ngFor="let config of configs$ | async; let i=index">
-      <div class="card bg-dark text-white">
-        <img [src]="config.imgSrc" class="card-img">
-        <div class="card-img-overlay">
-          <h5 class="card-title">{{config.name}}</h5>
+    <div class="col" *ngFor="let config of configs$ | async">
+      <div class="card text-white" >
+        <div class="card-img-overlay" [routerLink]="config.name">
+          <h5 class="card-title">{{config.fullName}}</h5>
           <p class="card-text">{{config.intro}}</p>
+        </div>
+        <div class="imgBox">
+          <img [src]="config.imgSrc" class="card-img">
+        </div>
+
           <button type="button" class="btn btn-primary"
+                  *ngIf="config.introButton"
                   (click)="config.introButton.click($event)">
             {{config.introButton.text}}
           </button>
-        </div>
       </div>
     </div>
   </div>
