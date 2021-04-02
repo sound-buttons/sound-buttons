@@ -107,10 +107,6 @@ export class ConfigService {
 
 export interface IFullConfig extends IConfig {
   buttonGroups?: iButtonGroup[];
-  color?: {
-    primary: string;
-    secondary: string;
-  };
   youtube?: string;
 }
 
@@ -121,4 +117,8 @@ export interface IConfig {
   intro: string;
   introButton?: iButton;
   fullConfigURL: string;
+  color?: {
+    primary: string;
+    secondary: string;
+  };
 }
