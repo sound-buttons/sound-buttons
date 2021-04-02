@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {  EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ButtonGroup, iButtonGroup } from './sound-buttons/ButtonGroup';
 import { Button, iButton } from './sound-buttons/Buttons';
@@ -11,8 +11,6 @@ import { map } from 'rxjs/operators';
 export class ConfigService {
   private url = 'assets/configs/main.json';
 
-  private configs: IConfig[] = [];
-  public config: IFullConfig | any = {};
   public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
@@ -23,11 +21,8 @@ export class ConfigService {
   public set name(value) {
     this._name = value;
     this.getBriefConfig().subscribe(cs => {
-      this.configs = Object.assign(cs);
-
-      this.getConfig().subscribe(c => {
-        this.config = Object.assign(c);
-        this.OnConfigChanged.emit(this.config);
+      this.getConfig(value, cs).subscribe(c => {
+        this.OnConfigChanged.emit(c);
       });
     });
   }
@@ -54,12 +49,14 @@ export class ConfigService {
     );
   }
 
-  getConfig(name: string = this.name): Observable<IFullConfig> {
+  getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> {
     // 由this.configs取得FullConfigUrl
     let fullConfigURL = '';
-    for (const c of this.configs) {
-      if (name === c.name) {
-        fullConfigURL = c.fullConfigURL;
+    if (configs) {
+      for (const c of configs) {
+        if (name === c.name) {
+          fullConfigURL = c.fullConfigURL;
+        }
       }
     }
     if (!fullConfigURL) {
