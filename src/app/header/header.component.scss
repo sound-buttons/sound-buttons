@@ -1,9 +1,13 @@
 @import 'variables';
 
-.navbar{
+.navbar-brand {
   padding: $navbar-padding-y;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  vertical-align: middle;
 
-  img{
-    width: 1.5em;
+  img {
+    height: 1.5rem;
   }
 }
