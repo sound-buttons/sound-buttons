@@ -1,15 +1,29 @@
-img {
-  max-height: 100%;
+#chara {
+  max-height: 70%;
   max-width: 100%;
-
-  &#chara {
-    max-height: 70%;
-    filter: drop-shadow(2px 6px 3px rgba(0, 0, 0, 0.4));
-  }
+  filter: drop-shadow(2px 6px 3px rgba(0, 0, 0, 0.4));
 }
 
-a#youtube {
+#linkIcon-container {
   position: absolute;
   right: 0;
-  width: 10%;
+  width: 15%;
+  margin: 0 auto;
+  text-align: center;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    width: 80%;
+    transition-property: margin, width;
+    transition-duration: .3s;
+
+    &:hover {
+      width: 100%;
+      margin: unset;
+    }
+  }
+
 }

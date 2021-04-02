@@ -107,7 +107,7 @@ export class ConfigService {
 
 export interface IFullConfig extends IConfig {
   buttonGroups?: iButtonGroup[];
-  youtube?: string;
+  link?: ILink;
 }
 
 export interface IConfig {
@@ -121,4 +121,11 @@ export interface IConfig {
     primary: string;
     secondary: string;
   };
+}
+
+export interface ILink{
+    youtube?: string;
+    twitter?: string;
+    facebook?: string;
+    other?: string;
 }

@@ -1,4 +1,6 @@
+import { IFullConfig, ILink } from './../config.service';
 import { Component, Input, OnInit, Output } from '@angular/core';
+import { IConfig } from '../config.service';
 
 @Component({
   selector: 'app-introduction',
@@ -23,7 +25,7 @@ export class IntroductionComponent implements OnInit {
 
   @Input() public intro = '';
 
-  @Input() youtubeLink: string | undefined = '';
+  @Input() link: ILink|undefined;
 
   constructor() {
   }

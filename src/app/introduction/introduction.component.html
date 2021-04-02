@@ -1,7 +1,21 @@
 <div class="container h-100 position-relative">
-  <a id='youtube' [href]="youtubeLink" target="_blank" *ngIf="youtubeLink">
-    <img src="assets/img/youtube.svg" alt="youtube">
-  </a>
+  <div id="linkIcon-container" *ngIf="link">
+    <a class='linkIcon' [href]="link!.youtube" target="_blank" *ngIf="link!.youtube">
+      <img src="assets/img/youtube.svg" alt="youtube">
+    </a>
+
+    <a class='linkIcon' [href]="link!.twitter" target="_blank" *ngIf="link!.twitter">
+      <img src="assets/img/twitter.svg" alt="twitter">
+    </a>
+
+    <a class='linkIcon' [href]="link!.facebook" target="_blank" *ngIf="link!.facebook">
+      <img src="assets/img/facebook.svg" alt="facebook">
+    </a>
+
+    <a class='linkIcon' [href]="link!.other" target="_blank" *ngIf="link!.other">
+      <img src="assets/img/other.svg" alt="other">
+    </a>
+  </div>
   <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image">
   <p [style.whiteSpace]="'pre-wrap'">{{intro}}</p>
 </div>
