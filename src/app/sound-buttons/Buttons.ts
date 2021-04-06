@@ -8,6 +8,7 @@ export class Button implements iButton {
     public text: string | any = filename,
     public baseRoute = defaultBaseRoute,
     public source?: string,
+    public SASToken?: string,
   ) {
     // 套用text中的多語系
     if (typeof (this.text) !== 'string') {
@@ -18,7 +19,7 @@ export class Button implements iButton {
 
   // tslint:disable-next-line: variable-name
   click = ($event: MouseEvent) => {
-    new Audio(`${this.baseRoute}${this.filename}`)?.play();
+    new Audio(`${this.baseRoute}${this.filename}${this.SASToken}`)?.play();
   };
 }
 
@@ -28,5 +29,6 @@ export interface iButton {
   text: string | any;
   baseRoute: string;
   source?: string;
+  SASToken?: string;
   click($event: MouseEvent): void;
 }
