@@ -96,4 +96,6 @@ $list-group-active-color:           $white !default;
 $list-group-active-bg:              $list-group-bg !default;
 $list-group-disabled-color:         lighten($list-group-bg, 30%) !default;
 
-@import '/node_modules/bootstrap/scss/bootstrap-utilities';
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
+@import '/node_modules/bootstrap/scss/mixins';
