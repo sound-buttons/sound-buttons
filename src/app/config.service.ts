@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ButtonGroup, iButtonGroup } from './sound-buttons/ButtonGroup';
 import { Button, iButton } from './sound-buttons/Buttons';
 import { map } from 'rxjs/operators';
+import { IColor, ColorService } from './color.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,25 +29,13 @@ export class ConfigService {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private colorService: ColorService
   ) { }
 
   getBriefConfig(url: string = this.url): Observable<IConfig[]> {
-    return this.http.get<IConfig[]>(url).pipe(
-      map(source => {
-        const result = [];
-        for (const c of source) {
-          // 重新建立introButton
-          const config = Object.assign({}, c);
-          if (c.introButton) {
-            const b = c.introButton;
-            config.introButton = new Button(b.filename, b.text, b.baseRoute, b.source);
-          }
-          result.push(config);
-        }
-        return result;
-      })
-    );
+    // IConfig下都是基本型別，直接用
+    return this.http.get<IConfig[]>(url);
   }
 
   getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> {
@@ -91,13 +80,8 @@ export class ConfigService {
           target.buttonGroups = buttonGroups;
         }
 
-        // 套用config中的顏色設定
-        for (const colorKey in source.color) {
-          if (Object.prototype.hasOwnProperty.call(source.color, colorKey)) {
-            const color = source.color as any;
-            const colorValue = color[colorKey] as string;
-            document.documentElement.style.setProperty('--bs-' + colorKey, colorValue);
-          }
+        if (source.color) {
+          this.colorService.color = source.color;
         }
         return target;
       })
@@ -108,19 +92,16 @@ export class ConfigService {
 export interface IFullConfig extends IConfig {
   buttonGroups?: iButtonGroup[];
   link?: ILink;
+  intro: string;
+  introButton?: iButton;
 }
 
 export interface IConfig {
   name: string | any;
   fullName: string;
   imgSrc: string;
-  intro: string;
-  introButton?: iButton;
   fullConfigURL: string;
-  color?: {
-    primary: string;
-    secondary: string;
-  };
+  color?: IColor;
 }
 
 export interface ILink {
