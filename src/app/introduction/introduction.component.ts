@@ -1,6 +1,5 @@
-import { IFullConfig, ILink } from './../config.service';
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { IConfig } from '../config.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ILink } from '../services/config.service';
 
 @Component({
   selector: 'app-introduction',

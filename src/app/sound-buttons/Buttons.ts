@@ -1,4 +1,4 @@
-import { LanguageService } from './../language.service';
+import { LanguageService } from '../services/language.service';
 
 export const defaultBaseRoute = 'assets/sound/';
 

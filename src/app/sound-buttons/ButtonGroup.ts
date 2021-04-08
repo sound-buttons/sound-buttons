@@ -1,4 +1,4 @@
-import { LanguageService } from '../language.service';
+import { LanguageService } from '../services/language.service';
 import { iButton, defaultBaseRoute } from './Buttons';
 
 export class ButtonGroup implements iButtonGroup {

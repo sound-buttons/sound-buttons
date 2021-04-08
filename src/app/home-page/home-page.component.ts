@@ -1,7 +1,7 @@
-import { ColorService } from './../color.service';
-import { Observable } from 'rxjs';
-import { ConfigService, IConfig } from './../config.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ColorService } from '../services/color.service';
+import { ConfigService, IConfig } from '../services/config.service';
 
 @Component({
   selector: 'app-home-page',

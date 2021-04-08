@@ -1,6 +1,6 @@
-import { ConfigService, IFullConfig } from './../config.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { IFullConfig, ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-container',

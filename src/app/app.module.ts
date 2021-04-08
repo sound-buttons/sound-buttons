@@ -1,18 +1,20 @@
-import { LanguageService } from './language.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { SoundButtonsComponent } from './sound-buttons/sound-buttons.component';
-import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
 import { ContainerComponent } from './container/container.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UploadComponent } from './upload/upload.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ColorService } from './services/color.service';
+import { ConfigService } from './services/config.service';
+import { LanguageService } from './services/language.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [LanguageService],
+  providers: [
+    LanguageService,
+    ConfigService,
+    ColorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

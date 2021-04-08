@@ -1,9 +1,9 @@
+import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ColorService } from './../color.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfigService, IFullConfig } from '../config.service';
-import { FormBuilder } from '@angular/forms';
+import { ColorService } from '../services/color.service';
+import { ConfigService, IFullConfig } from '../services/config.service';
 
 @Component({
   selector: 'app-upload',
@@ -50,7 +50,8 @@ export class UploadComponent implements OnInit {
   OnSubmit($event: any): void {
     if (!this.file) { return; }
 
-    const formData: any = new FormData();
+    // const formData: any = new FormData();
+    const formData = new FormData();
     formData.append('nameZH', this.uploadForm.get('nameZH')?.value);
     formData.append('nameJP', this.uploadForm.get('nameJP')?.value);
     formData.append('group', this.uploadForm.get('group')?.value);
