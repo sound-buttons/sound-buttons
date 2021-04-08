@@ -70,7 +70,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sound-buttons:build"
+            "browserTarget": "sound-buttons:build",
+            "sslKey": "../localhost.key",
+            "sslCert": "../localhost.crt"
           },
           "configurations": {
             "production": {
