@@ -1,0 +1,39 @@
+<div class="container" *ngIf="config">
+  <h1>{{config.fullName}} 上傳表單</h1>
+
+  <form class="form" [formGroup]="uploadForm" (ngSubmit)="OnSubmit($event)">
+    <div class="mb-3">
+      <label for="nameZH" class="form-label">中文名</label>
+      <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的中文版文字">
+    </div>
+
+    <div class="mb-3">
+      <label for="nameJP" class="form-label">日文名</label>
+      <input type="text" class="form-control" id="nameJP" formControlName="nameJP" placeholder="顯示在按鈕上的日文版文字">
+    </div>
+
+    <div class="mb-3">
+      <label for="group" class="form-label">分組</label>
+      <input type="text" class="form-control" id="group" formControlName="group" placeholder="中文分組名稱">
+    </div>
+
+    <div class="mb-3">
+      <label for="videoId" class="form-label">音檔出處</label>
+      <div class="mb-3 input-group">
+        <input type="text" class="form-control" id="videoId" formControlName="videoId"
+               placeholder="Youtube影片網址 或 Video ID">
+        <span class="input-group-text">起始秒數</span>
+        <input type="number" class="form-control" id="start" formControlName="start">
+        <span class="input-group-text">結束秒數</span>
+        <input type="number" class="form-control" id="end" formControlName="end">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="file" class="form-label">檔案上傳</label>
+      <input type="file" accept="audio/*" class="form-control" id="file" formControlName="file" (change)="uploadFile($event)">
+    </div>
+
+    <button type="submit" class="btn btn-primary">送出</button>
+  </form>
+</div>

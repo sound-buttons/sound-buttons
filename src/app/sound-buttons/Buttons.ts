@@ -19,7 +19,7 @@ export class Button implements iButton {
 
   // tslint:disable-next-line: variable-name
   click = ($event: MouseEvent) => {
-    new Audio(`${this.baseRoute}${this.filename}${this.SASToken}`)?.play();
+    new Audio(`${this.baseRoute}/${this.filename}${this.SASToken}`)?.play();
   };
 }
 

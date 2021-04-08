@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ContainerComponent } from './container/container.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { UploadComponent } from './upload/upload.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,15 @@ import { HomePageComponent } from './home-page/home-page.component';
     IntroductionComponent,
     SoundButtonsComponent,
     ContainerComponent,
-    HomePageComponent
+    HomePageComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
     ButtonsModule.forRoot(),
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [LanguageService],
   bootstrap: [AppComponent]
