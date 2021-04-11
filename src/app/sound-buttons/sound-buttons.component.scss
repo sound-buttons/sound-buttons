@@ -22,8 +22,17 @@
   }
 }
 
-iframe{
-  max-width: 53vh;
-  max-height: 30vh;
+.youtubeContainer{
+  display: block;
+  width: 60vh;
+  height: 33.75vh;
+  max-width: 100%;
   margin: 10px;
+  background: var(--bs-secondary);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    font-size: xx-large;
+color: $white;
 }
