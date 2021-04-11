@@ -15,6 +15,7 @@ import { UploadComponent } from './upload/upload.component';
 import { ColorService } from './services/color.service';
 import { ConfigService } from './services/config.service';
 import { LanguageService } from './services/language.service';
+import { AudioService } from './services/audio.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LanguageService } from './services/language.service';
   providers: [
     LanguageService,
     ConfigService,
-    ColorService
+    ColorService,
+    AudioService
   ],
   bootstrap: [AppComponent]
 })

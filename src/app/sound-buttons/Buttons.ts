@@ -1,9 +1,11 @@
+import { AudioService } from './../services/audio.service';
 import { LanguageService } from '../services/language.service';
 
 export const defaultBaseRoute = 'assets/sound/';
 
 export class Button implements IButton {
   constructor(
+    private audioService: AudioService,
     public filename: string,
     public text: string | any = filename,
     public baseRoute = defaultBaseRoute,
@@ -22,7 +24,7 @@ export class Button implements IButton {
     if (this.baseRoute.slice(-1) !== '/') {
       this.baseRoute += '/';
     }
-    new Audio(`${this.baseRoute}${this.filename}${this.SASToken}`)?.play();
+    this.audioService.add(`${this.baseRoute}${this.filename}${this.SASToken}`, this.source);
   };
 }
 

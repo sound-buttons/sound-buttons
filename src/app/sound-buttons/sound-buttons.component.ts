@@ -1,3 +1,4 @@
+import { AudioService } from './../services/audio.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IButtonGroup } from './ButtonGroup';
@@ -14,7 +15,8 @@ export class SoundButtonsComponent implements OnInit {
   youtubeEmbedSource: ISource | undefined = undefined;
 
   constructor(
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private audioService: AudioService
   ) { }
 
   ngOnInit(): void {
@@ -23,7 +25,8 @@ export class SoundButtonsComponent implements OnInit {
   buttonClick($event: MouseEvent, btn: IButton): void {
     btn.click($event);
     // console.log(btn);
-    this.youtubeEmbedSource = btn.source;
+
+    this.youtubeEmbedSource = this.audioService.lastSource;
     if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId) {
       const url = new URL('https://www.youtube.com/embed/' + this.youtubeEmbedSource.videoId);
       url.searchParams.append('start', `${this.youtubeEmbedSource.start}`);
@@ -33,6 +36,7 @@ export class SoundButtonsComponent implements OnInit {
     } else {
       this.youtubeEmbedLink = '';
     }
+
   }
 
 }
