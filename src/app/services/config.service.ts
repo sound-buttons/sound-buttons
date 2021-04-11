@@ -11,6 +11,7 @@ import { IColor, ColorService } from './color.service';
 })
 export class ConfigService {
   private url = 'assets/configs/main.json';
+  public isLiveUpdate = false;
 
   public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
 
@@ -44,7 +45,9 @@ export class ConfigService {
     if (configs) {
       for (const c of configs) {
         if (name === c.name) {
-          fullConfigURL = c.fullConfigURL;
+          fullConfigURL = this.isLiveUpdate
+            ? c.liveUpdateURL
+            : c.fullConfigURL;
         }
       }
     }
@@ -101,6 +104,7 @@ export interface IConfig {
   fullName: string;
   imgSrc: string;
   fullConfigURL: string;
+  liveUpdateURL: string;
   color?: IColor;
 }
 

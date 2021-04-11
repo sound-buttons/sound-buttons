@@ -17,7 +17,10 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit(): void {
     const name = this.route.snapshot.paramMap.get('name') ?? 'template';
+    const liveUpdate = this.route.snapshot.queryParamMap.has('liveUpdate');
     this.configService.name = name;
+    this.configService.isLiveUpdate = liveUpdate;
+
     this.configService.OnConfigChanged.subscribe(config => this.config = config);
   }
 
