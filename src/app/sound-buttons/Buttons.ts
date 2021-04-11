@@ -2,12 +2,12 @@ import { LanguageService } from '../services/language.service';
 
 export const defaultBaseRoute = 'assets/sound/';
 
-export class Button implements iButton {
+export class Button implements IButton {
   constructor(
     public filename: string,
     public text: string | any = filename,
     public baseRoute = defaultBaseRoute,
-    public source?: string,
+    public source?: ISource,
     public SASToken?: string,
   ) {
     // 套用text中的多語系
@@ -26,12 +26,16 @@ export class Button implements iButton {
   };
 }
 
-// tslint:disable-next-line: class-name
-export interface iButton {
+export interface IButton {
   filename: string;
   text: string | any;
   baseRoute: string;
-  source?: string;
+  source?: ISource;
   SASToken?: string;
   click($event: MouseEvent): void;
+}
+
+export interface ISource {
+  videoId: string;
+  start: number;
 }

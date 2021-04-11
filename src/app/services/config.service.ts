@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ButtonGroup, iButtonGroup } from '../sound-buttons/ButtonGroup';
-import { Button, iButton } from '../sound-buttons/Buttons';
+import { ButtonGroup, IButtonGroup } from '../sound-buttons/ButtonGroup';
+import { Button, IButton } from '../sound-buttons/Buttons';
 import { IColor, ColorService } from './color.service';
 
 @Injectable({
@@ -93,10 +93,10 @@ export class ConfigService {
 }
 
 export interface IFullConfig extends IConfig {
-  buttonGroups?: iButtonGroup[];
+  buttonGroups?: IButtonGroup[];
   link?: ILink;
   intro: string;
-  introButton?: iButton;
+  introButton?: IButton;
 }
 
 export interface IConfig {

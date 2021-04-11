@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { iButtonGroup } from './ButtonGroup';
-import { iButton } from './Buttons';
+import { IButtonGroup } from './ButtonGroup';
+import { IButton, ISource } from './Buttons';
 
 @Component({
   selector: 'app-sound-buttons',
@@ -9,24 +9,30 @@ import { iButton } from './Buttons';
   styleUrls: ['./sound-buttons.component.scss']
 })
 export class SoundButtonsComponent implements OnInit {
-  @Input() buttonGroups: iButtonGroup[] = [];
+  @Input() buttonGroups: IButtonGroup[] = [];
   youtubeEmbedLink: SafeResourceUrl = '';
-  constructor(private sanitizer: DomSanitizer) { }
+  youtubeEmbedSource: ISource | undefined = undefined;
+
+  constructor(
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
   }
 
-  buttonClick($event: MouseEvent, btn: iButton): void {
+  buttonClick($event: MouseEvent, btn: IButton): void {
     btn.click($event);
-    console.log(btn);
+    // console.log(btn);
+    this.youtubeEmbedSource = btn.source;
+    if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId) {
+      const url = new URL('https://www.youtube.com/embed/' + this.youtubeEmbedSource.videoId);
+      url.searchParams.append('start', `${this.youtubeEmbedSource.start}`);
+      // url.searchParams.append('autoplay', '1');
 
-    const url = btn.source ?? '';
-    if (url && url.startsWith('https://www.youtube.com/embed/')) {
-      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
     } else {
       this.youtubeEmbedLink = '';
     }
-
   }
 
 }

@@ -1,11 +1,11 @@
 import { LanguageService } from '../services/language.service';
-import { iButton, defaultBaseRoute } from './Buttons';
+import { IButton, defaultBaseRoute } from './Buttons';
 
-export class ButtonGroup implements iButtonGroup {
+export class ButtonGroup implements IButtonGroup {
   constructor(
     public name: string,
     public baseRoute: string,
-    public buttons: iButton[]) {
+    public buttons: IButton[]) {
     if (!this.baseRoute) {
       this.baseRoute = defaultBaseRoute;
     }
@@ -22,9 +22,8 @@ export class ButtonGroup implements iButtonGroup {
   }
 }
 
-// tslint:disable-next-line: class-name
-export interface iButtonGroup {
+export interface IButtonGroup {
   name: string;
   baseRoute: string;
-  buttons: iButton[];
+  buttons: IButton[];
 }
