@@ -24,7 +24,8 @@ export class SoundButtonsComponent implements OnInit {
       if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId) {
         const url = new URL('https://www.youtube.com/embed/' + this.youtubeEmbedSource.videoId);
         url.searchParams.append('start', `${this.youtubeEmbedSource.start}`);
-        // url.searchParams.append('autoplay', '1');
+        url.searchParams.append('end', `${this.youtubeEmbedSource.end}`);
+        url.searchParams.append('autoplay', '1');
 
         this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
       } else {

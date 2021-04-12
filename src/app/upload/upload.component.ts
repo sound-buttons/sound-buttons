@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-upload',
@@ -19,18 +20,21 @@ export class UploadComponent implements OnInit {
     group: [''],
     videoId: [''],
     start: [''],
+    end: { value: [''], disabled: true },
     file: ['']
   });
   file: File | undefined | null;
   duration = 0;
 
+  youtubeEmbedLink: SafeResourceUrl = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private configService: ConfigService,
     private colorService: ColorService,
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +47,7 @@ export class UploadComponent implements OnInit {
     });
   }
 
-  uploadFile($event: Event): void {
+  OnFileUpload($event: Event): void {
     this.file = ($event.target as HTMLInputElement).files?.item(0);
 
     if (this.file) {
@@ -57,6 +61,7 @@ export class UploadComponent implements OnInit {
         if (e.target && typeof e.target.result !== 'string') {
           audioContext.decodeAudioData(e.target.result as ArrayBuffer, (buffer) => {
             this.duration = buffer.duration;
+            this.patchEnd();
           });
         }
       };
@@ -71,8 +76,43 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  OnYoutubeLinkChange($event: Event, parseFromLink: boolean = true): void {
+    // console.log($event);
+    const txt: string = this.uploadForm.get('videoId')?.value ?? '';
+
+    let videoId: string = txt;
+    if (videoId.startsWith("https://youtu.be/")) {
+      videoId = txt.match(/^.*\/([^?]*).*$/)?.pop() ?? '';
+    }
+    else if (videoId.startsWith("https://www.youtube.com/watch")) {
+      videoId = txt.match(/^.*[?&]v=([^&]*).*$/)?.pop() ?? '';
+    }
+
+    let start: number;
+    if (parseFromLink) {
+      start = parseInt(txt.match(/^.*[?&]t=([^&smh]*).*$/)?.pop() ?? '0', 10);
+    } else {
+      start = this.uploadForm.get('start')?.value ?? 0;
+    }
+    this.uploadForm.patchValue({ start });
+    this.patchEnd();
+
+    const url = new URL('https://www.youtube.com/embed/' + videoId);
+    url.searchParams.append('start', `${this.uploadForm.get('start')?.value ?? 0}`);
+    url.searchParams.append('end', `${this.uploadForm.get('end')?.value ?? 0}`);
+
+    this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
+  }
+
   OnSubmit($event: any): void {
-    if (!this.file) { return; }
+    const start = this.uploadForm.get('start')?.value;
+    if (!this.file || this.uploadForm.invalid) {
+      alert('請填入必填欄位！');
+      return;
+    } else if (start && start < 0) {
+      alert('起始時間不能小於零！');
+      return;
+    }
 
     // const formData: any = new FormData();
     const formData = new FormData();
@@ -80,11 +120,11 @@ export class UploadComponent implements OnInit {
     formData.append('nameJP', this.uploadForm.get('nameJP')?.value);
     formData.append('group', this.uploadForm.get('group')?.value);
     formData.append('videoId', this.uploadForm.get('videoId')?.value);
-    formData.append('start', this.uploadForm.get('start')?.value);
     formData.append('file', this.file);
     formData.append('directory', this.configService.name);
 
-    formData.append('end', '' + (parseFloat(this.uploadForm.get('start')?.value) + this.duration));
+    formData.append('start', start);
+    formData.append('end', this.uploadForm.get('end')?.value);
 
     // console.log(formData);
     this.http.post(this.api, formData).subscribe(response => {
@@ -92,6 +132,12 @@ export class UploadComponent implements OnInit {
         this.router.navigate([this.configService.name], { queryParams: { liveUpdate: '' } });
       }
       this.uploadForm.reset();
+    });
+  }
+
+  patchEnd(): void {
+    this.uploadForm.patchValue({
+      end: Math.ceil(parseFloat(this.uploadForm.get('start')?.value ?? '0') + this.duration)
     });
   }
 

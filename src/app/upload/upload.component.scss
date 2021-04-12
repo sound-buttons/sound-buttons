@@ -10,3 +10,11 @@
   }
 }
 
+form > div > label{
+  position: relative;
+
+  & > .star{
+    position: absolute;
+    left: -1em;
+  }
+}

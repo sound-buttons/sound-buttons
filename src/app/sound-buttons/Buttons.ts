@@ -40,4 +40,5 @@ export interface IButton {
 export interface ISource {
   videoId: string;
   start: number;
+  end: number;
 }
