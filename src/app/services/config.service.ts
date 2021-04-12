@@ -12,7 +12,17 @@ import { IColor, ColorService } from './color.service';
 })
 export class ConfigService {
   private url = 'assets/configs/main.json';
-  public isLiveUpdate = false;
+  private config: IFullConfig | undefined;
+
+  // tslint:disable-next-line: variable-name
+  private _isLiveUpdate = false;
+  public get isLiveUpdate(): boolean {
+    return this._isLiveUpdate;
+  }
+  public set isLiveUpdate(value) {
+    this._isLiveUpdate = value;
+    this.OnConfigChanged.emit(this.config);
+  }
 
   public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
 
@@ -25,6 +35,7 @@ export class ConfigService {
     this._name = value;
     this.getBriefConfig().subscribe(cs => {
       this.getConfig(value, cs).subscribe(c => {
+        this.config = c;
         this.OnConfigChanged.emit(c);
       });
     });
