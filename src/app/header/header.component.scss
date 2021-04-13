@@ -22,3 +22,13 @@
 a{
   cursor: pointer;
 }
+
+.navbar-nav {
+  flex-direction: row-reverse;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+
+  .nav-link{
+    padding-left: 0.5rem;
+  }
+}

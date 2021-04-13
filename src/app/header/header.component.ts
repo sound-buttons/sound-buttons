@@ -1,7 +1,6 @@
 import { ConfigService } from './../services/config.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +12,7 @@ export class HeaderComponent implements OnInit {
   title = 'Sound Buttons';
   name = '';
   fullName = '';
+  isCollapsed = true;
 
   constructor(
     private configService: ConfigService,
