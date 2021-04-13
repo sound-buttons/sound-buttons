@@ -1,4 +1,4 @@
-name: Build and Deploy Github Page
+name: Build and Deploy to Github Page
 on:
   repository_dispatch:
     types: [update_config]
@@ -10,10 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repo on master
+      uses: actions/checkout@v2
       with:
-        submodules: true
-    - name: All things angular
+        ref: master
+
+    - name: Check out submodules on master
+      uses: actions/checkout@v2
+      with:
+        repository: jim60105/sound-buttons_configs
+        path: src/assets/configs
+        ref: master
+
+    - name: Build angular project and publish to github page
       uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.1
       with:
         github_access_token: ${{ secrets.ACCESS_TOKEN }} # see the Configuration section for how you can create secrets
