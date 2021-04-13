@@ -1,25 +1,27 @@
 import { ConfigService } from './../services/config.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   title = 'Sound Buttons';
   name = '';
   fullName = '';
   isCollapsed = true;
+  configSubscription: Subscription | undefined;
 
   constructor(
     private configService: ConfigService,
     public router: Router) { }
 
   ngOnInit(): void {
-    this.configService.OnConfigChanged.subscribe(c => {
+    this.configSubscription = this.configService.OnConfigChanged.subscribe(c => {
       this.name = c?.name ?? '';
       this.fullName = c?.fullName ?? '';
     });
@@ -32,6 +34,10 @@ export class HeaderComponent implements OnInit {
     } else {
       this.router.navigate([this.name]).then(() => location.reload());
     }
+  }
+
+  ngOnDestroy(): void {
+    this.configSubscription?.unsubscribe();
   }
 
 }

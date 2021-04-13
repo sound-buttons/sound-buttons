@@ -1,19 +1,19 @@
 <div class="outer">
-<div class="inner">
-<div class="container">
-  <div class="chara-card"
-       *ngFor="let config of configs$ | async"
-       [routerLink]="config.name"
-       (mouseenter)="OnMouseEnter($event, config)"
-       (mouseleave)="OnMouseLeave($event)">
-    <div class="details">
-      <img [src]="config.imgSrc">
-      <h2>{{config.fullName}}</h2>
-      <div class="background"
-           *ngIf="config.color"
-           [style.backgroundColor]="config.color['secondary']"></div>
+  <div class="inner">
+    <div class="container">
+      <div class="chara-card"
+           *ngFor="let config of configs$ | async"
+           [routerLink]="['/',config.name]"
+           (mouseenter)="OnMouseEnter($event, config)"
+           (mouseleave)="OnMouseLeave($event)">
+        <div class="details">
+          <img [src]="config.imgSrc">
+          <h2>{{config.fullName}}</h2>
+          <div class="background"
+               *ngIf="config.color"
+               [style.backgroundColor]="config.color['secondary']"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 </div>

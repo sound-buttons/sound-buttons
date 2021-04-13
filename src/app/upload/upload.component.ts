@@ -1,17 +1,18 @@
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy{
   config!: IFullConfig;
   api = 'https://soundbuttons.azure-api.net/sound-buttons';
   public uploadForm = this.formBuilder.group({
@@ -27,6 +28,8 @@ export class UploadComponent implements OnInit {
   duration = 0;
 
   youtubeEmbedLink: SafeResourceUrl = '';
+  routerSubscription: Subscription | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -40,7 +43,7 @@ export class UploadComponent implements OnInit {
   ngOnInit(): void {
     const name = this.route.snapshot.paramMap.get('name') ?? 'template';
     this.configService.name = name;
-    this.configService.OnConfigChanged.subscribe(config => {
+    this.routerSubscription = this.configService.OnConfigChanged.subscribe(config => {
       if (config) {
         this.colorService.color = config.color ?? this.colorService.defaultColor;
         this.config = config;
@@ -142,6 +145,10 @@ export class UploadComponent implements OnInit {
     this.uploadForm.patchValue({
       end: Math.ceil(parseFloat(this.uploadForm.get('start')?.value ?? '0') + this.duration)
     });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
 }

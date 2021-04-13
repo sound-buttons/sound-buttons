@@ -5,11 +5,11 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ContainerComponent } from './container/container.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: ':name',
     children: [
-      { path: '', component: ContainerComponent },
+      { path: '', component: ContainerComponent, pathMatch: 'full'  },
       { path: 'upload', component: UploadComponent }
     ]
   },
