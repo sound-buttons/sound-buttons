@@ -5,7 +5,7 @@
       &nbsp;
       {{title}}
     </span>
-    <span class="navbar-brand fullName">{{fullName}}</span>
+    <span class="navbar-brand fullName" [routerLink]="['/', name]">{{fullName}}</span>
     <button class="navbar-toggler" type="button" aria-controls="navbar" aria-label="Toggle navigation"
             (click)="isCollapsed = !isCollapsed"
             *ngIf="name"
