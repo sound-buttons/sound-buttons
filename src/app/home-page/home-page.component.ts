@@ -18,6 +18,7 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.configs$ = this.configService.getBriefConfig();
+    this.configService.resetConfig();
   }
 
   OnMouseEnter($event: MouseEvent, config: IConfig): void {

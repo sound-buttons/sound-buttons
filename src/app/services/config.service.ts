@@ -14,6 +14,8 @@ export class ConfigService {
   private url = 'assets/configs/main.json';
   private config: IFullConfig | undefined;
 
+  public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
+
   // tslint:disable-next-line: variable-name
   private _isLiveUpdate = false;
   public get isLiveUpdate(): boolean {
@@ -24,20 +26,23 @@ export class ConfigService {
     this.OnConfigChanged.emit(this.config);
   }
 
-  public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
-
   // tslint:disable-next-line: variable-name
-  private _name = 'template';
+  private _name = '';
   public get name(): string {
     return this._name;
   }
   public set name(value) {
     this._name = value;
     this.getBriefConfig().subscribe(cs => {
-      this.getConfig(value, cs).subscribe(c => {
-        this.config = c;
-        this.OnConfigChanged.emit(c);
-      });
+      const config$ = this.getConfig(value, cs);
+      if (config$) {
+        config$?.subscribe(c => {
+          this.config = c;
+          this.OnConfigChanged.emit(this.config);
+        });
+      } else {
+        this.resetConfig();
+      }
     });
   }
 
@@ -47,13 +52,7 @@ export class ConfigService {
     private audioService: AudioService
   ) { }
 
-  getBriefConfig(url: string = this.url): Observable<IConfig[]> {
-    // IConfig下都是基本型別，直接用
-    return this.http.get<IConfig[]>(url);
-  }
-
-  getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> {
-    // 由this.configs取得FullConfigUrl
+  private getFullConfigUrl(name: string, configs: IConfig[] | undefined): string {
     let fullConfigURL = '';
     if (configs) {
       for (const c of configs) {
@@ -64,8 +63,19 @@ export class ConfigService {
         }
       }
     }
+    return fullConfigURL;
+  }
+
+  getBriefConfig(url: string = this.url): Observable<IConfig[]> {
+    // IConfig下都是基本型別，直接用
+    return this.http.get<IConfig[]>(url);
+  }
+
+  getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> | undefined {
+    let fullConfigURL = this.getFullConfigUrl(name, configs);
     if (!fullConfigURL) {
-      fullConfigURL = 'assets/configs/template.json';
+      // fullConfigURL = 'assets/configs/template.json';
+      return undefined;
     }
 
     return this.http.get<IFullConfig>(fullConfigURL).pipe(
@@ -102,6 +112,14 @@ export class ConfigService {
         return target;
       })
     );
+  }
+
+  resetConfig() {
+    this.config = undefined;
+    this._name = '';
+    this._isLiveUpdate = false;
+    this.colorService.resetColor();
+    this.OnConfigChanged.emit(this.config);
   }
 }
 

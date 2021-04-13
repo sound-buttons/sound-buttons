@@ -31,6 +31,10 @@ export class ColorService {
     return this._color;
   }
 
+  resetColor() {
+    this.color = this.defaultColor;
+  }
+
 }
 
 export interface IColor {
