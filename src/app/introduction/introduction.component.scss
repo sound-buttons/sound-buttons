@@ -27,3 +27,16 @@
   }
 
 }
+
+.btn {
+  position: absolute;
+  top: calc(70% - 2.8em);
+
+  cursor: pointer;
+  border-radius: .3rem;
+
+  &:active {
+    background-color: var(--bs-secondary);
+    transform: translateY(.3em);
+  }
+}

@@ -4,6 +4,7 @@
 // Buttons =====================================================================
 
 .btn {
+
   &:focus,
   &:active,
   &:active:focus,
@@ -13,13 +14,13 @@
 
   &-secondary {
     background-color: $white;
-    border-color: #ccc;
-    color: $gray-900;
+    border-color: var(--bs-secondary);
+    color: var(--bs-primary);
 
     &:hover {
-      background-color: $gray-300;
-      border-color: $gray-500;
-      color: $gray-900;
+      background-color: var(--bs-secondary);
+      border-color: var(--bs-primary);
+      color: $white;
     }
 
     &.disabled {
@@ -34,11 +35,11 @@
   }
 
   &-primary:focus {
-    box-shadow: 0 0 5px var(--primary);
+    box-shadow: 0 0 5px var(--bs-primary);
   }
 
   &-secondary:focus {
-    box-shadow: 0 0 5px $gray-400;
+    box-shadow: 0 0 5px var(--bs-secondary);
   }
 
   &-success:focus {
@@ -88,7 +89,7 @@
   .nav-link.active,
   .nav-link.active:hover,
   .nav-link.active:focus {
-    border-bottom: 1px solid var(--primary);
+    border-bottom: 1px solid var(--bs-primary);
   }
 
   .nav-item+.nav-item {

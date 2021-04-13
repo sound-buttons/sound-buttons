@@ -1,3 +1,4 @@
+import { IButton } from './../sound-buttons/Buttons';
 import { Component, Input, OnInit } from '@angular/core';
 import { ILink } from '../services/config.service';
 
@@ -25,6 +26,8 @@ export class IntroductionComponent implements OnInit {
   @Input() public intro = '';
 
   @Input() link: ILink|undefined;
+
+  @Input() button: IButton | undefined;
 
   constructor() {
   }
