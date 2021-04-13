@@ -135,7 +135,7 @@ export class UploadComponent implements OnInit, OnDestroy{
     // console.log(formData);
     this.http.post(this.api, formData).subscribe(response => {
       if (confirm('上傳完成，是否前往預覧頁?')) {
-        this.router.navigate([this.configService.name], { queryParams: { liveUpdate: '' } });
+        this.router.navigate(['/', this.configService.name], { queryParams: { liveUpdate: '1' } });
       }
       this.uploadForm.reset();
     });

@@ -30,9 +30,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setLiveUpdate(flag: boolean): void {
     this.configService.isLiveUpdate = flag;
     if (flag) {
-      this.router.navigate([this.name], { queryParams: { liveUpdate: '' } });
+      this.router.navigate(['/', this.name], { queryParams: { liveUpdate: '1' } });
     } else {
-      this.router.navigate([this.name]).then(() => location.reload());
+      this.router.navigate(['/', this.name]).then(() => location.reload());
     }
   }
 
