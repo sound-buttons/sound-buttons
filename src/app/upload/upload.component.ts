@@ -41,9 +41,12 @@ export class UploadComponent implements OnInit {
     const name = this.route.snapshot.paramMap.get('name') ?? 'template';
     this.configService.name = name;
     this.configService.OnConfigChanged.subscribe(config => {
-      this.colorService.color = config.color ?? this.colorService.defaultColor;
-      this.config = config;
-      return;
+      if (config) {
+        this.colorService.color = config.color ?? this.colorService.defaultColor;
+        this.config = config;
+      } else {
+        this.router.navigate(['/']);
+      }
     });
   }
 
@@ -81,10 +84,10 @@ export class UploadComponent implements OnInit {
     const txt: string = this.uploadForm.get('videoId')?.value ?? '';
 
     let videoId: string = txt;
-    if (videoId.startsWith("https://youtu.be/")) {
+    if (videoId.startsWith('https://youtu.be/')) {
       videoId = txt.match(/^.*\/([^?]*).*$/)?.pop() ?? '';
     }
-    else if (videoId.startsWith("https://www.youtube.com/watch")) {
+    else if (videoId.startsWith('https://www.youtube.com/watch')) {
       videoId = txt.match(/^.*[?&]v=([^&]*).*$/)?.pop() ?? '';
     }
 

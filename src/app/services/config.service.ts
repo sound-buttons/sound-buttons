@@ -14,7 +14,7 @@ export class ConfigService {
   private url = 'assets/configs/main.json';
   private config: IFullConfig | undefined;
 
-  public OnConfigChanged: EventEmitter<IFullConfig> = new EventEmitter();
+  public OnConfigChanged: EventEmitter<IFullConfig | undefined> = new EventEmitter();
 
   // tslint:disable-next-line: variable-name
   private _isLiveUpdate = false;
@@ -72,7 +72,7 @@ export class ConfigService {
   }
 
   getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> | undefined {
-    let fullConfigURL = this.getFullConfigUrl(name, configs);
+    const fullConfigURL = this.getFullConfigUrl(name, configs);
     if (!fullConfigURL) {
       // fullConfigURL = 'assets/configs/template.json';
       return undefined;
@@ -114,7 +114,7 @@ export class ConfigService {
     );
   }
 
-  resetConfig() {
+  resetConfig(): void {
     this.config = undefined;
     this._name = '';
     this._isLiveUpdate = false;
