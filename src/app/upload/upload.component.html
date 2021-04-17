@@ -6,9 +6,10 @@
       <div class="row">
         <div class="col-md-8 col-12">
           <div class="mb-3">
-            <label for="videoId" class="form-label">音檔出處</label>
+            <label for="videoId" class="form-label">Youtube來源</label>
             <div class="mb-3 input-group">
-              <input type="text" class="form-control w-25" id="videoId" formControlName="videoId"
+              <input type="text" class="form-control w-25 left-border left-border-green" id="videoId"
+                     formControlName="videoId"
                      placeholder="Youtube影片網址，可帶t秒數"
                      (change)="OnYoutubeLinkChange($event)">
               <span class="input-group-text">起始秒數</span>
@@ -19,9 +20,15 @@
               <input type="number" class="form-control" id="end" formControlName="end"
                      [class.is-invalid]="getFormControl('end').invalid">
             </div>
+              <div class="form-text">
+                <span [class.text-danger]="getFormControl('end').invalid">音檔上限60秒</span>；約需3~5分鐘轉檔；伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)</div>
 
             <div class="youtubeContainer mx-auto"
-                 *ngIf="!youtubeEmbedLink">來源影片預覧</div>
+                 *ngIf="!youtubeEmbedLink">「檔案上傳」、「Youtube來源」<br>
+                 至少選擇一種，也可同時填寫<br>
+              <br>
+              「Youtube來源」功能需要3~5分鐘轉檔<br>
+              若5分鐘後預覧未出現，請改用「檔案上傳」方式</div>
             <iframe *ngIf="youtubeEmbedLink"
                     [src]="youtubeEmbedLink"
                     title="YouTube video player"
@@ -33,8 +40,9 @@
 
         <div class="col-md-4 col-12">
           <div class="mb-3">
-            <label for="nameZH" class="form-label"><span class="star text-danger">*</span>中文名</label>
-            <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的文字"
+            <label for="nameZH" class="form-label">中文名</label>
+            <input type="text" class="form-control left-border left-border-red" id="nameZH" formControlName="nameZH"
+                   placeholder="顯示在按鈕上的文字"
                    [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
           </div>
 
@@ -49,11 +57,14 @@
           </div>
 
           <div class="mb-3">
-            <label for="file" class="form-label"><span class="star text-danger">*</span>檔案上傳</label>
-            <input type="file" accept="audio/*" class="form-control" id="file" formControlName="file"
+            <label for="file" class="form-label">檔案上傳</label>
+            <input type="file" accept="audio/*" class="form-control left-border left-border-green" id="file"
+                   formControlName="file"
                    (change)="OnFileUpload($event)"
                    [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
+            <span class="form-text">直接上傳音檔可以節省伺服器負載，<span [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">上限30MB</span></span>
           </div>
+
 
           <button type="submit" class="btn btn-primary"
                   [disabled]="form.invalid">送出</button>
