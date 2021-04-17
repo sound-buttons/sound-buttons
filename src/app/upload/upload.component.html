@@ -1,10 +1,11 @@
 <div class="container" *ngIf="config">
   <h1>{{config.fullName}} 上傳表單</h1>
 
-  <form class="form" [formGroup]="uploadForm" (ngSubmit)="OnSubmit($event)">
+  <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit($event)">
     <div class="mb-3">
       <label for="nameZH" class="form-label"><span class="star text-danger">*</span>中文名</label>
-      <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的文字" required>
+      <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的文字"
+             [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
     </div>
 
     <div class="mb-3">
@@ -20,19 +21,23 @@
     <div class="mb-3">
       <label for="file" class="form-label"><span class="star text-danger">*</span>檔案上傳</label>
       <input type="file" accept="audio/*" class="form-control" id="file" formControlName="file"
-             (change)="OnFileUpload($event)" required>
+             (change)="OnFileUpload($event)"
+             [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
     </div>
 
     <div class="mb-3">
       <label for="videoId" class="form-label">音檔出處</label>
       <div class="mb-3 input-group">
         <input type="text" class="form-control" id="videoId" formControlName="videoId"
-               placeholder="Youtube影片網址，可帶t秒數" (change)="OnYoutubeLinkChange($event)">
+               placeholder="Youtube影片網址，可帶t秒數"
+               (change)="OnYoutubeLinkChange($event)">
         <span class="input-group-text">起始秒數</span>
         <input type="number" class="form-control" id="start" formControlName="start"
-               (change)="OnYoutubeLinkChange($event, false)">
+               (change)="OnYoutubeLinkChange($event, false)"
+               [class.is-invalid]="getFormControl('start').invalid">
         <span class="input-group-text">結束秒數</span>
-        <input type="number" class="form-control" id="end" formControlName="end">
+        <input type="number" class="form-control" id="end" formControlName="end"
+               [class.is-invalid]="getFormControl('end').invalid">
       </div>
 
       <iframe *ngIf="youtubeEmbedLink"
@@ -44,6 +49,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary"
-            [disabled]="uploadForm.invalid">送出</button>
+            [disabled]="form.invalid">送出</button>
   </form>
 </div>
