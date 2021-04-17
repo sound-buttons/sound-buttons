@@ -2,53 +2,63 @@
   <h1>{{config.fullName}} 上傳表單</h1>
 
   <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit($event)">
-    <div class="mb-3">
-      <label for="nameZH" class="form-label"><span class="star text-danger">*</span>中文名</label>
-      <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的文字"
-             [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
-    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-12">
+          <div class="mb-3">
+            <label for="videoId" class="form-label">音檔出處</label>
+            <div class="mb-3 input-group">
+              <input type="text" class="form-control w-25" id="videoId" formControlName="videoId"
+                     placeholder="Youtube影片網址，可帶t秒數"
+                     (change)="OnYoutubeLinkChange($event)">
+              <span class="input-group-text">起始秒數</span>
+              <input type="number" class="form-control" id="start" formControlName="start"
+                     (change)="OnYoutubeLinkChange($event, false)"
+                     [class.is-invalid]="getFormControl('start').invalid">
+              <span class="input-group-text">結束秒數</span>
+              <input type="number" class="form-control" id="end" formControlName="end"
+                     [class.is-invalid]="getFormControl('end').invalid">
+            </div>
 
-    <div class="mb-3">
-      <label for="nameJP" class="form-label">日文名</label>
-      <input type="text" class="form-control" id="nameJP" formControlName="nameJP" placeholder="顯示在按鈕上的日文版文字">
-    </div>
+            <div class="youtubeContainer mx-auto"
+                 *ngIf="!youtubeEmbedLink">來源影片預覧</div>
+            <iframe *ngIf="youtubeEmbedLink"
+                    [src]="youtubeEmbedLink"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    class="youtubeContainer mx-auto"></iframe>
+          </div>
+        </div>
 
-    <div class="mb-3">
-      <label for="group" class="form-label">分組</label>
-      <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱">
-    </div>
+        <div class="col-md-4 col-12">
+          <div class="mb-3">
+            <label for="nameZH" class="form-label"><span class="star text-danger">*</span>中文名</label>
+            <input type="text" class="form-control" id="nameZH" formControlName="nameZH" placeholder="顯示在按鈕上的文字"
+                   [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
+          </div>
 
-    <div class="mb-3">
-      <label for="file" class="form-label"><span class="star text-danger">*</span>檔案上傳</label>
-      <input type="file" accept="audio/*" class="form-control" id="file" formControlName="file"
-             (change)="OnFileUpload($event)"
-             [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
-    </div>
+          <div class="mb-3">
+            <label for="nameJP" class="form-label">日文名</label>
+            <input type="text" class="form-control" id="nameJP" formControlName="nameJP" placeholder="顯示在按鈕上的日文版文字">
+          </div>
 
-    <div class="mb-3">
-      <label for="videoId" class="form-label">音檔出處</label>
-      <div class="mb-3 input-group">
-        <input type="text" class="form-control" id="videoId" formControlName="videoId"
-               placeholder="Youtube影片網址，可帶t秒數"
-               (change)="OnYoutubeLinkChange($event)">
-        <span class="input-group-text">起始秒數</span>
-        <input type="number" class="form-control" id="start" formControlName="start"
-               (change)="OnYoutubeLinkChange($event, false)"
-               [class.is-invalid]="getFormControl('start').invalid">
-        <span class="input-group-text">結束秒數</span>
-        <input type="number" class="form-control" id="end" formControlName="end"
-               [class.is-invalid]="getFormControl('end').invalid">
+          <div class="mb-3">
+            <label for="group" class="form-label">分組</label>
+            <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱">
+          </div>
+
+          <div class="mb-3">
+            <label for="file" class="form-label"><span class="star text-danger">*</span>檔案上傳</label>
+            <input type="file" accept="audio/*" class="form-control" id="file" formControlName="file"
+                   (change)="OnFileUpload($event)"
+                   [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
+          </div>
+
+          <button type="submit" class="btn btn-primary"
+                  [disabled]="form.invalid">送出</button>
+        </div>
       </div>
-
-      <iframe *ngIf="youtubeEmbedLink"
-              [src]="youtubeEmbedLink"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              class="youtubeContainer mx-auto"></iframe>
     </div>
-
-    <button type="submit" class="btn btn-primary"
-            [disabled]="form.invalid">送出</button>
   </form>
 </div>
