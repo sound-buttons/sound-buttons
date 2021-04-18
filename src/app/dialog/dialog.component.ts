@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { DialogService } from './../services/dialog.service';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -7,7 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements AfterViewInit {
+export class DialogComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('tModel', { static: true }) modal!: TemplateRef<any>;
   modalRef!: BsModalRef;
@@ -16,6 +17,8 @@ export class DialogComponent implements AfterViewInit {
     message: '',
     result: false
   };
+  subscription!: Subscription;
+
   constructor(
     private modalService: BsModalService,
     private dialogService: DialogService
@@ -38,5 +41,9 @@ export class DialogComponent implements AfterViewInit {
   //   this.modalRef.hide();
   //   this.dialogService.confirmModal.emit(false);
   // }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
 }

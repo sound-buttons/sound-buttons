@@ -160,8 +160,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       start = parseInt(value.match(/^.*[?&]t=([^&smh]*).*$/)?.pop() ?? '0', 10);
       this.form.patchValue({ start });
       this.patchEnd();
-    // } else {
-    //   start = this.getFormControl('start').value ?? 0;
+      // } else {
+      //   start = this.getFormControl('start').value ?? 0;
     }
 
     // 拼youtube embed連結
@@ -237,4 +237,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   public getFormControl = (name: string): FormControl =>
     this.form.get(name) as FormControl;
+
+  groupNames = () => this.configService.groupNames;
 }

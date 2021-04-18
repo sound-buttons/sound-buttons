@@ -13,6 +13,7 @@ import { IColor, ColorService } from './color.service';
 export class ConfigService {
   private url = 'assets/configs/main.json';
   private config: IFullConfig | undefined;
+  public groupNames: string[] = [];
 
   public OnConfigChanged: EventEmitter<IFullConfig | undefined> = new EventEmitter();
 
@@ -51,6 +52,13 @@ export class ConfigService {
     private colorService: ColorService,
     private audioService: AudioService
   ) { }
+
+  private setGroupNames(buttonGroups: ButtonGroup[]): void {
+    this.groupNames.length = 0;
+    buttonGroups.forEach(group => {
+      this.groupNames.push(group.name);
+    });
+  }
 
   private getFullConfigUrl(name: string, configs: IConfig[] | undefined): string {
     let fullConfigURL = '';
@@ -108,11 +116,13 @@ export class ConfigService {
             );
           }
           target.buttonGroups = buttonGroups;
+          this.setGroupNames(buttonGroups);
         }
 
         if (source.color) {
           this.colorService.color = source.color;
         }
+
         return target;
       })
     );

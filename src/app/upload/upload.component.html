@@ -21,12 +21,13 @@
                      (change)="OnYoutubeLinkChange($event, false)"
                      [class.is-invalid]="getFormControl('end').invalid">
             </div>
-              <div class="form-text">
-                <span [class.text-danger]="getFormControl('end').invalid">音檔上限60秒</span>；約需3~5分鐘轉檔；伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)</div>
+            <div class="form-text">
+              <span [class.text-danger]="getFormControl('end').invalid">音檔上限60秒</span>；約需3~5分鐘轉檔；伺服器會在運算超過5分鐘時判定超時
+              (轉檔失敗)</div>
 
             <div class="youtubeContainer mx-auto"
                  *ngIf="!youtubeEmbedLink">「檔案上傳」、「Youtube來源」<br>
-                 至少選擇一種，也可同時填寫<br>
+              至少選擇一種，也可同時填寫<br>
               <br>
               「Youtube來源」功能需要3~5分鐘轉檔<br>
               若5分鐘後預覧未出現，請改用「檔案上傳」方式</div>
@@ -54,7 +55,11 @@
 
           <div class="mb-3">
             <label for="group" class="form-label">分組</label>
-            <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱">
+            <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱"
+                   [typeahead]="groupNames()"
+                   [typeaheadScrollable]="true"
+                   [typeaheadOptionsInScrollableView]="7"
+                   [typeaheadMinLength]="0">
           </div>
 
           <div class="mb-3">
@@ -63,7 +68,8 @@
                    formControlName="file"
                    (change)="OnFileUpload($event)"
                    [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
-            <span class="form-text">直接上傳音檔可以節省伺服器負載，<span [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">上限30MB</span></span>
+            <span class="form-text">直接上傳音檔可以節省伺服器負載，<span
+                    [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">上限30MB</span></span>
           </div>
 
 

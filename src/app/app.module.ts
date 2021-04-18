@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -45,6 +46,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot(), // ToastrModule added
+    TypeaheadModule.forRoot(),
   ],
   providers: [
     LanguageService,

@@ -11,7 +11,7 @@ export class DialogService {
   ) { }
 
   showModal = new EventEmitter();
-  confirmModal = new EventEmitter();
+  // confirmModal = new EventEmitter();
 
   toastError(message: string, title?: string ): void {
     this.toastr.error(message, title);
