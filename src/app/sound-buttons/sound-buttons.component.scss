@@ -12,10 +12,6 @@
   border: none;
   margin: 0.3em;
 
-  &:hover {
-    background-color: var(--bs-secondary);
-  }
-
   &:active {
     background-color: var(--bs-primary);
     transform: translateY(.3em);
