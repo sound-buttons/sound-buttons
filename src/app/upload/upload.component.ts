@@ -188,15 +188,29 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('start', this.getFormControl('start').value);
     formData.append('end', this.getFormControl('end').value);
 
-    this.http.post(this.api, formData).subscribe(response => {
-      if (confirm('表單已送出，是否前往預覧頁 ? ')) {
-        if (!this.file) {
-          alert('若使用Youtube來源運算，請於3~5分鐘後再重整查看!');
-        }
-        this.router.navigate(['/', this.configService.name], { queryParams: { liveUpdate: '1' } });
+    this.http.post(this.api, formData, { observe: 'response' }).subscribe(response => {
+      switch (response.status) {
+        case 200:
+          alert(`表單「${this.getFormControl('nameZH')}」發送成功}`);
+          break;
+        case 400:
+          alert(`表單「${this.getFormControl('nameZH')}」失敗，欄位錯誤!!}`);
+          break;
+        case 408:
+          alert(`表單「${this.getFormControl('nameZH')}」回應超時!!}`);
+          break;
+        case 500:
+          alert(`表單「${this.getFormControl('nameZH')}」失敗，伺服器錯誤!!}`);
+          break;
       }
-      this.form.reset();
     });
+    if (confirm('表單已送出，是否前往預覧頁 ? ')) {
+      if (!this.file) {
+        alert('若使用Youtube來源運算，請於3~5分鐘後再重整查看!');
+      }
+      this.router.navigate(['/', this.configService.name], { queryParams: { liveUpdate: '1' } });
+    }
+    this.form.reset();
   }
 
   patchEnd(): void {
