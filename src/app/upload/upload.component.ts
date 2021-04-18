@@ -1,3 +1,4 @@
+import { DialogService } from './../services/dialog.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -67,7 +68,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private colorService: ColorService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   OnFileUpload($event: Event): void {
     const clearFile = (message?: string) => {
       if (message) {
-        alert(message);
+        this.dialogService.toastError(
+          message
+        );
+        // alert(message);
       }
       this.file = undefined;
       this.getFormControl('file').reset();
@@ -154,10 +159,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (parseFromLink) {
       start = parseInt(value.match(/^.*[?&]t=([^&smh]*).*$/)?.pop() ?? '0', 10);
       this.form.patchValue({ start });
-    } else {
-      start = this.getFormControl('start').value ?? 0;
+      this.patchEnd();
+    // } else {
+    //   start = this.getFormControl('start').value ?? 0;
     }
-    this.patchEnd();
 
     // 拼youtube embed連結
     const url = new URL('https://www.youtube.com/embed/' + videoId);
@@ -172,7 +177,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   OnSubmit($event: any): void {
     if (this.form.invalid) {
-      alert('請填入必填欄位！');
+      this.dialogService.toastError('請填入必填欄位！');
       return;
     }
 
@@ -188,29 +193,36 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('start', this.getFormControl('start').value);
     formData.append('end', this.getFormControl('end').value);
 
-    this.http.post(this.api, formData, { observe: 'response' }).subscribe(response => {
+    this.http.post(this.api, formData, { observe: 'response' }).subscribe((response) => {
+      const name = (response.body as string[])[0] ?? '';
       switch (response.status) {
         case 200:
-          alert(`表單「${this.getFormControl('nameZH')}」發送成功}`);
+          this.dialogService.toastSuccess(`上傳${name}成功`);
           break;
         case 400:
-          alert(`表單「${this.getFormControl('nameZH')}」失敗，欄位錯誤!!}`);
+          this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
           break;
         case 408:
-          alert(`表單「${this.getFormControl('nameZH')}」回應超時!!}`);
+          this.dialogService.toastError(`上傳${name}回應超時!!`);
           break;
         case 500:
-          alert(`表單「${this.getFormControl('nameZH')}」失敗，伺服器錯誤!!}`);
+          this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
           break;
+        default:
+          this.dialogService.toastWarning(`上傳${name}回應異常!!`);
       }
     });
-    if (confirm('表單已送出，是否前往預覧頁 ? ')) {
-      if (!this.file) {
-        alert('若使用Youtube來源運算，請於3~5分鐘後再重整查看!');
-      }
-      this.router.navigate(['/', this.configService.name], { queryParams: { liveUpdate: '1' } });
-    }
+
+    this.dialogService.toastInfo(`表單${this.getFormControl('nameZH').value}已送出`);
     this.form.reset();
+    this.youtubeEmbedLink = '';
+
+    if (!this.file) {
+      this.dialogService.showModal.emit({
+        title: '提醒',
+        message: 'Youtube來源運算需要時間<br>請於3~5分鐘後再重整查看'
+      });
+    }
   }
 
   patchEnd(): void {

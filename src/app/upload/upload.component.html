@@ -18,6 +18,7 @@
                      [class.is-invalid]="getFormControl('start').invalid">
               <span class="input-group-text">結束秒數</span>
               <input type="number" class="form-control" id="end" formControlName="end"
+                     (change)="OnYoutubeLinkChange($event, false)"
                      [class.is-invalid]="getFormControl('end').invalid">
             </div>
               <div class="form-text">

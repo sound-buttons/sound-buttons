@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -14,10 +15,13 @@ import { SoundButtonsComponent } from './sound-buttons/sound-buttons.component';
 import { ContainerComponent } from './container/container.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UploadComponent } from './upload/upload.component';
+import { DialogComponent } from './dialog/dialog.component';
 import { ColorService } from './services/color.service';
 import { ConfigService } from './services/config.service';
 import { LanguageService } from './services/language.service';
 import { AudioService } from './services/audio.service';
+import { DialogService } from './services/dialog.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,22 +32,26 @@ import { AudioService } from './services/audio.service';
     SoundButtonsComponent,
     ContainerComponent,
     HomePageComponent,
-    UploadComponent
+    UploadComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     ButtonsModule.forRoot(),
+    ModalModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [
     LanguageService,
     ConfigService,
     ColorService,
-    AudioService
+    AudioService,
+    DialogService
   ],
   bootstrap: [AppComponent]
 })
