@@ -22,7 +22,10 @@
 .btn {
   &-primary,
   &-primary:disabled,
-  &-primary:hover {
+  &-primary:hover,
+  &-primary:focus,
+  &-primary:active,
+  &-primary.active {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
   }

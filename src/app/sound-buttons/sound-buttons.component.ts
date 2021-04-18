@@ -21,7 +21,7 @@ export class SoundButtonsComponent implements OnInit {
   ngOnInit(): void {
     this.audioService.OnSourceChanged.subscribe(source => {
       this.youtubeEmbedSource = source;
-      if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId) {
+      if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId && this.youtubeEmbedSource?.videoId !== 'null') {
         const url = new URL('https://www.youtube.com/embed/' + this.youtubeEmbedSource.videoId);
         url.searchParams.append('start', `${this.youtubeEmbedSource.start}`);
         url.searchParams.append('end', `${this.youtubeEmbedSource.end}`);
