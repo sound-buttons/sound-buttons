@@ -1,5 +1,5 @@
 import { AudioService } from './audio.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class ConfigService {
   }
   public set isLiveUpdate(value) {
     this._isLiveUpdate = value;
-    this.OnConfigChanged.emit(this.config);
+    this.name = this.name; // trigger set function
   }
 
   // tslint:disable-next-line: variable-name
@@ -68,7 +68,9 @@ export class ConfigService {
 
   getBriefConfig(url: string = this.url): Observable<IConfig[]> {
     // IConfig下都是基本型別，直接用
-    return this.http.get<IConfig[]>(url);
+    return this.http.get<IConfig[]>(url,
+      { headers: new HttpHeaders({ 'Cache-Control': 'max-age=0' }) }
+    );
   }
 
   getConfig(name: string = this.name, configs?: IConfig[]): Observable<IFullConfig> | undefined {
@@ -78,7 +80,9 @@ export class ConfigService {
       return undefined;
     }
 
-    return this.http.get<IFullConfig>(fullConfigURL).pipe(
+    return this.http.get<IFullConfig>(fullConfigURL,
+      { headers: new HttpHeaders({ 'Cache-Control': 'max-age=0' }) }
+    ).pipe(
       map(source => {
         // tslint:disable-next-line: prefer-const
         let target = Object.assign({}, source);

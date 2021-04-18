@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (flag) {
       this.router.navigate(['/', this.name], { queryParams: { liveUpdate: '1' } });
     } else {
-      this.router.navigate(['/', this.name]).then(() => location.reload());
+      this.router.navigate(['/', this.name]);
     }
   }
 
