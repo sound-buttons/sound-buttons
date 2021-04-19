@@ -21,7 +21,9 @@ export class HomePageComponent implements OnInit {
     this.configService.resetConfig();
   }
 
-  OnMouseEnter($event: MouseEvent, config: IConfig): void {
+  OnMouseEnter($event: MouseEvent, config?: IConfig): void {
+    if (!config) return;
+
     if (config.color) {
       this.colorService.color = config.color;
     }
