@@ -25,15 +25,16 @@
       margin: unset;
     }
   }
-
 }
 
 .btn {
   position: absolute;
-  top: calc(70% - 2.8em);
+  top: -2.5em;
 
   cursor: pointer;
   border-radius: .3rem;
+  border-color: var(--bs-primary);
+  border-width: 1px;
 
   &:active {
     // background-color: var(--bs-secondary);

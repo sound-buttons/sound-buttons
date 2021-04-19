@@ -10,6 +10,10 @@
   img {
     height: 1.5rem;
   }
+
+  @media only screen and (max-width: 425px) {
+    padding: 0.2rem;
+  }
 }
 
 .fullName {
@@ -18,7 +22,7 @@
   align-items: center;
 }
 
-a{
+a {
   cursor: pointer;
 }
 
@@ -27,7 +31,7 @@ a{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 
-  .nav-link{
+  .nav-link {
     padding-left: 0.5rem;
   }
 }

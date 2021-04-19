@@ -17,10 +17,12 @@
     </a>
   </div>
   <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image">
-  <button type="button" class="btn btn-secondary"
-          *ngIf="button"
-          (click)="button?.click($event)">
-    {{button?.text}}
-  </button>
-  <p [style.whiteSpace]="'pre-wrap'">{{intro}}</p>
+  <div class="position-relative">
+    <button type="button" class="btn btn-secondary"
+            *ngIf="button"
+            (click)="button?.click($event)">
+      {{button?.text}}
+    </button>
+    <p [style.whiteSpace]="'pre-wrap'">{{intro}}</p>
+  </div>
 </div>
