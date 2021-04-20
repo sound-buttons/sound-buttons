@@ -1,11 +1,9 @@
 @import 'variables';
 .container {
   margin: 3vh auto;
-  height: calc(94vh - 100px);
-}
+  height: calc(93vh - 100px);
 
-@media only screen and (max-width: 767px) {
-  .container {
-    height: unset;
+  @media only screen and (max-width: 767px) {
+      height: unset;
   }
 }
