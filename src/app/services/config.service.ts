@@ -1,3 +1,4 @@
+import { LanguageService } from './language.service';
 import { AudioService } from './audio.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
@@ -50,7 +51,7 @@ export class ConfigService {
   constructor(
     private http: HttpClient,
     private colorService: ColorService,
-    private audioService: AudioService
+    private audioService: AudioService,
   ) { }
 
   private setGroupNames(buttonGroups: ButtonGroup[]): void {
@@ -123,6 +124,12 @@ export class ConfigService {
           this.colorService.color = source.color;
         }
 
+        // 套用text中的多語系
+        if (typeof (source.intro) !== 'string') {
+          // tslint:disable-next-line: variable-name
+          source.intro = LanguageService.GetTextFromObject(source.intro);
+        }
+
         return target;
       })
     );
@@ -140,7 +147,7 @@ export class ConfigService {
 export interface IFullConfig extends IConfig {
   buttonGroups?: IButtonGroup[];
   link?: ILink;
-  intro: string;
+  intro: string | any;
   introButton?: IButton;
 }
 
