@@ -15,6 +15,10 @@
   --bs-secondary: #777777;
 }
 
+a{
+  color: var(--bs-primary);
+}
+
 .bg-primary {
   background-color: var(--bs-primary) !important;
 }

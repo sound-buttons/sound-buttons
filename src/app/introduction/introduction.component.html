@@ -23,6 +23,6 @@
             (click)="button?.click($event)">
       {{button?.text}}
     </button>
-    <p [style.whiteSpace]="'pre-wrap'">{{intro}}</p>
+    <p [style.whiteSpace]="'pre-wrap'" [innerHTML]="intro"></p>
   </div>
 </div>
