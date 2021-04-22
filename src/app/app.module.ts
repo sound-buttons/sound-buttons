@@ -45,7 +45,10 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot({
+      timeOut: 30000,
+      positionClass: 'toast-bottom-center',
+    }),
     TypeaheadModule.forRoot(),
   ],
   providers: [
