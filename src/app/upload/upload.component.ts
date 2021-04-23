@@ -193,7 +193,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('start', this.getFormControl('start').value);
     formData.append('end', this.getFormControl('end').value);
 
+    formData.append('toastId',
+      this.dialogService.toastPending(`上傳${this.getFormControl('nameZH').value}運算中`).toString());
+
     this.http.post(this.api, formData, { observe: 'response' }).subscribe((response) => {
+      const toastId = (response.body as string[])[1] ?? -1;
+      this.dialogService.disablePending(parseInt(toastId, 10));
+
       const name = (response.body as string[])[0] ?? '';
       switch (response.status) {
         case 200:
@@ -213,16 +219,16 @@ export class UploadComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.dialogService.toastInfo(`表單${this.getFormControl('nameZH').value}已送出`);
-    this.form.reset();
     this.youtubeEmbedLink = '';
 
     if (!this.file) {
       this.dialogService.showModal.emit({
         title: '提醒',
-        message: 'Youtube來源運算需要時間<br>請於3~5分鐘後再重整查看'
+        message: 'Youtube來源運算需要時間<br>運算至多5分鐘，請耐心等待'
       });
     }
+    this.form.reset();
+    this.router.navigate(['/', this.config.name], { queryParams: { liveUpdate: '1' } });
   }
 
   patchEnd(): void {

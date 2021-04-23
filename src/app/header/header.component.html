@@ -21,12 +21,12 @@
              [routerLink]="name+'/upload'">投稿</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"
+          <a class="nav-link text-white"
              *ngIf="router.url.includes('upload')"
              (click)="setLiveUpdate(true)">投稿預覧</a>
         </li>
         <li class=" nav-item">
-          <a class="nav-link"
+          <a class="nav-link text-white"
              *ngIf="router.url.includes('liveUpdate')"
              (click)="setLiveUpdate(false)">回正式版</a>
         </li>

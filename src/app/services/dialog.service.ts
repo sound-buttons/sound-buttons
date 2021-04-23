@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class DialogService {
-
   constructor(
     private toastr: ToastrService,
   ) { }
@@ -13,16 +12,25 @@ export class DialogService {
   showModal = new EventEmitter();
   // confirmModal = new EventEmitter();
 
-  toastError(message: string, title?: string ): void {
+  disablePending(toastId: number): void {
+    if (toastId > 0) {
+      this.toastr.clear(toastId);
+    }
+  }
+
+  toastPending(message: string, title?: string): number {
+    return this.toastr.info(message, title, {
+      timeOut: 0
+    }).toastId;
+  }
+
+  toastError(message: string, title?: string): void {
     this.toastr.error(message, title);
   }
-  toastInfo(message: string, title?: string ): void {
-    this.toastr.info(message, title);
-  }
-  toastWarning(message: string, title?: string ): void {
+  toastWarning(message: string, title?: string): void {
     this.toastr.warning(message, title);
   }
-  toastSuccess(message: string, title?: string ): void {
+  toastSuccess(message: string, title?: string): void {
     this.toastr.success(message, title);
   }
 
