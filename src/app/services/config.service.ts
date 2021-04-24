@@ -25,7 +25,7 @@ export class ConfigService {
   }
   public set isLiveUpdate(value) {
     this._isLiveUpdate = value;
-    this.name = this.name; // trigger set function
+    this.reloadConfig();
   }
 
   // tslint:disable-next-line: variable-name
@@ -35,23 +35,7 @@ export class ConfigService {
   }
   public set name(value) {
     this._name = value;
-    this.getBriefConfig().pipe(
-      switchMap(cs => {
-        const config$ = this.getConfig(value, cs);
-        if (config$) {
-          return config$;
-        } else {
-          throw new Error("No config received.");
-        }
-      })
-    ).subscribe(config => {
-      if (config) {
-        this.config = config;
-        this.OnConfigChanged.emit(this.config);
-      } else {
-        this.resetConfig();
-      }
-    });
+    this.reloadConfig();
   }
 
   constructor(
@@ -147,6 +131,29 @@ export class ConfigService {
     this._isLiveUpdate = false;
     this.colorService.resetColor();
     this.OnConfigChanged.emit(this.config);
+  }
+
+  reloadConfig(callback?: (result: IFullConfig) => void): void {
+    this.getBriefConfig().pipe(
+      switchMap(cs => {
+        const config$ = this.getConfig(this._name, cs);
+        if (config$) {
+          return config$;
+        } else {
+          throw new Error("No config received.");
+        }
+      })
+    ).subscribe(config => {
+      if (config) {
+        this.config = config;
+        this.OnConfigChanged.emit(this.config);
+      } else {
+        this.resetConfig();
+      }
+      if (callback) {
+        callback(config);
+      }
+    });
   }
 }
 

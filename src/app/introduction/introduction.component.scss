@@ -1,3 +1,5 @@
+@import 'variables';
+
 #chara {
   max-height: 70%;
   max-width: 100%;
@@ -40,4 +42,30 @@
     // background-color: var(--bs-secondary);
     transform: translateY(.3em);
   }
+}
+
+.notice{
+  display: block;
+  width: 60vh;
+  max-width: 100%;
+  padding: 3vh;
+  margin: 2vh auto;
+  background: var(--bs-secondary);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  color: $white;
+  text-align: center;
+
+  .btn{
+    position: unset;
+    top: unset;
+    margin-top: 2vh;
+  }
+}
+
+p{
+  padding-top: 1rem;
 }

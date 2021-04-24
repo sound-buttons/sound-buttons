@@ -1,3 +1,5 @@
+import { ConfigService } from './../services/config.service';
+import { ActivatedRoute } from '@angular/router';
 import { IButton } from './../sound-buttons/Buttons';
 import { Component, Input, OnInit } from '@angular/core';
 import { ILink } from '../services/config.service';
@@ -10,7 +12,7 @@ import { ILink } from '../services/config.service';
 export class IntroductionComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   private _imgSrc = '';
-  private initTime = Date.now();
+  initTime = Date.now();
 
   get imgSrc(): string {
     let url = this._imgSrc;
@@ -29,10 +31,25 @@ export class IntroductionComponent implements OnInit {
 
   @Input() button: IButton | undefined;
 
-  constructor() {
-  }
+  isLiveUpdate = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private configService: ConfigService
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe(
+      m => {
+        this.isLiveUpdate = m.get('liveUpdate') === '1';
+      }
+    );
+  }
+
+  reloadConfig(): void {
+    this.configService.reloadConfig(
+      () => this.initTime = Date.now()
+    );
   }
 
 }
