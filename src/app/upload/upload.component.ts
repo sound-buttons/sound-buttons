@@ -1,12 +1,13 @@
 import { DialogService } from './../services/dialog.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload',
@@ -196,29 +197,42 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('toastId',
       this.dialogService.toastPending(`上傳${this.getFormControl('nameZH').value}運算中`).toString());
 
-    this.http.post(this.api, formData, { observe: 'response' }).subscribe((response) => {
-      const toastId = (response.body as string[])[1] ?? -1;
-      this.dialogService.disablePending(parseInt(toastId, 10));
+    this.http.post(this.api, formData, { observe: 'response' })
+      .subscribe(
+        (response: HttpResponse<object>) => {
+          const toastId = (response.body as string[])[1] ?? -1;
+          this.dialogService.disablePending(parseInt(toastId, 10));
 
-      const name = (response.body as string[])[0] ?? '';
-      switch (response.status) {
-        case 200:
+          const name = (response.body as string[])[0] ?? '';
           this.dialogService.toastSuccess(`上傳${name}成功`);
-          break;
-        case 400:
-          this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
-          break;
-        case 408:
-          this.dialogService.toastError(`上傳${name}回應超時!!`);
-          break;
-        case 500:
-          this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
-          break;
-        default:
-          this.dialogService.toastWarning(`上傳${name}回應異常!!`);
-      }
-    });
+          this.configService.reloadConfig();
+        },
+        (response: HttpResponse<string[]>) => {
+          let name = '';
+          try {
+            const toastId = (response.body as string[])[1] ?? -1;
+            this.dialogService.disablePending(parseInt(toastId, 10));
 
+            name = (response.body as string[])[0] ?? '';
+          } catch (e) { /* 錯誤時不一定會正確回傳我設定的body，直接抓掉 */ }
+
+          switch (response.status) {
+            case 400:
+              this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
+              break;
+            case 0: // 由瀏覧器timeout
+            case 408:
+              this.dialogService.clearPending();
+              this.dialogService.toastError(`上傳${name}回應超時!!`);
+              break;
+            case 500:
+              this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
+              break;
+            default:
+              this.dialogService.toastWarning(`上傳${name}回應異常!!`);
+          }
+        },
+      );
     this.youtubeEmbedLink = '';
 
     if (!this.file) {

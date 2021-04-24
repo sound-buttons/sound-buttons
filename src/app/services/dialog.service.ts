@@ -35,4 +35,8 @@ export class DialogService {
     this.toastr.success(message, title);
   }
 
+  clearPending(): void {
+    this.toastr.clear();
+  }
+
 }
