@@ -3,7 +3,7 @@ import { AudioService } from './audio.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ButtonGroup, IButtonGroup } from '../sound-buttons/ButtonGroup';
 import { Button, IButton } from '../sound-buttons/Buttons';
 import { IColor, ColorService } from './color.service';
@@ -35,13 +35,19 @@ export class ConfigService {
   }
   public set name(value) {
     this._name = value;
-    this.getBriefConfig().subscribe(cs => {
-      const config$ = this.getConfig(value, cs);
-      if (config$) {
-        config$?.subscribe(c => {
-          this.config = c;
-          this.OnConfigChanged.emit(this.config);
-        });
+    this.getBriefConfig().pipe(
+      switchMap(cs => {
+        const config$ = this.getConfig(value, cs);
+        if (config$) {
+          return config$;
+        } else {
+          throw new Error("No config received.");
+        }
+      })
+    ).subscribe(config => {
+      if (config) {
+        this.config = config;
+        this.OnConfigChanged.emit(this.config);
       } else {
         this.resetConfig();
       }
