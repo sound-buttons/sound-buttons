@@ -3,6 +3,7 @@
 .container {
   margin: 5px;
   overflow-y: auto;
+  height: calc(100% - 33.75vh);
 }
 
 .btn {
