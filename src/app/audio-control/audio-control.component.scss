@@ -1,0 +1,23 @@
+.control-container{
+  position: fixed;
+  bottom: calc(3rem - 1px);
+  left: 0;
+  width: 50px;
+  height: 200px;
+  border-width: thick;
+  border-top-style: double;
+  border-right-style: double;
+  border-color: var(--bs-primary);
+  text-align: center;
+  display: grid;
+  border-radius: 0 20px 0 0;
+}
+
+i{
+  font-size: 30px;
+  color: var(--bs-primary);
+  border-width: 2px;
+  padding: 0 3px;
+  align-self: center;
+  cursor: pointer;
+}

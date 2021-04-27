@@ -6,6 +6,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class AudioService {
 
+
   audioQueue: HTMLAudioElement[] = [];
 
   public lastSource: ISource | undefined = undefined;
@@ -26,7 +27,7 @@ export class AudioService {
     this.OnSourceChanged.emit(source);
   }
 
-  public stopAll(): void {
+  public stop(): void {
     this.audioQueue.forEach(audio => {
       audio.pause();
       audio.remove();
@@ -34,4 +35,23 @@ export class AudioService {
     this.audioQueue = [];
   }
 
+  public faster(): void {
+    this.audioQueue.forEach(audio => {
+      audio.playbackRate += 0.1;
+    });
+  }
+
+  public slower(): void {
+    this.audioQueue.forEach(audio => {
+      if (audio.playbackRate > 0.1) {
+        audio.playbackRate -= 0.1;
+      }
+    });
+  }
+
+  public recover(): void{
+    this.audioQueue.forEach(audio => {
+      audio.playbackRate = 1;
+    });
+  }
 }
