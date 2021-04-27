@@ -57,6 +57,7 @@
           <div class="mb-3">
             <label for="group" class="form-label">分組</label>
             <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱"
+                   autocomplete="off"
                    [typeahead]="groupNames()"
                    [typeaheadScrollable]="true"
                    [typeaheadOptionsInScrollableView]="7"
