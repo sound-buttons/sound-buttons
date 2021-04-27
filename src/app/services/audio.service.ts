@@ -13,8 +13,9 @@ export class AudioService {
 
   constructor() { }
 
-  public add(url: string, source?: ISource): void {
+  public add(url: string, source?: ISource, volume = 1): void {
     const audio = new Audio(url);
+    audio.volume = volume;
     audio.addEventListener('ended', (event) => {
       this.audioQueue.splice(this.audioQueue.indexOf(audio), 1);
     });

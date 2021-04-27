@@ -89,7 +89,7 @@ export class ConfigService {
         // 重新建立introButton
         if (source.introButton) {
           const b = source.introButton;
-          target.introButton = new Button(this.audioService, b.filename, b.text, b.baseRoute, b.source, b.SASToken);
+          target.introButton = new Button(this.audioService, b.filename, b.text, b.baseRoute, b.volume, b.source, b.SASToken);
         }
 
         // 重新建立buttonGroups
@@ -100,7 +100,7 @@ export class ConfigService {
             const buttons: Button[] = [];
             for (const b of bg.buttons) {
               // 重點在此處重建Button，這樣才會有click方法屬性
-              buttons.push(new Button(this.audioService, b.filename, b.text, b.baseRoute, b.source, b.SASToken));
+              buttons.push(new Button(this.audioService, b.filename, b.text, b.baseRoute, b.volume, b.source, b.SASToken));
             }
             buttonGroups.push(
               new ButtonGroup(bg.name, bg.baseRoute, buttons)

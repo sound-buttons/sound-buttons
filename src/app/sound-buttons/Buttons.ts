@@ -9,6 +9,7 @@ export class Button implements IButton {
     public filename: string,
     public text: string | any = filename,
     public baseRoute = defaultBaseRoute,
+    public volume = 1,
     public source?: ISource,
     public SASToken?: string,
   ) {
@@ -24,7 +25,7 @@ export class Button implements IButton {
     if (this.baseRoute.slice(-1) !== '/') {
       this.baseRoute += '/';
     }
-    this.audioService.add(`${this.baseRoute}${this.filename}${this.SASToken}`, this.source);
+    this.audioService.add(`${this.baseRoute}${this.filename}${this.SASToken}`, this.source, this.volume);
   };
 }
 
@@ -32,6 +33,7 @@ export interface IButton {
   filename: string;
   text: string | any;
   baseRoute: string;
+  volume: number;
   source?: ISource;
   SASToken?: string;
   click($event: MouseEvent): void;

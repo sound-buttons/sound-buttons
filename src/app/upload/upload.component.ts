@@ -190,6 +190,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('videoId', this.getFormControl('videoId').value);
     formData.append('file', this.file ?? '');
     formData.append('directory', this.configService.name);
+    formData.append('volume', '1');
 
     formData.append('start', this.getFormControl('start').value);
     formData.append('end', this.getFormControl('end').value);
