@@ -18,17 +18,17 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link"
-             [routerLink]="name+'/upload'">投稿</a>
+             [routerLink]="name+'/upload'" i18n>投稿</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white"
              *ngIf="router.url.includes('upload')"
-             (click)="setLiveUpdate(true)">待審核預覧</a>
+             (click)="setLiveUpdate(true)" i18n>待審核預覧</a>
         </li>
         <li class=" nav-item">
           <a class="nav-link text-white"
              *ngIf="router.url.includes('liveUpdate')"
-             (click)="setLiveUpdate(false)">回正式版</a>
+             (click)="setLiveUpdate(false)" i18n>回正式版</a>
         </li>
       </ul>
     </div>

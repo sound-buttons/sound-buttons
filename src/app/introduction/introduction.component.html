@@ -27,10 +27,12 @@
 
     <div class="notice" *ngIf="isLiveUpdate">
       <div>
-        此為待審核之預覧頁面，我會定期手動上版<br>
-        如果有需要刪修，請在<a href="https://github.com/jim60105/sound-buttons_configs/discussions/3" target="_blank">此串</a>回報<br>
-        按右上角回到正式版<br>
-        <button class="btn btn-primary" type="button" (click)="reloadConfig()">
+        <ng-container i18n>此為待審核之預覧頁面，我會定期手動上版<br>
+          按右上角回到正式<br>
+          如果有需要刪修，請向我回報</ng-container>:
+        <a href="https://github.com/jim60105/sound-buttons_configs/discussions/3" target="_blank">Github
+          Discussion</a><br>
+        <button class="btn btn-primary" type="button" (click)="reloadConfig()" i18n>
           重新整理本頁內容
         </button><br>
         {{initTime | date:'yyyy/MM/dd hh:mm:ss'}}
