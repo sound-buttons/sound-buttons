@@ -24,6 +24,7 @@ import { AudioService } from './services/audio.service';
 import { DialogService } from './services/dialog.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
+import { I18nPipe } from './i18n.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AudioControlComponent } from './audio-control/audio-control.component';
     HomePageComponent,
     UploadComponent,
     DialogComponent,
-    AudioControlComponent
+    AudioControlComponent,
+    I18nPipe
   ],
   imports: [
     BrowserModule,

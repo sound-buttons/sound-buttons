@@ -1,5 +1,5 @@
 <div class="youtubeContainer mx-auto"
-     *ngIf="!youtubeEmbedLink">來源影片預覧</div>
+     *ngIf="!youtubeEmbedLink">{{"來源影片預覧"|i18n}}</div>
 <iframe *ngIf="youtubeEmbedLink"
         [src]="youtubeEmbedLink"
         title="YouTube video player"
