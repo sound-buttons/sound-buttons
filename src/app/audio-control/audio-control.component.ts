@@ -15,20 +15,25 @@ export class AudioControlComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  OnStopClick() {
+  OnStopClick(): void {
     this.audioService.stop();
   }
 
-  OnFastClick() {
+  OnFastClick(): void {
     this.audioService.faster();
   }
 
-  OnSlowClick() {
+  OnSlowClick(): void {
     this.audioService.slower();
   }
 
-  OnRecover() {
+  OnRecover(): void {
     this.audioService.recover();
+  }
+
+  OnVolumeChange($event: any): void {
+    console.log($event);
+    this.audioService.volume(+($event.target as HTMLInputElement).value);
   }
 
 }
