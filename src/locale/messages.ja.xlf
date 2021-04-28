@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="zh" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="3631703834992643692" datatype="html">
+        <source>投稿</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7239879781763014607" datatype="html">
+        <source>待審核預覧</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2317460966768914090" datatype="html">
+        <source>回正式版</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5846014806312967356" datatype="html">
+        <source>此為待審核之預覧頁面，我會定期手動上版<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 按右上角回到正式<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 如果有需要刪修，請向我回報</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/introduction/introduction.component.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7939025442264508485" datatype="html">
+        <source> 重新整理本頁內容 </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/introduction/introduction.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7307663939497659364" datatype="html">
+        <source>來源影片預覧</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/sound-buttons/sound-buttons.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4166654475582785933" datatype="html">
+        <source>上傳表單</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4751640173476485966" datatype="html">
+        <source>Youtube來源</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7468644309565805008" datatype="html">
+        <source>Youtube影片網址，可帶t秒數</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="437197260530277563" datatype="html">
+        <source>起始秒數</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4328936025821760460" datatype="html">
+        <source>結束秒數</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4459759311085834608" datatype="html">
+        <source>音檔上限60秒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7217303975226353425" datatype="html">
+        <source>；約需3~5分鐘轉檔；</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="83648611384522259" datatype="html">
+        <source>伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3928708401388022181" datatype="html">
+        <source>「檔案上傳」、「Youtube來源」<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 至少選擇一種，也可同時填寫<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 「Youtube來源」功能需要3~5分鐘轉檔<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> 若5分鐘後預覧未出現，請改用「檔案上傳」方式</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">33,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6741644189323778926" datatype="html">
+        <source>中文名</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5997014088753724633" datatype="html">
+        <source>顯示在按鈕上的文字</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6534146359308073828" datatype="html">
+        <source>日文名</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7142085716175463275" datatype="html">
+        <source>分組</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4600793201781614262" datatype="html">
+        <source>檔案上傳</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7089816215391592975" datatype="html">
+        <source>直接上傳音檔可以節省伺服器負載，</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3797068532835692319" datatype="html">
+        <source>上限30MB</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7154384100865149247" datatype="html">
+        <source>送出</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/upload/upload.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
