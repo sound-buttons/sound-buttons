@@ -29,13 +29,17 @@ i {
   padding: 0 3px;
   align-self: center;
   cursor: pointer;
+
+  &.clickable:active {
+    transform: translateY(.1em);
+  }
 }
 
 input {
-  grid-row: 1/ span 4;
-  width: 180px;
+  grid-row: auto / span 3;
+  width: 130px;
   height: 15px;
-  margin: 0px 10px 10px -160px;
+  margin: 0px 10px 10px -110px;
   transform: rotate(270deg);
   transform-origin: right;
 }
@@ -55,7 +59,7 @@ input {
   input {
     margin: 10px;
     transform: rotate(0deg);
-    grid-column: auto/span 4;
+    grid-column: auto / span 3;
     grid-row: auto;
     width: calc(100% - 20px);
   }
