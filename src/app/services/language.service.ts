@@ -4,17 +4,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class LanguageService {
-  static BrowserLanguage = () => navigator.language || (navigator.languages || ['en'])[0];
+  /**
+   * 取得語系前兩碼
+   */
+  static BrowserLanguage = (navigator.language || navigator.languages[0]).match(/^([^-_]*)/)?.pop() ?? 'zh';
+
+  /**
+   * 傳入一個物件，並回傳此物件中的語言字串。若無對應的語言，則傳回第一個語言字串。
+   * @param obj \{ zh: "中文字", ja: "日文字" }
+   * @returns 取得的語言字串
+   */
   static GetTextFromObject(obj: any = {}): string {
-    // tslint:disable-next-line: variable-name
-    let _text;
+    let text;
     Object.keys(obj).forEach(key => {
-      if (this.BrowserLanguage().toLowerCase().includes(key)) {
-        _text = obj[key] as string;
+      if (this.BrowserLanguage.toLowerCase().includes(key)) {
+        text = obj[key] as string;
       }
     });
-    return _text ? _text : obj[Object.keys(obj)[0]];
+    return text ? text : obj[Object.keys(obj)[0]];
   }
-
-  constructor() { }
 }
