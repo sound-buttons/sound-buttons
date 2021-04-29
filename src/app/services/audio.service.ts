@@ -37,14 +37,14 @@ export class AudioService {
 
   public faster(): void {
     this.audioQueue.forEach(audio => {
-      audio.playbackRate += 0.1;
+      audio.playbackRate += 0.2;
     });
   }
 
   public slower(): void {
     this.audioQueue.forEach(audio => {
-      if (audio.playbackRate > 0.1) {
-        audio.playbackRate -= 0.1;
+      if (audio.playbackRate > 0.2) {
+        audio.playbackRate -= 0.2;
       }
     });
   }
