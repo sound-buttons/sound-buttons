@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -24,6 +24,13 @@ import { AudioService } from './services/audio.service';
 import { DialogService } from './services/dialog.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -52,6 +59,14 @@ import { AudioControlComponent } from './audio-control/audio-control.component';
       positionClass: 'toast-bottom-center',
     }),
     TypeaheadModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      defaultLanguage: 'zh'
+    }),
   ],
   providers: [
     LanguageService,

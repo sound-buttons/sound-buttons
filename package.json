@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "bootstrap": "^5.0.0-beta3",
     "bootstrap-icons": "^1.4.1",
     "ngx-bootstrap": "^6.2.0",
