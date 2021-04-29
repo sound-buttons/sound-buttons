@@ -1,37 +1,37 @@
 <div class="container" *ngIf="config">
-  <h1>{{config.fullName}} 上傳表單</h1>
+  <h1>{{config.fullName}} {{"上傳表單" | i18n}}</h1>
 
   <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit($event)">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-12">
           <div class="mb-3">
-            <label for="videoId" class="form-label">Youtube來源</label>
+            <label for="videoId" class="form-label">{{"Youtube來源" | i18n}}</label>
             <div class="mb-3 input-group">
               <input type="text" class="form-control w-25 left-border left-border-green" id="videoId"
                      formControlName="videoId"
-                     placeholder="Youtube影片網址，可帶t秒數"
+                     [placeholder]="'Youtube影片網址，可帶t秒數' | i18n"
                      (change)="OnYoutubeLinkChange($event)">
-              <span class="input-group-text">起始秒數</span>
+              <span class="input-group-text">{{"起始秒數" | i18n}}</span>
               <input type="number" class="form-control" id="start" formControlName="start"
                      (change)="OnYoutubeLinkChange($event, false)"
                      [class.is-invalid]="getFormControl('start').invalid">
-              <span class="input-group-text">結束秒數</span>
+              <span class="input-group-text">{{"結束秒數" | i18n}}</span>
               <input type="number" class="form-control" id="end" formControlName="end"
                      (change)="OnYoutubeLinkChange($event, false)"
                      [class.is-invalid]="getFormControl('end').invalid">
             </div>
             <div class="form-text">
-              <span [class.text-danger]="getFormControl('end').invalid">音檔上限60秒</span>；約需3~5分鐘轉檔；
-              <span class="text-nowrap">伺服器會在運算超過5分鐘時判定超時
-              (轉檔失敗)</span></div>
+              <span
+                    [class.text-danger]="getFormControl('end').invalid">{{"音檔上限60秒" | i18n}}</span>；{{"約需3~5分鐘轉檔" | i18n}}；
+              <span class="text-nowrap">{{"伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)" | i18n}}</span></div>
 
             <div class="youtubeContainer mx-auto"
-                 *ngIf="!youtubeEmbedLink">「檔案上傳」、「Youtube來源」<br>
-              至少選擇一種，也可同時填寫<br>
+                 *ngIf="!youtubeEmbedLink">「{{"檔案上傳" | i18n}}」、「{{"Youtube來源" | i18n}}」<br>
+              {{"至少選擇一種，也可同時填寫" | i18n}}<br>
               <br>
-              「Youtube來源」功能需要3~5分鐘轉檔<br>
-              若5分鐘後預覧未出現，請改用「檔案上傳」方式</div>
+              「{{"Youtube來源" | i18n}}」{{"功能需要3~5分鐘轉檔" | i18n}}<br>
+              {{"若5分鐘後預覧未出現，請改用" | i18n}}「{{"檔案上傳" | i18n}}」</div>
             <iframe *ngIf="youtubeEmbedLink"
                     [src]="youtubeEmbedLink"
                     title="YouTube video player"
@@ -43,20 +43,22 @@
 
         <div class="col-md-4 col-12">
           <div class="mb-3">
-            <label for="nameZH" class="form-label">中文名</label>
+            <label for="nameZH" class="form-label">{{"中文名" | i18n}}</label>
             <input type="text" class="form-control left-border left-border-red" id="nameZH" formControlName="nameZH"
-                   placeholder="顯示在按鈕上的文字"
+                   [placeholder]="'顯示在按鈕上的文字' | i18n"
                    [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
           </div>
 
           <div class="mb-3">
-            <label for="nameJP" class="form-label">日文名</label>
-            <input type="text" class="form-control" id="nameJP" formControlName="nameJP" placeholder="顯示在按鈕上的日文版文字">
+            <label for="nameJP" class="form-label">{{"日文名" | i18n}}</label>
+            <input type="text" class="form-control" id="nameJP" formControlName="nameJP"
+                   [placeholder]="'顯示在按鈕上的日文版文字' | i18n">
           </div>
 
           <div class="mb-3">
-            <label for="group" class="form-label">分組</label>
-            <input type="text" class="form-control" id="group" formControlName="group" placeholder="分組名稱"
+            <label for="group" class="form-label">{{"分組" | i18n}}</label>
+            <input type="text" class="form-control" id="group" formControlName="group"
+                   [placeholder]="'分組名稱' | i18n"
                    autocomplete="off"
                    [typeahead]="groupNames()"
                    [typeaheadScrollable]="true"
@@ -65,18 +67,18 @@
           </div>
 
           <div class="mb-3">
-            <label for="file" class="form-label">檔案上傳</label>
+            <label for="file" class="form-label">{{"檔案上傳" | i18n}}</label>
             <input type="file" accept="audio/*" class="form-control left-border left-border-green" id="file"
                    formControlName="file"
                    (change)="OnFileUpload($event)"
                    [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
-            <span class="form-text">直接上傳音檔可以節省伺服器負載，<span
-                    [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">上限30MB</span></span>
+            <span class="form-text">{{"直接上傳音檔可以節省伺服器負載，" | i18n}}<span
+                    [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">{{"上限30MB" | i18n}}</span></span>
           </div>
 
 
           <button type="submit" class="btn btn-primary"
-                  [disabled]="form.invalid">送出</button>
+                  [disabled]="form.invalid">{{"送出" | i18n}}</button>
         </div>
       </div>
     </div>
