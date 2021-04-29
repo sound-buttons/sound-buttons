@@ -8,7 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(translateService:TranslateService) {
+  constructor(translateService: TranslateService) {
+    translateService.setDefaultLang('zh');
     translateService.use(LanguageService.BrowserLanguage);
   }
 }

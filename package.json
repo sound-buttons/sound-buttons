@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "start_ssl": "ng serve --ssl",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/ja.json --clean --format json",
     "build": "ng build",
+    "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -34,6 +35,7 @@
     "@angular-devkit/build-angular": "~0.1102.5",
     "@angular/cli": "~11.2.5",
     "@angular/compiler-cli": "~11.2.6",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from './../services/dialog.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -7,7 +8,6 @@ import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload',
@@ -70,7 +70,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private http: HttpClient,
     private sanitizer: DomSanitizer,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
