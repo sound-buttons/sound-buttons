@@ -11,5 +11,6 @@ export class AppComponent {
   constructor(translateService: TranslateService) {
     translateService.setDefaultLang('zh');
     translateService.use(LanguageService.BrowserLanguage);
+    // translateService.use('ja');
   }
 }
