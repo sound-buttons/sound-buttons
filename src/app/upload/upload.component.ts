@@ -162,8 +162,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       start = parseInt(value.match(/^.*[?&]t=([^&smh]*).*$/)?.pop() ?? '0', 10);
       this.form.patchValue({ start });
       this.patchEnd();
-      // } else {
-      //   start = this.getFormControl('start').value ?? 0;
     }
 
     // 拼youtube embed連結
@@ -173,8 +171,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
 
-    // 重新計算file的驗證
+    // 重新計算驗證
     this.getFormControl('file').updateValueAndValidity();
+    this.getFormControl('start').updateValueAndValidity();
+    this.getFormControl('end').updateValueAndValidity();
   }
 
   OnSubmit($event: any): void {
