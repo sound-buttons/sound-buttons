@@ -55,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 30000,
+      disableTimeOut: true,
       positionClass: 'toast-bottom-center',
     }),
     TypeaheadModule.forRoot(),

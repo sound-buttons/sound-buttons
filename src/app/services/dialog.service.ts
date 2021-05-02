@@ -20,7 +20,6 @@ export class DialogService {
 
   toastPending(message: string, title?: string): number {
     return this.toastr.info(message, title, {
-      disableTimeOut: true,
       tapToDismiss: false
     }).toastId;
   }
