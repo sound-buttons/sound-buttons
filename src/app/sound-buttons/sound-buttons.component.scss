@@ -21,3 +21,11 @@
     transform: translateY(.3em);
   }
 }
+
+@media only screen and (min-width: 1023px) {
+  .card-body {
+    display: grid;
+    grid-auto-flow: row dense;
+    grid-template-columns: repeat(auto-fit, 1em);
+  }
+}
