@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
   api = 'https://soundbuttons.azure-api.net/sound-buttons';
+  apiWake = 'https://soundbuttons.azure-api.net/wake';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
       validators: Validators.required,
@@ -85,6 +86,9 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
       }
     });
+
+    // 因為cold start，在開啟上傳表單時直接送一個http get啟動azure function，而結果我不管它
+    this.http.get(this.apiWake).subscribe();
   }
 
   OnFileUpload($event: Event): void {
