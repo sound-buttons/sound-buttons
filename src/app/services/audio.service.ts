@@ -11,12 +11,14 @@ export class AudioService {
   public lastSource: ISource | undefined = undefined;
   public OnSourceChanged: EventEmitter<ISource | undefined> = new EventEmitter();
   private nowVolume = 1;
+  private nowSpeed = 1;
 
   constructor() { }
 
   public add(url: string, source?: ISource, volume = 1): void {
     const audio = new Audio(url);
     audio.volume = volume * this.nowVolume;
+    audio.playbackRate = this.nowSpeed;
     audio.addEventListener('ended', (event) => {
       this.audioQueue.splice(this.audioQueue.indexOf(audio), 1);
     });
@@ -36,22 +38,25 @@ export class AudioService {
   }
 
   public faster(): void {
-    this.audioQueue.forEach(audio => {
-      if (audio.playbackRate < 4) {
-        audio.playbackRate += 0.1;
-      }
-    });
+    if (this.nowSpeed < 4) {
+      this.nowSpeed += 0.1;
+      this.audioQueue.forEach(audio => {
+        audio.playbackRate = this.nowSpeed;
+      });
+    }
   }
 
   public slower(): void {
-    this.audioQueue.forEach(audio => {
-      if (audio.playbackRate > 0.5) {
-        audio.playbackRate -= 0.1;
-      }
-    });
+    if (this.nowSpeed > 0.5) {
+      this.nowSpeed -= 0.1;
+      this.audioQueue.forEach(audio => {
+        audio.playbackRate = this.nowSpeed;
+      });
+    }
   }
 
   public recover(): void {
+    this.nowSpeed = 1;
     this.audioQueue.forEach(audio => {
       audio.playbackRate = 1;
     });
