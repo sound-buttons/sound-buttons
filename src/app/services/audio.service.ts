@@ -9,7 +9,7 @@ export class AudioService {
   audioQueue: HTMLAudioElement[] = [];
 
   public lastSource: ISource | undefined = undefined;
-  public OnSourceChanged: EventEmitter<ISource> = new EventEmitter();
+  public OnSourceChanged: EventEmitter<ISource | undefined> = new EventEmitter();
   private nowVolume = 1;
 
   constructor() { }

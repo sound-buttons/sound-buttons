@@ -12,26 +12,29 @@ import { IButton, ISource } from './Buttons';
 export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
   youtubeEmbedLink: SafeResourceUrl = '';
-  youtubeEmbedSource: ISource | undefined = undefined;
 
   constructor(
     private sanitizer: DomSanitizer,
     private audioService: AudioService) { }
 
   ngOnInit(): void {
-    this.audioService.OnSourceChanged.subscribe(source => {
-      this.youtubeEmbedSource = source;
-      if (this.youtubeEmbedSource !== undefined && this.youtubeEmbedSource?.videoId && this.youtubeEmbedSource?.videoId !== 'null') {
-        const url = new URL('https://www.youtube.com/embed/' + this.youtubeEmbedSource.videoId);
-        url.searchParams.append('start', `${this.youtubeEmbedSource.start}`);
-        url.searchParams.append('end', `${this.youtubeEmbedSource.end}`);
-        // url.searchParams.append('autoplay', '1');
+    this.audioService.OnSourceChanged.subscribe((s) => this.changeYoutubeEmbed(s));
+    if (this.audioService.lastSource) {
+      this.changeYoutubeEmbed(this.audioService.lastSource);
+    }
+  }
 
-        this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
-      } else {
-        this.youtubeEmbedLink = '';
-      }
-    });
+  changeYoutubeEmbed(source: ISource | undefined): void {
+    if (source && source?.videoId && source?.videoId !== 'null') {
+      const url = new URL('https://www.youtube.com/embed/' + source.videoId);
+      url.searchParams.append('start', `${source.start}`);
+      url.searchParams.append('end', `${source.end}`);
+      // url.searchParams.append('autoplay', '1');
+
+      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
+    } else {
+      this.youtubeEmbedLink = '';
+    }
   }
 
   buttonClick($event: MouseEvent, btn: IButton): void {

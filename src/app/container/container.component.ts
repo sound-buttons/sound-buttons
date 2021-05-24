@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AudioService } from '../services/audio.service';
 import { IFullConfig, ConfigService } from '../services/config.service';
 
 @Component({
@@ -14,13 +15,20 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private audioService: AudioService
   ) { }
 
   ngOnInit(): void {
     this.configSubscription = this.configService.OnConfigChanged.subscribe(config => {
       if (config) {
         this.config = config;
+
+        if (config.introButton?.source) {
+          this.audioService.lastSource = config.introButton?.source;
+        } else {
+          this.audioService.lastSource = undefined;
+        }
       }
     });
     this.route.paramMap.subscribe(p => {
