@@ -1,7 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from './../services/dialog.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColorService } from '../services/color.service';
@@ -18,6 +18,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
   api = 'https://soundbuttons.azure-api.net/sound-buttons';
   apiWake = 'https://soundbuttons.azure-api.net/wake';
+  apiExist = 'https://soundbuttons.azure-api.net/cache-exists';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
       validators: Validators.required,
@@ -62,6 +63,8 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   youtubeEmbedLink: SafeResourceUrl = '';
   routerSubscription: Subscription | undefined;
+
+  cacheExists = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -181,6 +184,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.getFormControl('file').updateValueAndValidity();
     this.getFormControl('start').updateValueAndValidity();
     this.getFormControl('end').updateValueAndValidity();
+
+    this.http.get<boolean>(this.apiExist, { params: { id: videoId } }).subscribe((response) => {
+      this.cacheExists = response;
+    });
   }
 
   OnSubmit($event: any): void {
