@@ -44,7 +44,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       validators: [(c) => (
         c.parent?.get('videoId')?.dirty
         && ((c.parent?.get('start')?.value ?? 0) >= c.value
-          || c.value - (c.parent?.get('start')?.value ?? 0) > 60)
+          || c.value - (c.parent?.get('start')?.value ?? 0) > 180)
       ) ? { end: true }
         : null
       ]
