@@ -220,7 +220,10 @@ export class UploadComponent implements OnInit, OnDestroy {
             this.dialogService.disablePending(parseInt(toastId, 10));
 
             name = (response.body as string[])[0] ?? '';
-          } catch (e) { /* 錯誤時不一定會正確回傳我設定的body，直接抓掉 */ }
+          } catch (e) {
+            /* 錯誤時不一定會正確回傳我設定的body，直接抓掉 */
+            this.dialogService.clearPending();
+          }
 
           switch (response.status) {
             case 400:
@@ -228,7 +231,6 @@ export class UploadComponent implements OnInit, OnDestroy {
               break;
             case 0: // 由瀏覧器timeout
             case 408:
-              this.dialogService.clearPending();
               this.dialogService.toastError(`上傳${name}回應超時!!`);
               break;
             case 500:
