@@ -161,6 +161,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       videoId = value.match(/^.*[?&]v=([^&]*).*$/)?.pop() ?? '';
     }
 
+    if ('' === videoId) { return; }
+
     let start: number;
     if (parseFromLink) {
       start = parseInt(value.match(/^.*[?&]t=([^&smh]*).*$/)?.pop() ?? '0', 10);
