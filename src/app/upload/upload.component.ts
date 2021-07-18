@@ -1,13 +1,15 @@
 import { TranslateService } from '@ngx-translate/core';
-import { DialogService } from './../services/dialog.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DialogService } from './../services/dialog.service';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { skipWhile, switchMap, take } from 'rxjs/operators';
+import { ISource } from '../sound-buttons/Buttons';
 
 @Component({
   selector: 'app-upload',
@@ -212,44 +214,64 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('toastId',
       this.dialogService.toastPending(`上傳${this.getFormControl('nameZH').value}運算中`).toString());
 
-    this.http.post(this.api, formData, { observe: 'response' })
-      .subscribe(
-        (response: HttpResponse<object>) => {
-          const toastId = (response.body as string[])[1] ?? -1;
-          this.dialogService.disablePending(parseInt(toastId, 10));
+    // Long polling
+    this.http.post<IAcceptedResponse>(this.api, formData)
+      .subscribe((acceptResponse => {
+        const uri = acceptResponse.statusQueryGetUri;
+        if (!uri) {
+          this.dialogService.clearPending();
+          this.dialogService.toastError(`上傳失敗，伺服器未回應輪詢URI`);
+          return;
+        }
 
-          const name = (response.body as string[])[0] ?? '';
-          this.dialogService.toastSuccess(`上傳${name}成功`);
-          this.configService.reloadConfig();
-        },
-        (response: HttpResponse<string[]>) => {
-          let name = '';
-          try {
-            const toastId = (response.body as string[])[1] ?? -1;
-            this.dialogService.disablePending(parseInt(toastId, 10));
+        timer(10000, 20000).pipe(
+          take(30),
+          switchMap(() => {
+            return this.http.get<ILongPollingResponse>(uri, { observe: 'response' });
+          }),
+          skipWhile(response => response.body?.runtimeStatus === 'Running'),
+          take(1)
+        ).subscribe(
+          response => {
+            const toastId = response.body?.input.toastId ?? -1;
+            this.dialogService.disablePending(+toastId);
+            const name = response.body?.input.nameZH;
+            if (response.body?.output) {
+              this.dialogService.toastSuccess(`上傳${name}成功`);
+            } else {
+              this.dialogService.toastError(`上傳${name}失敗`);
+            }
+            this.configService.reloadConfig();
+          },
+          (response) => {
+            let name = '';
+            try {
+              const toastId = response.body?.input.toastId ?? -1;
+              this.dialogService.disablePending(+toastId);
 
-            name = (response.body as string[])[0] ?? '';
-          } catch (e) {
-            /* 錯誤時不一定會正確回傳我設定的body，直接抓掉 */
-            this.dialogService.clearPending();
-          }
+              name = response.body?.input.nameZH;
+            } catch (e) {
+              /* 錯誤時不一定會正確回傳設定的結果，直接抓掉 */
+              this.dialogService.clearPending();
+            }
 
-          switch (response.status) {
-            case 400:
-              this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
-              break;
-            case 0: // 由瀏覧器timeout
-            case 408:
-              this.dialogService.toastError(`上傳${name}回應超時!!`);
-              break;
-            case 500:
-              this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
-              break;
-            default:
-              this.dialogService.toastWarning(`上傳${name}回應異常!!`);
-          }
-        },
-      );
+            switch (response.status) {
+              case 400:
+                this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
+                break;
+              case 0: // 由瀏覧器timeout
+              case 408:
+                this.dialogService.toastError(`上傳${name}回應超時!!`);
+                break;
+              case 500:
+                this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
+                break;
+              default:
+                this.dialogService.toastWarning(`上傳${name}回應異常!!`);
+            }
+          },
+        );
+      }));
     this.youtubeEmbedLink = '';
 
     if (!this.file) {
@@ -276,4 +298,35 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.form.get(name) as FormControl;
 
   groupNames = () => this.configService.groupNames;
+}
+
+interface IAcceptedResponse {
+  id: string;
+  statusQueryGetUri: string;
+  sendEventPostUri: string;
+  terminatePostUri: string;
+  purgeHistoryDeleteUri: string;
+}
+
+interface ILongPollingResponse {
+  name: string;
+  instanceId: string;
+  runtimeStatus: string;
+  input: {
+    ip: string;
+    filename: string;
+    directory: string;
+    source: ISource;
+    nameZH: string;
+    nameJP: string;
+    volume: string;
+    group: string;
+    tempPath: string;
+    sasContainerToken?: any;
+    toastId: string;
+  };
+  customStatus?: any;
+  output: boolean;
+  createdTime: string;
+  lastUpdatedTime: string;
 }
