@@ -229,7 +229,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           switchMap(() => {
             return this.http.get<ILongPollingResponse>(uri, { observe: 'response' });
           }),
-          skipWhile(response => response.body?.runtimeStatus === 'Running'),
+          skipWhile(response => response.status === 202),
           take(1)
         ).subscribe(
           response => {
