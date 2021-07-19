@@ -8,7 +8,7 @@ import { DialogService } from './../services/dialog.service';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { Subscription, timer } from 'rxjs';
-import { skipWhile, switchMap, take } from 'rxjs/operators';
+import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
 
 @Component({
@@ -216,68 +216,70 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     // Long polling
     this.http.post<IAcceptedResponse>(this.api, formData)
-      .subscribe((acceptResponse => {
-        const uri = acceptResponse.statusQueryGetUri;
-        if (!uri) {
-          this.dialogService.clearPending();
-          this.dialogService.toastError(`上傳失敗，伺服器未回應輪詢URI`);
-          return;
-        }
+      .pipe(
+        concatMap(acceptResponse => {
+          const uri = acceptResponse.statusQueryGetUri;
+          if (!uri) {
+            this.dialogService.clearPending();
+            this.dialogService.toastError(`上傳失敗，伺服器未回應輪詢URI`);
+            throw Error('No recall location.');
+          }
 
-        timer(10000, 20000).pipe(
-          take(30),
-          switchMap(() => {
-            return this.http.get<ILongPollingResponse>(uri, { observe: 'response' });
-          }),
-          skipWhile(response => response.status === 202),
-          take(1)
-        ).subscribe(
-          response => {
+          return timer(10000, 20000).pipe(
+            take(30),
+            switchMap(() => {
+              return this.http.get<ILongPollingResponse>(uri, { observe: 'response' });
+            }),
+            skipWhile(response => response.status === 202),
+            take(1)
+          );
+        })
+      ).subscribe(
+        response => {
+          const toastId = response.body?.input.toastId ?? -1;
+          this.dialogService.disablePending(+toastId);
+          const name = response.body?.input.nameZH;
+          if (response.body?.output) {
+            this.dialogService.toastSuccess(`上傳${name}成功`);
+          } else {
+            this.dialogService.toastError(`上傳${name}失敗`);
+          }
+          this.configService.reloadConfig();
+        },
+        response => {
+          let name = '';
+          try {
             const toastId = response.body?.input.toastId ?? -1;
             this.dialogService.disablePending(+toastId);
-            const name = response.body?.input.nameZH;
-            if (response.body?.output) {
-              this.dialogService.toastSuccess(`上傳${name}成功`);
-            } else {
-              this.dialogService.toastError(`上傳${name}失敗`);
-            }
-            this.configService.reloadConfig();
-          },
-          (response) => {
-            let name = '';
-            try {
-              const toastId = response.body?.input.toastId ?? -1;
-              this.dialogService.disablePending(+toastId);
 
-              name = response.body?.input.nameZH;
-            } catch (e) {
-              /* 錯誤時不一定會正確回傳設定的結果，直接抓掉 */
-              this.dialogService.clearPending();
-            }
+            name = response.body?.input.nameZH;
+          } catch (e) {
+            /* 錯誤時不一定會正確回傳設定的結果，直接抓掉 */
+            this.dialogService.clearPending();
+          }
 
-            switch (response.status) {
-              case 400:
-                this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
-                break;
-              case 0: // 由瀏覧器timeout
-              case 408:
-                this.dialogService.toastError(`上傳${name}回應超時!!`);
-                break;
-              case 500:
-                this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
-                break;
-              default:
-                this.dialogService.toastWarning(`上傳${name}回應異常!!`);
-            }
-          },
-        );
-      }));
+          switch (response.status) {
+            case 400:
+              this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
+              break;
+            case 0: // 由瀏覧器timeout
+            case 408:
+              this.dialogService.toastError(`上傳${name}回應超時!!`);
+              break;
+            case 500:
+              this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
+              break;
+            default:
+              this.dialogService.toastWarning(`上傳${name}回應異常!!`);
+          }
+        },
+      );
     this.youtubeEmbedLink = '';
 
-    if (!this.file) {
+    if (!this.file && !this.cacheExists) {
       this.dialogService.showModal.emit({
         title: '提醒',
-        message: 'Youtube來源運算需要時間<br>運算至多5分鐘，請耐心等待'
+        message: '此影片尚未建立快取，有可能在下載中逾時<br>請留意！'
       });
     }
     this.form.reset();
