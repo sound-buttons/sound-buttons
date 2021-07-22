@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'zh'
     }),
+    ScullyLibModule,
   ],
   providers: [
     LanguageService,
