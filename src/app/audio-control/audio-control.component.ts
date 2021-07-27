@@ -12,7 +12,10 @@ export class AudioControlComponent implements OnInit {
     private audioService: AudioService
   ) { }
 
+  volume = 0.5;
+
   ngOnInit(): void {
+    this.audioService.volume(this.volume);
   }
 
   OnStopClick(): void {
@@ -32,7 +35,6 @@ export class AudioControlComponent implements OnInit {
   }
 
   OnVolumeChange($event: any): void {
-    console.log($event);
     this.audioService.volume(+($event.target as HTMLInputElement).value);
   }
 
