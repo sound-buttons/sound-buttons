@@ -46,6 +46,7 @@ jobs:
         ref: gh-pages
 
     - name: IPFS Publish to Pinnata
+      id: ipfs
       uses: alexanderschau/ipfs-pinning-action@v1.0.0
       with:
         path_to_add: './' #Required
@@ -53,11 +54,18 @@ jobs:
         access_token: ${{ secrets.PINATA_TOKEN }} #Required
         pin_name: 'sound-buttons'
 
-    - name: IPFS Publish to personal endpoint
-      uses: aquiladev/ipfs-action@v0.1.6
+    # - name: IPFS Publish to personal endpoint
+    #   uses: aquiladev/ipfs-action@v0.1.6
+    #   with:
+    #     path: './'
+    #     host: ${{ secrets.ENDPOINT }}
+    #     port: ${{ secrets.ENDPOINT_PORT }}
+    #     protocol: http
+    #     verbose: true
+
+    - uses: decooio/cloudflare-dnslink-action@v1.0.0
       with:
-        path: './'
-        host: ${{ secrets.ENDPOINT }}
-        port: ${{ secrets.ENDPOINT_PORT }}
-        protocol: http
-        verbose: true
+        name: "ipfs.sound-buttons.maki0419.com"
+        cid: ${{ steps.ipfs.outputs.cid }}
+        token: ${{ secrets.CLOUDFLARE_KEY }}
+        zone: ${{ secrets.CLOUDFLARE_ZONEID }}
