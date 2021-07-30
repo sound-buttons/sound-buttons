@@ -37,12 +37,12 @@ jobs:
     #     deploy_branch: gh-pages # The branch the action should deploy to.
     #     angular_dist_build_folder: dist/sound-buttons # The folder where your project is supposed to be after running ng build by the action.
 
-    - name: Publish to IPFS
-      uses: sha224/ipfs-publisher@v1
-      env:
-        DEFAULT_BRANCH: gh-pages
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        DOMAIN: ipfs.sound-buttons
-        PINATA_TOKEN: ${{ secrets.PINATA_TOKEN }}
-        CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
-        CLOUDFLARE_ZONEID: ${{ secrets.CLOUDFLARE_ZONEID }}
+    - name: IPFS Publish
+      id: IPFS
+      uses: alexanderschau/ipfs-pinning-action@v1.0.0
+      with:
+        path_to_add: '/' #Required
+        # endpoint: ${{ secrets.ENDPOINT }} #Required
+        endpoint: https://api.pinata.cloud/psa #Required
+        access_token: ${{ secrets.PINATA_TOKEN }} #Required
+        pin_name: 'sound-buttons'
