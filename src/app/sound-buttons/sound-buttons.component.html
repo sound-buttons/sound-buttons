@@ -15,7 +15,7 @@
       <button type="button" class="btn btn-primary"
               *ngFor="let btn of buttonGroup.buttons"
               (click)="buttonClick($event,btn)"
-              [style.gridColumn]="'auto/span '+ (btn.text.length +3)">
+              [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)">
         {{btn.text}}
       </button>
     </div>

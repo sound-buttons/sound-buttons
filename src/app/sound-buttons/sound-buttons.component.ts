@@ -41,4 +41,11 @@ export class SoundButtonsComponent implements OnInit {
     btn.click($event);
   }
 
+  gridColumnLen(str: string) {
+    let len: number = str.replace(/[^\x00-\xff]/g, "xx").length;
+    len = Math.ceil(len / 2) + 5;
+    len = len > 50 ? 50 : len;
+    len = len < 10 ? 10 : len;
+    return len;
+  }
 }

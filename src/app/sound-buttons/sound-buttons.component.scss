@@ -3,9 +3,10 @@
 .container {
   margin: 5px;
   overflow-y: auto;
-  height: calc(100% - 33.75vh);
+  height: calc(100% - 34.75vh);
+
   @media only screen and (max-width: 767px) {
-    margin-bottom: $footer-height;
+    margin-bottom: $footer-height+1;
   }
 }
 

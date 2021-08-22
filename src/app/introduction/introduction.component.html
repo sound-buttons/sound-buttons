@@ -17,13 +17,13 @@
     </a>
   </div>
   <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image">
-  <div class="position-relative">
+  <div class="position-relative info">
     <button type="button" class="btn btn-secondary"
             *ngIf="button && !isLiveUpdate"
             (click)="button?.click($event)">
       {{button?.text}}
     </button>
-    <p [style.whiteSpace]="'pre-wrap'" [innerHTML]="intro" *ngIf="!isLiveUpdate"></p>
+    <p [innerHTML]="intro" *ngIf="!isLiveUpdate"></p>
 
     <div class="notice" *ngIf="isLiveUpdate">
       <div>
