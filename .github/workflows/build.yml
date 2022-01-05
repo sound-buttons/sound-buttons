@@ -20,22 +20,13 @@ jobs:
     - name: Checkout submodules to latest
       run: git submodule update --init --recursive && git submodule update --recursive --remote
 
-    # This is specifically for Scully
-    - name: Build angular project and publish to github page (Scully)
-      uses: cmgriffing/scully-gh-pages-action@v9
+    - name: Build angular project and publish to github page
+      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.1
       with:
-        access-token: ${{ secrets.ACCESS_TOKEN }}
-        deploy-branch: gh-pages # The branch the action should deploy to.
-
-    # # This is for normal Angular project
-    # - name: Build angular project and publish to github page
-    #   uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.1
-    #   with:
-    #     github_access_token: ${{ secrets.ACCESS_TOKEN }} # see the Configuration section for how you can create secrets
-    #     build_configuration: production # The build environment for the app. please look configurations in your angular.json
-    #     deploy_branch: gh-pages # The branch the action should deploy to.
-    #     angular_dist_build_folder: dist/sound-buttons # The folder where your project is supposed to be after running ng build by the action.
-
+        github_access_token: ${{ secrets.ACCESS_TOKEN }} # see the Configuration section for how you can create secrets
+        build_configuration: production # The build environment for the app. please look configurations in your angular.json
+        deploy_branch: gh-pages # The branch the action should deploy to.
+        angular_dist_build_folder: dist/sound-buttons # The folder where your project is supposed to be after running ng build by the action.
   publish_to_IPFS:
     runs-on: ubuntu-latest
     needs: build

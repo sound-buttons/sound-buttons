@@ -9,9 +9,7 @@
     "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "scully": "npx scully --",
-    "scully:serve": "npx scully serve --"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -25,9 +23,6 @@
     "@angular/router": "~11.2.6",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
-    "@scullyio/init": "^1.1.4",
-    "@scullyio/ng-lib": "^1.0.0",
-    "@scullyio/scully": "^1.0.0",
     "bootstrap": "^5.0.0-beta3",
     "bootstrap-icons": "^1.4.1",
     "ngx-bootstrap": "^6.2.0",
