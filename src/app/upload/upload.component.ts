@@ -94,6 +94,9 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     // 因為cold start，在開啟上傳表單時直接送一個http get啟動azure function，而結果我不管它
     this.http.get(this.apiWake).subscribe();
+
+    // 使input type=number能使用滾輪
+    document.addEventListener('wheel', () => { });
   }
 
   OnFileUpload($event: Event): void {
