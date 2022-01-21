@@ -30,7 +30,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     group: '',
     videoId: this.fb.control(null, {
       validators: [(c) =>
-        c.parent?.get('file')?.pristine && !!Validators.required(c)
+        + (!Validators.required(c))
+          + +(!!c.parent?.get('file')?.value)
+          + +(!!c.parent?.get('clip')?.value)
+          !== 1
           ? { videoId: true }
           : null
       ]
@@ -54,8 +57,21 @@ export class UploadComponent implements OnInit, OnDestroy {
     }),
     file: this.fb.control(null, {
       validators: [(c) =>
-        c.parent?.get('videoId')?.pristine && !!Validators.required(c)
+        + (!Validators.required(c))
+          + +(!!c.parent?.get('videoId')?.value)
+          + +(!!c.parent?.get('clip')?.value)
+          !== 1
           ? { file: true }
+          : null
+      ]
+    }),
+    clip: this.fb.control(null, {
+      validators: [(c) =>
+        + (!Validators.required(c))
+          + +(!!c.parent?.get('videoId')?.value)
+          + +(!!c.parent?.get('file')?.value)
+          !== 1
+          ? { clip: true }
           : null
       ]
     })
@@ -114,6 +130,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     // 檔案驗證
     this.file = ($event.target as HTMLInputElement).files?.item(0);
 
+    this.updateValueAndValidity();
     if (!this.file) {
       clearFile();
       return;
@@ -151,10 +168,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     // Read file as an ArrayBuffer, important !
     reader.readAsArrayBuffer(this.file);
 
-    // 重新計算video相關的三格驗證
-    this.getFormControl('videoId').updateValueAndValidity();
-    this.getFormControl('start').updateValueAndValidity();
-    this.getFormControl('end').updateValueAndValidity();
+    this.updateValueAndValidity();
   }
 
   OnYoutubeLinkChange($event: Event, parseFromLink: boolean = true): void {
@@ -169,7 +183,11 @@ export class UploadComponent implements OnInit, OnDestroy {
       videoId = value.match(/^.*[?&]v=([^&]*).*$/)?.pop() ?? '';
     }
 
-    if ('' === videoId) { return; }
+    if ('' === videoId) {
+      this.youtubeEmbedLink = '';
+      this.updateValueAndValidity();
+      return;
+    }
 
     let start: number;
     if (parseFromLink) {
@@ -185,10 +203,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
 
-    // 重新計算驗證
-    this.getFormControl('file').updateValueAndValidity();
-    this.getFormControl('start').updateValueAndValidity();
-    this.getFormControl('end').updateValueAndValidity();
+    this.updateValueAndValidity();
 
     this.http.get<boolean>(this.apiExist, { params: { id: videoId } }).subscribe((response) => {
       this.cacheExists = response;
@@ -207,6 +222,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('nameJP', this.getFormControl('nameJP').value);
     formData.append('group', this.getFormControl('group').value);
     formData.append('videoId', this.getFormControl('videoId').value);
+    formData.append('clip', this.getFormControl('clip').value);
     formData.append('file', this.file ?? '');
     formData.append('directory', this.configService.name);
     formData.append('volume', '1');
@@ -293,6 +309,18 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       end: Math.ceil(parseFloat(this.getFormControl('start').value ?? '0') + this.duration)
     });
+  }
+
+  /**
+   * 重新計算驗證
+   *
+   */
+  updateValueAndValidity(): void {
+    this.getFormControl('file').updateValueAndValidity();
+    this.getFormControl('clip').updateValueAndValidity();
+    this.getFormControl('videoId').updateValueAndValidity();
+    this.getFormControl('start').updateValueAndValidity();
+    this.getFormControl('end').updateValueAndValidity();
   }
 
   ngOnDestroy(): void {
