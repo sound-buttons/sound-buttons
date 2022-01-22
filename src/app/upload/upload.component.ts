@@ -30,10 +30,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     group: '',
     videoId: this.fb.control(null, {
       validators: [(c) =>
-        + (!Validators.required(c))
+        (+ (!Validators.required(c))
           + +(!!c.parent?.get('file')?.value)
           + +(!!c.parent?.get('clip')?.value)
-          !== 1
+          !== 1) || !(!!('' + c.value).match(/(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/) || !!Validators.required(c))
           ? { videoId: true }
           : null
       ]
@@ -67,10 +67,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     }),
     clip: this.fb.control(null, {
       validators: [(c) =>
-        + (!Validators.required(c))
+        (+ (!Validators.required(c))
           + +(!!c.parent?.get('videoId')?.value)
           + +(!!c.parent?.get('file')?.value)
-          !== 1
+          !== 1) || !('' + c.value).match(/^(?:https?:\/\/(?:www.)?youtube.com\/clip\/)?[\w-]*$/)
           ? { clip: true }
           : null
       ]
@@ -174,18 +174,17 @@ export class UploadComponent implements OnInit, OnDestroy {
   OnYoutubeLinkChange($event: Event, parseFromLink: boolean = true): void {
     // 自動帶入start、end
     const value: string = this.form.get('videoId')?.value ?? '';
-
-    let videoId: string = value;
-    if (videoId.startsWith('https://youtu.be/')) {
-      videoId = value.match(/^.*\/([^?]*).*$/)?.pop() ?? '';
-    }
-    else if (videoId.startsWith('https://www.youtube.com/watch')) {
-      videoId = value.match(/^.*[?&]v=([^&]*).*$/)?.pop() ?? '';
-    }
+    const videoId = value.match(/(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/)?.pop() ?? '';
 
     if ('' === videoId) {
       this.youtubeEmbedLink = '';
       this.updateValueAndValidity();
+      this.cacheExists = false;
+      if ('' !== value) {
+        this.dialogService.toastError(
+          'Invalid Link: ' + value
+        );
+      }
       return;
     }
 
@@ -208,6 +207,18 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.http.get<boolean>(this.apiExist, { params: { id: videoId } }).subscribe((response) => {
       this.cacheExists = response;
     });
+  }
+
+  OnYoutubeClipChange($event: Event): void {
+    const clip: string = this.form.get('clip')?.value ?? '';
+
+    if (clip !== '' && !clip.match(/^(https?:\/\/(www.)?youtube.com\/clip\/)?[\w-]+$/)) {
+      this.dialogService.toastError(
+        'Invalid Clip Link: ' + clip
+      );
+    }
+    this.updateValueAndValidity();
+
   }
 
   OnSubmit($event: any): void {
