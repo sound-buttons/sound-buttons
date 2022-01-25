@@ -28,7 +28,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     }),
     nameJP: '',
     group: '',
-    videoId: this.fb.control(null, {
+    videoId: this.fb.control('', {
       validators: [(c) =>
         (+ (!Validators.required(c))
           + +(!!c.parent?.get('file')?.value)
@@ -65,7 +65,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           : null
       ]
     }),
-    clip: this.fb.control(null, {
+    clip: this.fb.control('', {
       validators: [(c) =>
         (+ (!Validators.required(c))
           + +(!!c.parent?.get('videoId')?.value)
