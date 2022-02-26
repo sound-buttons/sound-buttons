@@ -177,5 +177,7 @@ export interface ILink {
   youtube?: string;
   twitter?: string;
   facebook?: string;
+  instagram?: string;
+  discord?: string;
   other?: string;
 }
