@@ -30,6 +30,7 @@ a {
   flex-direction: row-reverse;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  min-width: fit-content;
 
   .nav-link {
     padding-left: 0.5rem;
@@ -50,10 +51,7 @@ a {
   }
 }
 
-.input-group {
-  width: 10em;
-}
-
 input{
   border: 0;
+  width: 10em;
 }
