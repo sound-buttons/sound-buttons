@@ -41,8 +41,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
       this.configService.isLiveUpdate = q.has('liveUpdate');
     });
 
-    this.displayService.OnConfigChanged.subscribe(display => {
-      this.displaySet = display;
+    this.displayService.OnConfigChanged.subscribe(p => {
+      this.displaySet = p[0];
     });
   }
 

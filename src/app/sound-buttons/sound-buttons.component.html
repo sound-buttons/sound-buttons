@@ -9,16 +9,19 @@
 
 <div class="container" role="main"
      [class.h-100]="displaySet == 1">
-  <div class="card border-primary mb-3"
+  <div
        *ngFor="let buttonGroup of buttonGroups">
-    <div class="card-header">{{buttonGroup.name}}</div>
-    <div class="card-body">
-      <button type="button" class="btn btn-primary"
-              *ngFor="let btn of buttonGroup.buttons"
-              (click)="buttonClick($event,btn)"
-              [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)">
-        {{btn.text}}
-      </button>
+    <div class="card border-primary mb-3"
+      *ngIf="(buttonGroup.buttons | buttonFilter: filterText).length != 0" [attr.test]="(buttonGroup.buttons | buttonFilter: filterText).length">
+      <div class="card-header">{{buttonGroup.name}}</div>
+      <div class="card-body">
+        <button type="button" class="btn btn-primary"
+                *ngFor="let btn of buttonGroup.buttons | buttonFilter: filterText"
+                (click)="buttonClick($event,btn)"
+                [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)">
+          {{btn.text}}
+        </button>
+      </div>
     </div>
   </div>
 </div>

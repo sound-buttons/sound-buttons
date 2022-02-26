@@ -39,7 +39,21 @@ a {
 .pulse {
   animation: pulse 1s infinite ease-in-out alternate;
 }
+
 @keyframes pulse {
-  from { transform: scale(0.8); }
-  to { transform: scale(1.2); }
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.input-group {
+  width: 10em;
+}
+
+input{
+  border: 0;
 }

@@ -15,7 +15,12 @@
     <div class="collapse navbar-collapse justify-content-end"
          *ngIf="name"
          [collapse]="isCollapsed">
-      <ul class="navbar-nav ml-auto">
+      <div class="navbar-nav ps-0 input-group">
+        <input type="text"
+                placeholder='filter'
+                (change)="setFilterText($event)">
+      </div>
+      <ul class="navbar-nav ps-0">
         <li class="nav-item">
           <a class="nav-link"
              [routerLink]="name+'/upload'">{{'投稿'|translate}}</a>

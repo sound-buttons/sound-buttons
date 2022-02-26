@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,7 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomePageComponent,
     UploadComponent,
     DialogComponent,
-    AudioControlComponent
+    AudioControlComponent,
+    ButtonFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AudioService,
     DialogService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [ButtonFilterPipe]
 })
 export class AppModule { }

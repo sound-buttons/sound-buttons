@@ -14,6 +14,7 @@ export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
   youtubeEmbedLink: SafeResourceUrl = '';
   displaySet = 0;
+  filterText = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -27,8 +28,9 @@ export class SoundButtonsComponent implements OnInit {
       this.changeYoutubeEmbed(this.audioService.lastSource);
     }
 
-    this.displayService.OnConfigChanged.subscribe(display => {
-      this.displaySet = display;
+    this.displayService.OnConfigChanged.subscribe(p => {
+      this.displaySet = p[0];
+      this.filterText = p[1];
     });
   }
 

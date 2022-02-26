@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fullName = '';
   isCollapsed = true;
   configSubscription: Subscription | undefined;
+  filterText = '';
 
   constructor(
     private configService: ConfigService,
@@ -38,8 +39,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  expand(flag: boolean): void{
+  expand(flag: boolean): void {
     this.displayService.setDisplay(+flag);
+  }
+
+  setFilterText($event: Event): void {
+    this.displayService.setFilterText(($event.target as HTMLInputElement).value ?? '');
   }
 
   ngOnDestroy(): void {
