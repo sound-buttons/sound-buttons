@@ -25,10 +25,20 @@
              *ngIf="router.url.includes('upload')"
              (click)="setLiveUpdate(true)">{{'待審核預覧'|translate}}</a>
         </li>
-        <li class=" nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white"
              *ngIf="router.url.includes('liveUpdate')"
              (click)="setLiveUpdate(false)">{{'回正式版'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             *ngIf="displayService.getDisplay() == 0"
+             (click)="expand(true)"><i class="bi bi-arrows-angle-expand"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             *ngIf="displayService.getDisplay() == 1"
+             (click)="expand(false)"><i class="bi bi-arrows-angle-contract"></i></a>
         </li>
       </ul>
     </div>

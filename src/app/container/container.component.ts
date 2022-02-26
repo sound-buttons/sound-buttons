@@ -1,3 +1,4 @@
+import { DisplayService } from './../services/display.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,11 +13,13 @@ import { IFullConfig, ConfigService } from '../services/config.service';
 export class ContainerComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
   configSubscription: Subscription | undefined;
+  displaySet = 0;
 
   constructor(
     private route: ActivatedRoute,
     private configService: ConfigService,
-    private audioService: AudioService
+    private audioService: AudioService,
+    private displayService: DisplayService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +39,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     });
     this.route.queryParamMap.subscribe(q => {
       this.configService.isLiveUpdate = q.has('liveUpdate');
+    });
+
+    this.displayService.OnConfigChanged.subscribe(display => {
+      this.displaySet = display;
     });
   }
 

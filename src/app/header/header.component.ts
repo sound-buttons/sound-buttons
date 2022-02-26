@@ -1,3 +1,4 @@
+import { DisplayService } from './../services/display.service';
 import { ConfigService } from './../services/config.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private configService: ConfigService,
+    public displayService: DisplayService,
     public router: Router) { }
 
   ngOnInit(): void {
@@ -34,6 +36,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/', this.name]);
     }
+  }
+
+  expand(flag: boolean): void{
+    this.displayService.setDisplay(+flag);
   }
 
   ngOnDestroy(): void {
