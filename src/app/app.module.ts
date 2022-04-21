@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { Inject, InjectionToken, NgModule } from '@angular/core';
+import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,9 @@ import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
+declare let gtag: Function;
 
 @NgModule({
   declarations: [
@@ -71,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   providers: [
+    { provide: EnvironmentToken, useValue: environment },
     LanguageService,
     ConfigService,
     ColorService,
@@ -80,4 +85,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [ButtonFilterPipe]
 })
-export class AppModule { }
+
+export class AppModule {
+  constructor(@Inject(EnvironmentToken) private env: any) {
+    gtag('config', this.env.google.GA_TRACKING_ID);
+  }
+}
