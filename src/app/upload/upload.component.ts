@@ -136,11 +136,15 @@ export class UploadComponent implements OnInit, OnDestroy {
       return;
     }
     if ((this.file.size && this.file?.size > 30000000)) {
-      clearFile('音檔上限30MB!!');
+      this.translate.get('音檔上限', { value: '30MB' }).subscribe((res: string) => {
+        clearFile(`${res}!!`);
+      });
       return;
     }
     if (!this.file.type.startsWith('audio')) {
-      clearFile('僅限上傳音訊檔!!');
+      this.translate.get('僅限上傳音訊檔案').subscribe((res: string) => {
+        clearFile(`${res}!!`);
+      });
       return;
     }
 
@@ -223,7 +227,9 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   OnSubmit($event: any): void {
     if (this.form.invalid) {
-      this.dialogService.toastError('請填入必填欄位！');
+      this.translate.get('請填入必填欄位').subscribe((res: string) => {
+        this.dialogService.toastError(`${res}!`);
+      });
       return;
     }
 
@@ -242,7 +248,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('end', this.getFormControl('end').value);
 
     formData.append('toastId',
-      this.dialogService.toastPending(`上傳${this.getFormControl('nameZH').value}運算中`).toString());
+      this.dialogService.toastPending(`Uploading ${this.getFormControl('nameZH').value} ...`).toString());
 
     // Long polling
     this.http.post<IAcceptedResponse>(this.api, formData)
@@ -251,7 +257,9 @@ export class UploadComponent implements OnInit, OnDestroy {
           const uri = acceptResponse.statusQueryGetUri;
           if (!uri) {
             this.dialogService.clearPending();
-            this.dialogService.toastError(`上傳失敗，伺服器未回應輪詢URI`);
+            this.translate.get('上傳失敗，伺服器未回應輪詢URI').subscribe((res: string) => {
+              this.dialogService.toastError(res);
+            });
             throw Error('No recall location.');
           }
 
@@ -270,9 +278,13 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.dialogService.disablePending(+toastId);
           const name = response.body?.input.nameZH;
           if (response.body?.output) {
-            this.dialogService.toastSuccess(`上傳${name}成功`);
+            this.translate.get('上傳成功').subscribe((res: string) => {
+              this.dialogService.toastSuccess(`${name} ${res}`);
+            });
           } else {
-            this.dialogService.toastError(`上傳${name}失敗`);
+            this.translate.get('上傳失敗').subscribe((res: string) => {
+              this.dialogService.toastError(`${name} ${res}`);
+            });
           }
           this.configService.reloadConfig();
         },
@@ -290,26 +302,43 @@ export class UploadComponent implements OnInit, OnDestroy {
 
           switch (response.status) {
             case 400:
-              this.dialogService.toastError(`上傳${name}失敗，欄位錯誤!!`);
+              this.translate.get('上傳失敗，欄位錯誤').subscribe((res: string) => {
+                this.dialogService.toastError(`${name} ${res}`);
+              });
               break;
             case 0: // 由瀏覧器timeout
             case 408:
-              this.dialogService.toastError(`上傳${name}回應超時!!`);
+              this.translate.get('上傳回應超時').subscribe((res: string) => {
+                this.dialogService.toastError(`${name} ${res}`);
+              });
               break;
             case 500:
-              this.dialogService.toastError(`上傳${name}失敗，伺服器錯誤!!`);
+              this.translate.get('上傳失敗，伺服器錯誤').subscribe((res: string) => {
+                this.dialogService.toastError(`${name} ${res}`);
+              });
               break;
             default:
-              this.dialogService.toastWarning(`上傳${name}回應異常!!`);
+              this.translate.get('上傳回應異常').subscribe((res: string) => {
+                this.dialogService.toastWarning(`${name} ${res}`);
+              });
           }
         },
       );
     this.youtubeEmbedLink = '';
 
-    if (!this.file && !this.cacheExists) {
-      this.dialogService.showModal.emit({
-        title: '提醒',
-        message: '此影片尚未建立快取，有可能在下載中逾時<br>請留意！'
+    if (this.getFormControl('clip').value) {
+      this.translate.get('剪輯片段在伺服器端才能檢查快取，若快取不存在有可能在下載中逾時').subscribe((res: string) => {
+        this.dialogService.showModal.emit({
+          title: 'Notice',
+          message: res
+        });
+      });
+    } else if (!this.file && !this.cacheExists) {
+      this.translate.get('此影片尚未建立快取，有可能在下載中逾時').subscribe((res: string) => {
+        this.dialogService.showModal.emit({
+          title: 'Notice',
+          message: res
+        });
       });
     }
     this.form.reset();
