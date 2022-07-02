@@ -18,6 +18,10 @@ export class Button implements IButton {
       // tslint:disable-next-line: variable-name
       this.text = LanguageService.GetTextFromObject(this.text);
     }
+
+    if (!this.SASToken) {
+      this.SASToken = '';
+    }
   }
 
   // tslint:disable-next-line: variable-name
