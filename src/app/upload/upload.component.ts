@@ -1,7 +1,13 @@
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  InjectionToken,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DialogService } from './../services/dialog.service';
@@ -10,7 +16,7 @@ import { ConfigService, IFullConfig } from '../services/config.service';
 import { Subscription, timer } from 'rxjs';
 import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
-
+export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -18,9 +24,10 @@ import { ISource } from '../sound-buttons/Buttons';
 })
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
-  api = 'https://soundbuttons.azure-api.net/sound-buttons';
-  apiWake = 'https://soundbuttons.azure-api.net/wake';
-  apiExist = 'https://soundbuttons.azure-api.net/cache-exists';
+  apibase = '';
+  api = '';
+  apiWake = '';
+  apiExist = '';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
       validators: Validators.required,
@@ -93,8 +100,14 @@ export class UploadComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private dialogService: DialogService,
-    public translate: TranslateService
-  ) { }
+    public translate: TranslateService,
+    @Inject(EnvironmentToken) private env: any
+  ) {
+    this.apibase = this.env.api;
+    this.api = this.apibase + '/sound-buttons';
+    this.apiWake = this.apibase + '/wake';
+    this.apiExist = this.apibase + '/cache-exists';
+  }
 
   ngOnInit(): void {
     const name = this.route.snapshot.paramMap.get('name') ?? 'template';
