@@ -8,8 +8,6 @@ export class DisplayService {
   private displaySet = 0;
   private filterText = '';
 
-  constructor() {}
-
   public setDisplay(i: number): void {
     this.displaySet = i;
     this.OnConfigChanged.emit([this.displaySet, this.filterText]);

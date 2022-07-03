@@ -15,6 +15,7 @@ export class LanguageService {
    * @param obj \{ zh: "中文字", ja: "日文字" }
    * @returns 取得的語言字串
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static GetTextFromObject(obj: any = {}): string {
     let text;
     Object.keys(obj).forEach((key) => {

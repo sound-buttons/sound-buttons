@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NavigationEnd, Router, Event, RouterEvent } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-declare let gtag: (arg0: string, arg1: string, arg2: { page_path: string }) => void;
+declare let gtag: (...arg: unknown[]) => void;
 
 @Component({
   selector: 'app-root',

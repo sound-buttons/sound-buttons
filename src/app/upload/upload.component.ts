@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +20,7 @@ export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
 })
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
-  apibase = '';
+  apiBase = '';
   api = '';
   apiWake = '';
   apiExist = '';
@@ -38,7 +40,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             1 ||
           !(
             !!('' + c.value).match(
-              /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/
+              /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/
             ) || !!Validators.required(c)
           )
             ? { videoId: true }
@@ -101,12 +103,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private dialogService: DialogService,
     public translate: TranslateService,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
-    this.apibase = this.env.api;
-    this.api = this.apibase + '/sound-buttons';
-    this.apiWake = this.apibase + '/wake';
-    this.apiExist = this.apibase + '/cache-exists';
+    this.apiBase = this.env.api;
+    this.api = this.apiBase + '/sound-buttons';
+    this.apiWake = this.apiBase + '/wake';
+    this.apiExist = this.apiBase + '/cache-exists';
   }
 
   ngOnInit(): void {
@@ -125,7 +128,9 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.http.get(this.apiWake).subscribe();
 
     // 使input type=number能使用滾輪
-    document.addEventListener('wheel', () => {});
+    document.addEventListener('wheel', () => {
+      return;
+    });
   }
 
   OnFileUpload($event: Event): void {
@@ -192,7 +197,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     const videoId =
       value
         .match(
-          /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/
+          /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/
         )
         ?.pop() ?? '';
 
@@ -236,7 +241,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.updateValueAndValidity();
   }
 
-  OnSubmit($event: any): void {
+  OnSubmit($event: Event): void {
     if (this.form.invalid) {
       this.translate.get('請填入必填欄位').subscribe((res: string) => {
         this.dialogService.toastError(`${res}!`);
@@ -417,10 +422,10 @@ interface ILongPollingResponse {
     volume: string;
     group: string;
     tempPath: string;
-    sasContainerToken?: any;
+    sasContainerToken?: never;
     toastId: string;
   };
-  customStatus?: any;
+  customStatus?: never;
   output: boolean;
   createdTime: string;
   lastUpdatedTime: string;

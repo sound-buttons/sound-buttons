@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ColorService } from '../services/color.service';

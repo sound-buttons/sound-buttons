@@ -23,7 +23,7 @@ export class ConfigService {
   public get isLiveUpdate(): boolean {
     return this._isLiveUpdate;
   }
-  public set isLiveUpdate(value) {
+  public set isLiveUpdate(value: boolean) {
     this._isLiveUpdate = value;
     this.reloadConfig();
   }
@@ -33,7 +33,7 @@ export class ConfigService {
   public get name(): string {
     return this._name;
   }
-  public set name(value) {
+  public set name(value: string) {
     this._name = value;
     this.reloadConfig();
   }
@@ -178,12 +178,12 @@ export class ConfigService {
 export interface IFullConfig extends IConfig {
   buttonGroups?: IButtonGroup[];
   link?: ILink;
-  intro: string | any;
+  intro: string | never;
   introButton?: IButton;
 }
 
 export interface IConfig {
-  name: string | any;
+  name: string | never;
   fullName: string;
   imgSrc: string;
   fullConfigURL: string;

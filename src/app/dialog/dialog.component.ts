@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { DialogService } from './../services/dialog.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -9,7 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('tModel', { static: true }) modal!: TemplateRef<any>;
+  @ViewChild('tModel', { static: true }) modal!: TemplateRef<unknown>;
   modalRef!: BsModalRef;
   modalData = {
     title: '',

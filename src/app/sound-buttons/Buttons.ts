@@ -7,7 +7,7 @@ export class Button implements IButton {
   constructor(
     private audioService: AudioService,
     public filename: string,
-    public text: string | any = filename,
+    public text: string | never = filename,
     public baseRoute = defaultBaseRoute,
     public volume = 1,
     public source?: ISource,
@@ -25,7 +25,7 @@ export class Button implements IButton {
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
-  click = ($event: MouseEvent) => {
+  click = (): void => {
     if (this.baseRoute.slice(-1) !== '/') {
       this.baseRoute += '/';
     }
@@ -39,7 +39,7 @@ export class Button implements IButton {
 
 export interface IButton {
   filename: string;
-  text: string | any;
+  text: string | never;
   baseRoute: string;
   volume: number;
   source?: ISource;

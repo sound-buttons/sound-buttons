@@ -56,6 +56,7 @@ export class SoundButtonsComponent implements OnInit {
   }
 
   gridColumnLen(str: string): number {
+    // eslint-disable-next-line no-control-regex
     let len: number = str.replace(/[^\x00-\xff]/g, 'xx').length;
     len = Math.ceil(len / 2) + 5;
     len = len > 50 ? 50 : len;

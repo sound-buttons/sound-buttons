@@ -31,7 +31,7 @@ export class AudioControlComponent implements OnInit {
     this.audioService.recover();
   }
 
-  OnVolumeChange($event: any): void {
+  OnVolumeChange($event: Event): void {
     this.audioService.volume(+($event.target as HTMLInputElement).value);
   }
 }

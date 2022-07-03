@@ -12,13 +12,11 @@ export class AudioService {
   private nowVolume = 1;
   private nowSpeed = 1;
 
-  constructor() {}
-
   public add(url: string, source?: ISource, volume = 1): void {
     const audio = new Audio(url);
     audio.volume = volume * this.nowVolume;
     audio.playbackRate = this.nowSpeed;
-    audio.addEventListener('ended', (event) => {
+    audio.addEventListener('ended', () => {
       this.audioQueue.splice(this.audioQueue.indexOf(audio), 1);
     });
     this.audioQueue.push(audio);
