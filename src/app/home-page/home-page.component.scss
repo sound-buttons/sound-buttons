@@ -14,21 +14,16 @@ h2 {
   left: 0;
   line-height: 140%;
   transition-property: font-size;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   z-index: 5;
-  text-shadow:
-    1px 1px 1px $white,
-    0 0 5px $white,
-    0 0 10px $white,
-    0 0 15px $white,
-    0 0 40px $white,
+  text-shadow: 1px 1px 1px $white, 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 40px $white,
     0 0 70px $white;
 }
 
 img {
   width: 80%;
   transition-property: width;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 }
 
 .outer {
@@ -87,14 +82,13 @@ img {
   //   grid-column-gap: 1vw;
   //   margin: 0 1.5vw 0 5.5vw;
   // }
-
 }
 
 .chara-card {
   transform-origin: top left;
   z-index: 1;
   transition-property: z-index, top;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   padding: 5%;
   cursor: pointer;
 
@@ -122,7 +116,6 @@ img {
     margin: 0;
     padding: 0 0 10% 0;
   }
-
 }
 
 .details {
@@ -137,7 +130,7 @@ img {
   filter: drop-shadow(2px 6px 3px rgba(0, 0, 0, 0.4));
   transform: rotate(0deg) translate(0, 0);
   transition-property: transform;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   overflow: hidden;
   display: grid;
   justify-content: center;
@@ -152,7 +145,7 @@ img {
   .background {
     background-color: var(--bs-secondary);
     opacity: 0.1;
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;

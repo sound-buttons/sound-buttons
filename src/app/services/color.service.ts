@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ColorService {
-
   public defaultColor: IColor = {
     primary: '#000000',
-    secondary: '#777777'
+    secondary: '#777777',
   };
 
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _color: IColor = this.defaultColor;
 
-  constructor() { }
+  constructor() {}
 
   public set color(v: IColor) {
     this._color = v;
@@ -34,7 +33,6 @@ export class ColorService {
   resetColor() {
     this.color = this.defaultColor;
   }
-
 }
 
 export interface IColor {

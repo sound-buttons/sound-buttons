@@ -4,5 +4,12 @@
   <i class="bi bi-arrow-repeat clickable" (click)="OnRecover()"></i>
   <i class="bi bi-skip-backward-fill clickable" (click)="OnSlowClick()"></i>
   <i class="bi bi-volume-up"></i>
-  <input type="range" min="0" max="1" step="0.01" [value]="volume" (change)="OnVolumeChange($event)">
+  <input
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    [value]="volume"
+    (change)="OnVolumeChange($event)"
+  />
 </div>

@@ -8,7 +8,7 @@ import { IFullConfig, ConfigService } from '../services/config.service';
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss']
+  styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
@@ -20,10 +20,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private audioService: AudioService,
     private displayService: DisplayService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.configSubscription = this.configService.OnConfigChanged.subscribe(config => {
+    this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
       if (config) {
         this.config = config;
 
@@ -34,14 +34,14 @@ export class ContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.route.paramMap.subscribe(p => {
+    this.route.paramMap.subscribe((p) => {
       this.configService.name = p.get('name') ?? 'template';
     });
-    this.route.queryParamMap.subscribe(q => {
+    this.route.queryParamMap.subscribe((q) => {
       this.configService.isLiveUpdate = q.has('liveUpdate');
     });
 
-    this.displayService.OnConfigChanged.subscribe(p => {
+    this.displayService.OnConfigChanged.subscribe((p) => {
       this.displaySet = p[0];
     });
   }

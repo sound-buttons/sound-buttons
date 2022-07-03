@@ -2,10 +2,9 @@ import { ISource } from './../sound-buttons/Buttons';
 import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AudioService {
-
   audioQueue: HTMLAudioElement[] = [];
 
   public lastSource: ISource | undefined = undefined;
@@ -13,7 +12,7 @@ export class AudioService {
   private nowVolume = 1;
   private nowSpeed = 1;
 
-  constructor() { }
+  constructor() {}
 
   public add(url: string, source?: ISource, volume = 1): void {
     const audio = new Audio(url);
@@ -30,7 +29,7 @@ export class AudioService {
   }
 
   public stop(): void {
-    this.audioQueue.forEach(audio => {
+    this.audioQueue.forEach((audio) => {
       audio.pause();
       audio.remove();
     });
@@ -40,7 +39,7 @@ export class AudioService {
   public faster(): void {
     if (this.nowSpeed < 4) {
       this.nowSpeed += 0.1;
-      this.audioQueue.forEach(audio => {
+      this.audioQueue.forEach((audio) => {
         audio.playbackRate = this.nowSpeed;
       });
     }
@@ -49,7 +48,7 @@ export class AudioService {
   public slower(): void {
     if (this.nowSpeed > 0.5) {
       this.nowSpeed -= 0.1;
-      this.audioQueue.forEach(audio => {
+      this.audioQueue.forEach((audio) => {
         audio.playbackRate = this.nowSpeed;
       });
     }
@@ -57,7 +56,7 @@ export class AudioService {
 
   public recover(): void {
     this.nowSpeed = 1;
-    this.audioQueue.forEach(audio => {
+    this.audioQueue.forEach((audio) => {
       audio.playbackRate = 1;
     });
   }
@@ -68,11 +67,10 @@ export class AudioService {
       volume = 0.0001;
     }
 
-    this.audioQueue.forEach(audio => {
+    this.audioQueue.forEach((audio) => {
       audio.volume /= this.nowVolume;
       audio.volume *= volume;
     });
     this.nowVolume = volume;
   }
-
 }

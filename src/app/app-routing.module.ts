@@ -9,14 +9,14 @@ const routes: Routes = [
   {
     path: ':name',
     children: [
-      { path: '', component: ContainerComponent, pathMatch: 'full'  },
-      { path: 'upload', component: UploadComponent }
-    ]
+      { path: '', component: ContainerComponent, pathMatch: 'full' },
+      { path: 'upload', component: UploadComponent },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

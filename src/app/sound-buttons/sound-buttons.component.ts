@@ -8,7 +8,7 @@ import { IButton, ISource } from './Buttons';
 @Component({
   selector: 'app-sound-buttons',
   templateUrl: './sound-buttons.component.html',
-  styleUrls: ['./sound-buttons.component.scss']
+  styleUrls: ['./sound-buttons.component.scss'],
 })
 export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
@@ -20,7 +20,7 @@ export class SoundButtonsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private audioService: AudioService,
     private displayService: DisplayService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.audioService.OnSourceChanged.subscribe((s) => this.changeYoutubeEmbed(s));
@@ -28,7 +28,7 @@ export class SoundButtonsComponent implements OnInit {
       this.changeYoutubeEmbed(this.audioService.lastSource);
     }
 
-    this.displayService.OnConfigChanged.subscribe(p => {
+    this.displayService.OnConfigChanged.subscribe((p) => {
       this.displaySet = p[0];
       this.filterText = p[1];
     });
@@ -40,6 +40,10 @@ export class SoundButtonsComponent implements OnInit {
       url.searchParams.append('start', `${source.start}`);
       url.searchParams.append('end', `${source.end}`);
       // url.searchParams.append('autoplay', '1');
+      // url.searchParams.append('playsinline', '1');
+      // url.searchParams.append('enablejsapi', '1');
+      // url.searchParams.append('origin', 'https://www.youtube.com');
+      // url.searchParams.append('widgetid', '1');
 
       this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
     } else {

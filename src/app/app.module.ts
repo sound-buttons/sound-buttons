@@ -49,7 +49,7 @@ declare let gtag: Function;
     UploadComponent,
     DialogComponent,
     AudioControlComponent,
-    ButtonFilterPipe
+    ButtonFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -69,9 +69,9 @@ declare let gtag: Function;
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
-      defaultLanguage: 'zh'
+      defaultLanguage: 'zh',
     }),
   ],
   providers: [
@@ -80,12 +80,11 @@ declare let gtag: Function;
     ConfigService,
     ColorService,
     AudioService,
-    DialogService
+    DialogService,
   ],
   bootstrap: [AppComponent],
-  exports: [ButtonFilterPipe]
+  exports: [ButtonFilterPipe],
 })
-
 export class AppModule {
   constructor(@Inject(EnvironmentToken) private env: any) {
     gtag('config', this.env.google.GA_TRACKING_ID);

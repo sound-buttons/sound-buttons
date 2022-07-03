@@ -6,15 +6,12 @@ import { ConfigService, IConfig } from '../services/config.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
   public configs$!: Observable<IConfig[]>;
 
-  constructor(
-    private configService: ConfigService,
-    private colorService: ColorService
-  ) { }
+  constructor(private configService: ConfigService, private colorService: ColorService) {}
 
   ngOnInit(): void {
     this.configs$ = this.configService.getBriefConfig();
@@ -33,4 +30,3 @@ export class HomePageComponent implements OnInit {
     this.colorService.color = this.colorService.defaultColor;
   }
 }
-
