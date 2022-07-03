@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, InjectionToken, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -98,7 +98,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     private router: Router,
     private configService: ConfigService,
     private colorService: ColorService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private dialogService: DialogService,
@@ -395,7 +395,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.routerSubscription?.unsubscribe();
   }
 
-  public getFormControl = (name: string): FormControl => this.form.get(name) as FormControl;
+  public getFormControl = (name: string): UntypedFormControl => this.form.get(name) as UntypedFormControl;
 
   groupNames = () => this.configService.groupNames;
 }
