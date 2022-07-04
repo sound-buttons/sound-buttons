@@ -1,9 +1,10 @@
 import { DisplayService } from './../services/display.service';
 import { AudioService } from './../services/audio.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton, ISource } from './Buttons';
+import { EnvironmentToken } from '../app.module';
 
 @Component({
   selector: 'app-sound-buttons',
@@ -15,12 +16,17 @@ export class SoundButtonsComponent implements OnInit {
   youtubeEmbedLink: SafeResourceUrl = '';
   displaySet = 0;
   filterText = '';
+  origin = '';
 
   constructor(
     private sanitizer: DomSanitizer,
     private audioService: AudioService,
-    private displayService: DisplayService
-  ) {}
+    private displayService: DisplayService,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Inject(EnvironmentToken) private env: any
+  ) {
+    this.origin = this.env.origin;
+  }
 
   ngOnInit(): void {
     this.audioService.OnSourceChanged.subscribe((s) => this.changeYoutubeEmbed(s));
@@ -39,11 +45,16 @@ export class SoundButtonsComponent implements OnInit {
       const url = new URL('https://www.youtube.com/embed/' + source.videoId);
       url.searchParams.append('start', `${source.start}`);
       url.searchParams.append('end', `${source.end}`);
-      // url.searchParams.append('autoplay', '1');
-      // url.searchParams.append('playsinline', '1');
-      // url.searchParams.append('enablejsapi', '1');
-      // url.searchParams.append('origin', 'https://www.youtube.com');
-      // url.searchParams.append('widgetid', '1');
+      url.searchParams.append('playsinline', '1');
+      url.searchParams.append('enablejsapi', '1');
+      url.searchParams.append('origin', this.origin);
+      url.searchParams.append('widget_referrer', this.origin);
+      url.searchParams.append('widgetid', '1');
+      url.searchParams.append('iv_load_policy', '3');
+      url.searchParams.append('controls', '0');
+      url.searchParams.append('fs', '0');
+      url.searchParams.append('rel', '0');
+      url.searchParams.append('autoplay', '0');
 
       this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
     } else {

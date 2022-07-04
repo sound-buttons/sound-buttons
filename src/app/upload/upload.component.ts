@@ -221,13 +221,20 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
 
     // 拼youtube embed連結
+    // https://developers.google.com/youtube/player_parameters
     const url = new URL('https://www.youtube.com/embed/' + videoId);
     url.searchParams.append('start', `${this.getFormControl('start').value ?? 0}`);
     url.searchParams.append('end', `${this.getFormControl('end').value ?? 0}`);
     url.searchParams.append('playsinline', '1');
     url.searchParams.append('enablejsapi', '1');
     url.searchParams.append('origin', this.origin);
+    url.searchParams.append('widget_referrer', this.origin);
     url.searchParams.append('widgetid', '1');
+    url.searchParams.append('iv_load_policy', '3');
+    url.searchParams.append('controls', '0');
+    url.searchParams.append('fs', '0');
+    url.searchParams.append('rel', '0');
+    url.searchParams.append('autoplay', '1');
 
     this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
 
