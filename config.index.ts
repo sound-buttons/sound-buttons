@@ -7,7 +7,7 @@ const envConfigFile = `export const environment = {
    google: {
       GA_TRACKING_ID: '${process.env.GA_TRACKING_ID}'
    },
-   api: '${process.env.API} ?? 'https://soundbuttons.azure-api.net',
+   api: '${process.env.API ?? 'https://soundbuttons.azure-api.net'}',
 };
 `;
 

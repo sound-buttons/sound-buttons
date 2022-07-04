@@ -20,7 +20,7 @@
     margin-bottom: 10%;
     width: 80%;
     transition-property: margin, width;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
 
     &:hover {
       width: 100%;
@@ -34,17 +34,17 @@
   top: -2.5em;
 
   cursor: pointer;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   border-color: var(--bs-primary);
   border-width: 1px;
 
   &:active {
     // background-color: var(--bs-secondary);
-    transform: translateY(.3em);
+    transform: translateY(0.3em);
   }
 }
 
-.notice{
+.notice {
   display: block;
   width: 60vh;
   max-width: 100%;
@@ -59,18 +59,18 @@
   color: $white;
   text-align: center;
 
-  .btn{
+  .btn {
     position: unset;
     top: unset;
     margin-top: 2vh;
   }
 }
 
-.info{
+.info {
   padding: 0 1rem;
 }
 
-p{
+p {
   white-space: pre-wrap;
   padding-top: 1rem;
 }

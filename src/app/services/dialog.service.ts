@@ -2,12 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DialogService {
-  constructor(
-    private toastr: ToastrService,
-  ) { }
+  constructor(private toastr: ToastrService) {}
 
   showModal = new EventEmitter();
   // confirmModal = new EventEmitter();
@@ -37,5 +35,4 @@ export class DialogService {
   clearPending(): void {
     this.toastr.clear();
   }
-
 }

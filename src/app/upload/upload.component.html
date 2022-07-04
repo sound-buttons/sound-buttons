@@ -1,122 +1,205 @@
 <div class="container" *ngIf="config">
-  <h1>{{config.fullName}} {{'上傳表單'|translate}}</h1>
+  <h1>{{ config.fullName }} {{ '上傳表單' | translate }}</h1>
 
   <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit($event)">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-12">
           <div class="mb-3">
-            <label for="videoId" class="form-label">{{'Youtube來源'|translate}}
-              <span title="Is video cached?"
-                    *ngIf="getFormControl('videoId').valid && !!getFormControl('videoId').value"
-                    [class.text-danger]="!this.cacheExists"
-                    [class.text-success]="this.cacheExists"><i class="bi bi-circle-fill"></i></span>
+            <label for="videoId" class="form-label"
+              >{{ 'Youtube來源' | translate }}
+              <span
+                title="Is video cached?"
+                *ngIf="getFormControl('videoId').valid && !!getFormControl('videoId').value"
+                [class.text-danger]="!this.cacheExists"
+                [class.text-success]="this.cacheExists"
+                ><i class="bi bi-circle-fill"></i
+              ></span>
             </label>
             <div class="input-group">
-              <span class="input-group-text">{{'Youtube分享連結'|translate}}</span>
-              <input type="text" class="form-control w-25 left-border left-border-green" id="videoId"
-                     formControlName="videoId"
-                     [attr.placeholder]="'https://youtu.be/xxxxxxxxxxx?t=1234'"
-                     (change)="OnYoutubeLinkChange($event)">
-              <span class="input-group-text">{{'起始秒數'|translate}}</span>
-              <input type="number" class="form-control" id="start" formControlName="start"
-                     (change)="OnYoutubeLinkChange($event, false)"
-                     [class.is-invalid]="getFormControl('start').invalid">
-              <span class="input-group-text">{{'結束秒數'|translate}}</span>
-              <input type="number" class="form-control" id="end" formControlName="end"
-                     (change)="OnYoutubeLinkChange($event, false)"
-                     [class.is-invalid]="getFormControl('end').invalid">
-              <button class="btn btn-primary" type="button" tabindex="-1"
-                      (click)="OnYoutubeLinkChange($event, false)"><i class="bi bi-arrow-counterclockwise"></i></button>
+              <span class="input-group-text">{{ 'Youtube分享連結' | translate }}</span>
+              <input
+                type="text"
+                class="form-control w-25 left-border left-border-green"
+                id="videoId"
+                formControlName="videoId"
+                [attr.placeholder]="'https://youtu.be/xxxxxxxxxxx?t=1234'"
+                (change)="OnYoutubeLinkChange($event)"
+              />
+              <span class="input-group-text">{{ '起始秒數' | translate }}</span>
+              <input
+                type="number"
+                class="form-control"
+                id="start"
+                formControlName="start"
+                (change)="OnYoutubeLinkChange($event, false)"
+                [class.is-invalid]="getFormControl('start').invalid"
+              />
+              <span class="input-group-text">{{ '結束秒數' | translate }}</span>
+              <input
+                type="number"
+                class="form-control"
+                id="end"
+                formControlName="end"
+                (change)="OnYoutubeLinkChange($event, false)"
+                [class.is-invalid]="getFormControl('end').invalid"
+              />
+              <button
+                class="btn btn-primary"
+                type="button"
+                tabindex="-1"
+                (click)="OnYoutubeLinkChange($event, false)"
+              >
+                <i class="bi bi-arrow-counterclockwise"></i>
+              </button>
             </div>
             <div class="input-group">
-              <span class="input-group-text" style="border-top: 0;">{{'Youtube剪輯片段'|translate}}</span>
-              <input type="text" class="form-control w-25 left-border left-border-green" id="clip" style="border-top: 0;"
-                     formControlName="clip"
-                     [attr.placeholder]="'https://youtube.com/clip/Ugkxxxxxxxxxx.......'|translate"
-                     (change)="OnYoutubeClipChange($event)">
+              <span class="input-group-text" style="border-top: 0">{{
+                'Youtube剪輯片段' | translate
+              }}</span>
+              <input
+                type="text"
+                class="form-control w-25 left-border left-border-green"
+                id="clip"
+                style="border-top: 0"
+                formControlName="clip"
+                [attr.placeholder]="'https://youtube.com/clip/Ugkxxxxxxxxxx.......' | translate"
+                (change)="OnYoutubeClipChange($event)"
+              />
             </div>
             <div class="form-text">
               <div>
-                <span
-                      [class.text-danger]="getFormControl('end').invalid">{{'音檔上限180秒'|translate}}</span>；{{'約需3~5分鐘轉檔'
-                |translate}}；
-                <span class="text-nowrap">{{'伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)'|translate}}</span>
+                <span [class.text-danger]="getFormControl('end').invalid">{{
+                  '音檔上限180秒' | translate
+                }}</span
+                >；{{ '約需3~5分鐘轉檔' | translate }}；
+                <span class="text-nowrap">{{
+                  '伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)' | translate
+                }}</span>
               </div>
               <div>
-                「{{'檔案上傳'|translate}}」、「{{'Youtube分享連結'|translate}}」、「{{'Youtube剪輯片段'|translate}}」
+                「{{ '檔案上傳' | translate }}」、「{{ 'Youtube分享連結' | translate }}」、「{{
+                  'Youtube剪輯片段' | translate
+                }}」
                 <span
-                      [class.text-danger]="(getFormControl('videoId').invalid || getFormControl('file').invalid || getFormControl('clip').invalid) && (getFormControl('videoId').dirty || getFormControl('file').dirty || getFormControl('clip').dirty)">{{'請只選擇一種'|translate}}</span>
+                  [class.text-danger]="
+                    (getFormControl('videoId').invalid ||
+                      getFormControl('file').invalid ||
+                      getFormControl('clip').invalid) &&
+                    (getFormControl('videoId').dirty ||
+                      getFormControl('file').dirty ||
+                      getFormControl('clip').dirty)
+                  "
+                  >{{ '請只選擇一種' | translate }}</span
+                >
               </div>
             </div>
 
             <div class="youtubeContainer mx-auto" *ngIf="!youtubeEmbedLink">
               <div>
-                <div class="m-3"
-                     *ngIf="(getFormControl('videoId').invalid || getFormControl('file').invalid || getFormControl('clip').invalid)">
-                  「{{'檔案上傳'|translate}}」、「{{'Youtube分享連結'|translate}}」、「{{'Youtube剪輯片段'|translate}}」<br>
-                  {{'請只選擇一種'|translate}}
+                <div
+                  class="m-3"
+                  *ngIf="
+                    getFormControl('videoId').invalid ||
+                    getFormControl('file').invalid ||
+                    getFormControl('clip').invalid
+                  "
+                >
+                  「{{ '檔案上傳' | translate }}」、「{{ 'Youtube分享連結' | translate }}」、「{{
+                    'Youtube剪輯片段' | translate
+                  }}」<br />
+                  {{ '請只選擇一種' | translate }}
                 </div>
-                <div *ngIf="getFormControl('videoId').value || getFormControl('clip').value" class="m-3">
-                  「{{'Youtube來源'|translate}}」{{'約需3~5分鐘轉檔'|translate}}<br>
-                  {{'若5分鐘後預覧未出現，請改用「檔案上傳」功能'|translate}}
+                <div
+                  *ngIf="getFormControl('videoId').value || getFormControl('clip').value"
+                  class="m-3"
+                >
+                  「{{ 'Youtube來源' | translate }}」{{ '約需3~5分鐘轉檔' | translate }}<br />
+                  {{ '若5分鐘後預覧未出現，請改用「檔案上傳」功能' | translate }}
                 </div>
                 <div *ngIf="getFormControl('clip').value" class="m-3">
-                  「{{'Youtube剪輯片段'|translate}}」{{'沒有影片預覧'|translate}}
+                  「{{ 'Youtube剪輯片段' | translate }}」{{ '沒有影片預覧' | translate }}
                 </div>
                 <div *ngIf="getFormControl('file').value" class="m-3">
-                  {{'使用Youtube來源更易於將流量導向回Vtuber的頻道'|translate}}
+                  {{ '使用Youtube來源更易於將流量導向回Vtuber的頻道' | translate }}
                 </div>
               </div>
             </div>
-            <iframe *ngIf="youtubeEmbedLink"
-                    [src]="youtubeEmbedLink"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    class="youtubeContainer mx-auto"></iframe>
+            <iframe
+              *ngIf="youtubeEmbedLink"
+              [src]="youtubeEmbedLink"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              class="youtubeContainer mx-auto"
+            ></iframe>
           </div>
         </div>
 
         <div class="col-md-4 col-12">
           <div class="mb-3">
-            <label for="nameZH" class="form-label">{{'中文名'|translate}}</label>
-            <input type="text" class="form-control left-border left-border-red" id="nameZH" formControlName="nameZH"
-                   [attr.placeholder]="'顯示在按鈕上的文字'|translate"
-                   [class.is-invalid]="getFormControl('nameZH').touched && getFormControl('nameZH').invalid">
+            <label for="nameZH" class="form-label">{{ '中文名' | translate }}</label>
+            <input
+              type="text"
+              class="form-control left-border left-border-red"
+              id="nameZH"
+              formControlName="nameZH"
+              [attr.placeholder]="'顯示在按鈕上的文字' | translate"
+              [class.is-invalid]="
+                getFormControl('nameZH').touched && getFormControl('nameZH').invalid
+              "
+            />
           </div>
 
           <div class="mb-3">
-            <label for="nameJP" class="form-label">{{'日文名'|translate}}</label>
-            <input type="text" class="form-control" id="nameJP" formControlName="nameJP"
-                   [attr.placeholder]="'顯示在按鈕上的日文版文字'|translate">
+            <label for="nameJP" class="form-label">{{ '日文名' | translate }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nameJP"
+              formControlName="nameJP"
+              [attr.placeholder]="'顯示在按鈕上的日文版文字' | translate"
+            />
           </div>
 
           <div class="mb-3">
-            <label for="group" class="form-label">{{'分組'|translate}}</label>
-            <input type="text" class="form-control" id="group" formControlName="group"
-                   [attr.placeholder]="'分組名稱'|translate"
-                   autocomplete="off"
-                   [typeahead]="groupNames()"
-                   [typeaheadScrollable]="true"
-                   [typeaheadOptionsInScrollableView]="7"
-                   [typeaheadMinLength]="0">
+            <label for="group" class="form-label">{{ '分組' | translate }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="group"
+              formControlName="group"
+              [attr.placeholder]="'分組名稱' | translate"
+              autocomplete="off"
+              [typeahead]="groupNames()"
+              [typeaheadScrollable]="true"
+              [typeaheadOptionsInScrollableView]="7"
+              [typeaheadMinLength]="0"
+            />
           </div>
 
           <div class="mb-3">
-            <label for="file" class="form-label">{{'檔案上傳'|translate}}</label>
-            <input type="file" accept="audio/*" class="form-control left-border left-border-green" id="file"
-                   formControlName="file"
-                   (change)="OnFileUpload($event)"
-                   [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid">
-            <span class="form-text"
-                  [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid">
-              {{'上限30MB'|translate}}
+            <label for="file" class="form-label">{{ '檔案上傳' | translate }}</label>
+            <input
+              type="file"
+              accept="audio/*"
+              class="form-control left-border left-border-green"
+              id="file"
+              formControlName="file"
+              (change)="OnFileUpload($event)"
+              [class.is-invalid]="getFormControl('file').touched && getFormControl('file').invalid"
+            />
+            <span
+              class="form-text"
+              [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid"
+            >
+              {{ '上限30MB' | translate }}
             </span>
           </div>
 
-          <button type="submit" class="btn btn-primary"
-                  [disabled]="form.invalid">{{'送出'|translate}}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            {{ '送出' | translate }}
+          </button>
         </div>
       </div>
     </div>

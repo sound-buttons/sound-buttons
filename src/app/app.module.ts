@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, InjectionToken, NgModule } from '@angular/core';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,12 +31,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
 export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
-declare let gtag: Function;
+declare let gtag: (...arg: unknown[]) => void;
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ declare let gtag: Function;
     UploadComponent,
     DialogComponent,
     AudioControlComponent,
-    ButtonFilterPipe
+    ButtonFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -69,9 +70,9 @@ declare let gtag: Function;
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
-      defaultLanguage: 'zh'
+      defaultLanguage: 'zh',
     }),
   ],
   providers: [
@@ -80,13 +81,13 @@ declare let gtag: Function;
     ConfigService,
     ColorService,
     AudioService,
-    DialogService
+    DialogService,
   ],
   bootstrap: [AppComponent],
-  exports: [ButtonFilterPipe]
+  exports: [ButtonFilterPipe],
 })
-
 export class AppModule {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {
     gtag('config', this.env.google.GA_TRACKING_ID);
   }

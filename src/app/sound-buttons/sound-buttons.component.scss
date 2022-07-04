@@ -6,20 +6,20 @@
   height: calc(100% - 34.75vh);
 
   @media only screen and (max-width: 767px) {
-    margin-bottom: $footer-height+1;
+    margin-bottom: $footer-height + 1;
   }
 }
 
 .btn {
   cursor: pointer;
   outline: none;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   border: none;
   margin: 0.3em;
 
   &:active {
     background-color: var(--bs-primary);
-    transform: translateY(.3em);
+    transform: translateY(0.3em);
   }
 }
 

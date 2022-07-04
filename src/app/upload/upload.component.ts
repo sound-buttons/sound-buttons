@@ -1,13 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  Inject,
-  InjectionToken,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, InjectionToken, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DialogService } from './../services/dialog.service';
@@ -20,68 +16,74 @@ export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
-  apibase = '';
+  apiBase = '';
   api = '';
   apiWake = '';
   apiExist = '';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
       validators: Validators.required,
-      updateOn: 'blur'
+      updateOn: 'blur',
     }),
     nameJP: '',
     group: '',
     videoId: this.fb.control('', {
-      validators: [(c) =>
-        (+ (!Validators.required(c))
-          + +(!!c.parent?.get('file')?.value)
-          + +(!!c.parent?.get('clip')?.value)
-          !== 1) || !(!!('' + c.value).match(/(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/) || !!Validators.required(c))
-          ? { videoId: true }
-          : null
-      ]
+      validators: [
+        (c) =>
+          +!Validators.required(c) +
+            +!!c.parent?.get('file')?.value +
+            +!!c.parent?.get('clip')?.value !==
+            1 ||
+          !(
+            !!('' + c.value).match(
+              /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/
+            ) || !!Validators.required(c)
+          )
+            ? { videoId: true }
+            : null,
+      ],
     }),
     start: this.fb.control('', {
-      validators: [(c) => (
-        c.parent?.get('videoId')?.dirty
-        && c.value < 0
-      ) ? { start: true }
-        : null
-      ]
+      validators: [
+        (c) => (c.parent?.get('videoId')?.dirty && c.value < 0 ? { start: true } : null),
+      ],
     }),
     end: this.fb.control('', {
-      validators: [(c) => (
-        c.parent?.get('videoId')?.dirty
-        && ((c.parent?.get('start')?.value ?? 0) >= c.value
-          || c.value - (c.parent?.get('start')?.value ?? 0) > 180)
-      ) ? { end: true }
-        : null
-      ]
+      validators: [
+        (c) =>
+          c.parent?.get('videoId')?.dirty &&
+          ((c.parent?.get('start')?.value ?? 0) >= c.value ||
+            c.value - (c.parent?.get('start')?.value ?? 0) > 180)
+            ? { end: true }
+            : null,
+      ],
     }),
     file: this.fb.control(null, {
-      validators: [(c) =>
-        + (!Validators.required(c))
-          + +(!!c.parent?.get('videoId')?.value)
-          + +(!!c.parent?.get('clip')?.value)
-          !== 1
-          ? { file: true }
-          : null
-      ]
+      validators: [
+        (c) =>
+          +!Validators.required(c) +
+            +!!c.parent?.get('videoId')?.value +
+            +!!c.parent?.get('clip')?.value !==
+          1
+            ? { file: true }
+            : null,
+      ],
     }),
     clip: this.fb.control('', {
-      validators: [(c) =>
-        (+ (!Validators.required(c))
-          + +(!!c.parent?.get('videoId')?.value)
-          + +(!!c.parent?.get('file')?.value)
-          !== 1) || !('' + c.value).match(/^(?:https?:\/\/(?:www.)?youtube.com\/clip\/)?[\w-]*$/)
-          ? { clip: true }
-          : null
-      ]
-    })
+      validators: [
+        (c) =>
+          +!Validators.required(c) +
+            +!!c.parent?.get('videoId')?.value +
+            +!!c.parent?.get('file')?.value !==
+            1 || !('' + c.value).match(/^(?:https?:\/\/(?:www.)?youtube.com\/clip\/)?[\w-]*$/)
+            ? { clip: true }
+            : null,
+      ],
+    }),
   });
   file: File | undefined | null;
   duration = 0;
@@ -96,23 +98,24 @@ export class UploadComponent implements OnInit, OnDestroy {
     private router: Router,
     private configService: ConfigService,
     private colorService: ColorService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private dialogService: DialogService,
     public translate: TranslateService,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
-    this.apibase = this.env.api;
-    this.api = this.apibase + '/sound-buttons';
-    this.apiWake = this.apibase + '/wake';
-    this.apiExist = this.apibase + '/cache-exists';
+    this.apiBase = this.env.api;
+    this.api = this.apiBase + '/sound-buttons';
+    this.apiWake = this.apiBase + '/wake';
+    this.apiExist = this.apiBase + '/cache-exists';
   }
 
   ngOnInit(): void {
     const name = this.route.snapshot.paramMap.get('name') ?? 'template';
     this.configService.name = name;
-    this.routerSubscription = this.configService.OnConfigChanged.subscribe(config => {
+    this.routerSubscription = this.configService.OnConfigChanged.subscribe((config) => {
       if (config) {
         this.colorService.color = config.color ?? this.colorService.defaultColor;
         this.config = config;
@@ -125,15 +128,15 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.http.get(this.apiWake).subscribe();
 
     // 使input type=number能使用滾輪
-    document.addEventListener('wheel', () => { });
+    document.addEventListener('wheel', () => {
+      return;
+    });
   }
 
   OnFileUpload($event: Event): void {
     const clearFile = (message?: string) => {
       if (message) {
-        this.dialogService.toastError(
-          message
-        );
+        this.dialogService.toastError(message);
         // alert(message);
       }
       this.file = undefined;
@@ -148,7 +151,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       clearFile();
       return;
     }
-    if ((this.file.size && this.file?.size > 30000000)) {
+    if (this.file.size && this.file?.size > 30000000) {
       this.translate.get('音檔上限', { value: '30MB' }).subscribe((res: string) => {
         clearFile(`${res}!!`);
       });
@@ -164,7 +167,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     // 讀出音檔長度，用來計算end
     const reader = new FileReader();
 
-    reader.onload = e => {
+    reader.onload = (e) => {
       // Create an instance of AudioContext
       const audioContext = new window.AudioContext();
 
@@ -188,19 +191,22 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.updateValueAndValidity();
   }
 
-  OnYoutubeLinkChange($event: Event, parseFromLink: boolean = true): void {
+  OnYoutubeLinkChange($event: Event, parseFromLink = true): void {
     // 自動帶入start、end
     const value: string = this.form.get('videoId')?.value ?? '';
-    const videoId = value.match(/(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/)?.pop() ?? '';
+    const videoId =
+      value
+        .match(
+          /(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*[^\w\s-])?([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/
+        )
+        ?.pop() ?? '';
 
     if ('' === videoId) {
       this.youtubeEmbedLink = '';
       this.updateValueAndValidity();
       this.cacheExists = false;
       if ('' !== value) {
-        this.dialogService.toastError(
-          'Invalid Link: ' + value
-        );
+        this.dialogService.toastError('Invalid Link: ' + value);
       }
       return;
     }
@@ -230,15 +236,12 @@ export class UploadComponent implements OnInit, OnDestroy {
     const clip: string = this.form.get('clip')?.value ?? '';
 
     if (clip !== '' && !clip.match(/^(https?:\/\/(www.)?youtube.com\/clip\/)?[\w-]+$/)) {
-      this.dialogService.toastError(
-        'Invalid Clip Link: ' + clip
-      );
+      this.dialogService.toastError('Invalid Clip Link: ' + clip);
     }
     this.updateValueAndValidity();
-
   }
 
-  OnSubmit($event: any): void {
+  OnSubmit($event: Event): void {
     if (this.form.invalid) {
       this.translate.get('請填入必填欄位').subscribe((res: string) => {
         this.dialogService.toastError(`${res}!`);
@@ -260,13 +263,18 @@ export class UploadComponent implements OnInit, OnDestroy {
     formData.append('start', this.getFormControl('start').value);
     formData.append('end', this.getFormControl('end').value);
 
-    formData.append('toastId',
-      this.dialogService.toastPending(`Uploading ${this.getFormControl('nameZH').value} ...`).toString());
+    formData.append(
+      'toastId',
+      this.dialogService
+        .toastPending(`Uploading ${this.getFormControl('nameZH').value} ...`)
+        .toString()
+    );
 
     // Long polling
-    this.http.post<IAcceptedResponse>(this.api, formData)
+    this.http
+      .post<IAcceptedResponse>(this.api, formData)
       .pipe(
-        concatMap(acceptResponse => {
+        concatMap((acceptResponse) => {
           const uri = acceptResponse.statusQueryGetUri;
           if (!uri) {
             this.dialogService.clearPending();
@@ -279,14 +287,17 @@ export class UploadComponent implements OnInit, OnDestroy {
           return timer(10000, 20000).pipe(
             take(30),
             switchMap(() => {
-              return this.http.get<ILongPollingResponse>(uri, { observe: 'response' });
+              return this.http.get<ILongPollingResponse>(uri, {
+                observe: 'response',
+              });
             }),
-            skipWhile(response => response.status === 202),
+            skipWhile((response) => response.status === 202),
             take(1)
           );
         })
-      ).subscribe(
-        response => {
+      )
+      .subscribe(
+        (response) => {
           const toastId = response.body?.input.toastId ?? -1;
           this.dialogService.disablePending(+toastId);
           const name = response.body?.input.nameZH;
@@ -301,7 +312,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           }
           this.configService.reloadConfig();
         },
-        response => {
+        (response) => {
           let name = '';
           try {
             const toastId = response.body?.input.toastId ?? -1;
@@ -335,32 +346,36 @@ export class UploadComponent implements OnInit, OnDestroy {
                 this.dialogService.toastWarning(`${name} ${res}`);
               });
           }
-        },
+        }
       );
     this.youtubeEmbedLink = '';
 
     if (this.getFormControl('clip').value) {
-      this.translate.get('剪輯片段在伺服器端才能檢查快取，若快取不存在有可能在下載中逾時').subscribe((res: string) => {
-        this.dialogService.showModal.emit({
-          title: 'Notice',
-          message: res
+      this.translate
+        .get('剪輯片段在伺服器端才能檢查快取，若快取不存在有可能在下載中逾時')
+        .subscribe((res: string) => {
+          this.dialogService.showModal.emit({
+            title: 'Notice',
+            message: res,
+          });
         });
-      });
     } else if (!this.file && !this.cacheExists) {
       this.translate.get('此影片尚未建立快取，有可能在下載中逾時').subscribe((res: string) => {
         this.dialogService.showModal.emit({
           title: 'Notice',
-          message: res
+          message: res,
         });
       });
     }
     this.form.reset();
-    this.router.navigate(['/', this.config.name], { queryParams: { liveUpdate: '1' } });
+    this.router.navigate(['/', this.config.name], {
+      queryParams: { liveUpdate: '1' },
+    });
   }
 
   patchEnd(): void {
     this.form.patchValue({
-      end: Math.ceil(parseFloat(this.getFormControl('start').value ?? '0') + this.duration)
+      end: Math.ceil(parseFloat(this.getFormControl('start').value ?? '0') + this.duration),
     });
   }
 
@@ -380,8 +395,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.routerSubscription?.unsubscribe();
   }
 
-  public getFormControl = (name: string): FormControl =>
-    this.form.get(name) as FormControl;
+  public getFormControl = (name: string): UntypedFormControl => this.form.get(name) as UntypedFormControl;
 
   groupNames = () => this.configService.groupNames;
 }
@@ -408,10 +422,10 @@ interface ILongPollingResponse {
     volume: string;
     group: string;
     tempPath: string;
-    sasContainerToken?: any;
+    sasContainerToken?: never;
     toastId: string;
   };
-  customStatus?: any;
+  customStatus?: never;
   output: boolean;
   createdTime: string;
   lastUpdatedTime: string;

@@ -8,9 +8,8 @@ describe('SoundButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SoundButtonsComponent ]
-    })
-    .compileComponents();
+      declarations: [SoundButtonsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

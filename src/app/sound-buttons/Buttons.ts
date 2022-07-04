@@ -7,15 +7,15 @@ export class Button implements IButton {
   constructor(
     private audioService: AudioService,
     public filename: string,
-    public text: string | any = filename,
+    public text: string | never = filename,
     public baseRoute = defaultBaseRoute,
     public volume = 1,
     public source?: ISource,
-    public SASToken?: string,
+    public SASToken?: string
   ) {
     // 套用text中的多語系
-    if (typeof (this.text) !== 'string') {
-      // tslint:disable-next-line: variable-name
+    if (typeof this.text !== 'string') {
+      // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
       this.text = LanguageService.GetTextFromObject(this.text);
     }
 
@@ -24,18 +24,22 @@ export class Button implements IButton {
     }
   }
 
-  // tslint:disable-next-line: variable-name
-  click = ($event: MouseEvent) => {
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
+  click = (): void => {
     if (this.baseRoute.slice(-1) !== '/') {
       this.baseRoute += '/';
     }
-    this.audioService.add(`${this.baseRoute}${this.filename}${this.SASToken}`, this.source, this.volume);
+    this.audioService.add(
+      `${this.baseRoute}${this.filename}${this.SASToken}`,
+      this.source,
+      this.volume
+    );
   };
 }
 
 export interface IButton {
   filename: string;
-  text: string | any;
+  text: string | never;
   baseRoute: string;
   volume: number;
   source?: ISource;

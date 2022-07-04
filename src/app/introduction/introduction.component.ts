@@ -7,10 +7,10 @@ import { ILink } from '../services/config.service';
 @Component({
   selector: 'app-introduction',
   templateUrl: './introduction.component.html',
-  styleUrls: ['./introduction.component.scss']
+  styleUrls: ['./introduction.component.scss'],
 })
 export class IntroductionComponent implements OnInit {
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _imgSrc = '';
   initTime = Date.now();
 
@@ -27,29 +27,21 @@ export class IntroductionComponent implements OnInit {
 
   @Input() public intro = '';
 
-  @Input() link: ILink|undefined;
+  @Input() link: ILink | undefined;
 
   @Input() button: IButton | undefined;
 
   isLiveUpdate = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private configService: ConfigService
-  ) { }
+  constructor(private route: ActivatedRoute, private configService: ConfigService) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(
-      m => {
-        this.isLiveUpdate = m.get('liveUpdate') === '1';
-      }
-    );
+    this.route.queryParamMap.subscribe((m) => {
+      this.isLiveUpdate = m.get('liveUpdate') === '1';
+    });
   }
 
   reloadConfig(): void {
-    this.configService.reloadConfig(
-      () => this.initTime = Date.now()
-    );
+    this.configService.reloadConfig(() => (this.initTime = Date.now()));
   }
-
 }

@@ -7,10 +7,9 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   title = 'Sound Buttons';
   name = '';
   fullName = '';
@@ -21,10 +20,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private configService: ConfigService,
     public displayService: DisplayService,
-    public router: Router) { }
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.configSubscription = this.configService.OnConfigChanged.subscribe(c => {
+    this.configSubscription = this.configService.OnConfigChanged.subscribe((c) => {
       this.name = c?.name ?? '';
       this.fullName = c?.fullName ?? '';
     });
@@ -33,7 +33,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setLiveUpdate(flag: boolean): void {
     this.configService.isLiveUpdate = flag;
     if (flag) {
-      this.router.navigate(['/', this.name], { queryParams: { liveUpdate: '1' } });
+      this.router.navigate(['/', this.name], {
+        queryParams: { liveUpdate: '1' },
+      });
     } else {
       this.router.navigate(['/', this.name]);
     }
@@ -50,5 +52,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.configSubscription?.unsubscribe();
   }
-
 }

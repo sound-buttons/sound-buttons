@@ -4,13 +4,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-audio-control',
   templateUrl: './audio-control.component.html',
-  styleUrls: ['./audio-control.component.scss']
+  styleUrls: ['./audio-control.component.scss'],
 })
 export class AudioControlComponent implements OnInit {
-
-  constructor(
-    private audioService: AudioService
-  ) { }
+  constructor(private audioService: AudioService) {}
 
   volume = 0.5;
 
@@ -34,8 +31,7 @@ export class AudioControlComponent implements OnInit {
     this.audioService.recover();
   }
 
-  OnVolumeChange($event: any): void {
+  OnVolumeChange($event: Event): void {
     this.audioService.volume(+($event.target as HTMLInputElement).value);
   }
-
 }

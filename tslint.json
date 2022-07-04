@@ -1,5 +1,11 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "plugin:@angular-eslint/recommended",
+    "plugin:@angular-eslint/template/process-inline-templates",
+    "tslint:recommended",
+    "plugin:@angular-eslint/template/recommended",
+    "prettier"
+  ],
   "rulesDirectory": [
     "codelyzer"
   ],
@@ -147,6 +153,25 @@
       "element",
       "app",
       "kebab-case"
+    ],
+    "@angular-eslint/directive-selector": [
+      "warn",
+      {
+        "type": "attribute",
+        "prefix": "app",
+        "style": "camelCase"
+      }
+    ],
+    "@angular-eslint/component-selector": [
+      "warn",
+      {
+        "type": "element",
+        "prefix": "app",
+        "style": "kebab-case"
+      }
+    ],
+    "@angular-eslint/no-empty-lifecycle-method": [
+      "off"
     ]
   }
 }

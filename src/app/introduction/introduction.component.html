@@ -1,45 +1,51 @@
 <div class="container h-100 position-relative">
   <div id="linkIcon-container" *ngIf="link">
-    <a class='linkIcon' [href]="link!.youtube" target="_blank" *ngIf="link!.youtube">
-      <img src="assets/img/youtube.svg" alt="youtube">
+    <a class="linkIcon" [href]="link!.youtube" target="_blank" *ngIf="link!.youtube">
+      <img src="assets/img/youtube.svg" alt="youtube" />
     </a>
 
-    <a class='linkIcon' [href]="link!.twitter" target="_blank" *ngIf="link!.twitter">
-      <img src="assets/img/twitter.svg" alt="twitter">
+    <a class="linkIcon" [href]="link!.twitter" target="_blank" *ngIf="link!.twitter">
+      <img src="assets/img/twitter.svg" alt="twitter" />
     </a>
 
-    <a class='linkIcon' [href]="link!.facebook" target="_blank" *ngIf="link!.facebook">
-      <img src="assets/img/facebook.svg" alt="facebook">
+    <a class="linkIcon" [href]="link!.facebook" target="_blank" *ngIf="link!.facebook">
+      <img src="assets/img/facebook.svg" alt="facebook" />
     </a>
 
-    <a class='linkIcon' [href]="link!.discord" target="_blank" *ngIf="link!.discord">
-      <img src="assets/img/discord.svg" alt="discord">
+    <a class="linkIcon" [href]="link!.discord" target="_blank" *ngIf="link!.discord">
+      <img src="assets/img/discord.svg" alt="discord" />
     </a>
 
-    <a class='linkIcon' [href]="link!.instagram" target="_blank" *ngIf="link!.instagram">
-      <img src="assets/img/instagram.svg" alt="instagram">
+    <a class="linkIcon" [href]="link!.instagram" target="_blank" *ngIf="link!.instagram">
+      <img src="assets/img/instagram.svg" alt="instagram" />
     </a>
 
-    <a class='linkIcon' [href]="link!.other" target="_blank" *ngIf="link!.other">
-      <img src="assets/img/other.svg" alt="other">
+    <a class="linkIcon" [href]="link!.other" target="_blank" *ngIf="link!.other">
+      <img src="assets/img/other.svg" alt="other" />
     </a>
   </div>
-  <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image">
+  <img id="chara" class="mx-auto d-block" [src]="imgSrc" alt="intro image" />
   <div class="position-relative info">
-    <button type="button" class="btn btn-secondary"
-            *ngIf="button && !isLiveUpdate"
-            (click)="button?.click($event)">
-      {{button?.text}}
+    <button
+      type="button"
+      class="btn btn-secondary"
+      *ngIf="button && !isLiveUpdate"
+      (click)="button?.click($event)"
+    >
+      {{ button?.text }}
     </button>
     <p [innerHTML]="intro" *ngIf="!isLiveUpdate"></p>
 
     <div class="notice" *ngIf="isLiveUpdate">
       <div>
-        <span [innerHTML]="'previewMessage' | translate"></span>: <a href="https://github.com/jim60105/sound-buttons_configs/discussions/3" target="_blank">Github discussion</a><br>
+        <span [innerHTML]="'previewMessage' | translate"></span>:
+        <a href="https://github.com/jim60105/sound-buttons_configs/discussions/3" target="_blank"
+          >Github discussion</a
+        ><br />
         <button class="btn btn-primary" type="button" (click)="reloadConfig()">
-          {{'重新整理本頁內容'|translate}}
-        </button><br>
-        {{initTime | date:'yyyy/MM/dd hh:mm:ss'}}
+          {{ '重新整理本頁內容' | translate }}</button
+        ><br />
+        {{ initTime | date: 'yyyy/MM/dd hh:mm:ss' }}
       </div>
     </div>
   </div>

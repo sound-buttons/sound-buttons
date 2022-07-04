@@ -1,10 +1,13 @@
-
 <ng-template #tModel>
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{modalData.title}}</h4>
-      <button type="button" class="close pull-right btn-close" aria-label="Close" (click)="modalRef.hide()">
-      </button>
+      <h4 class="modal-title pull-left">{{ modalData.title }}</h4>
+      <button
+        type="button"
+        class="close pull-right btn-close"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      ></button>
     </div>
     <div class="modal-body" [innerHTML]="modalData.message"></div>
     <!-- <div class="modal-footer">
