@@ -12,7 +12,7 @@ import { ConfigService, IFullConfig } from '../services/config.service';
 import { Subscription, timer } from 'rxjs';
 import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
-export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
+import { EnvironmentToken } from '../app.module';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
