@@ -24,6 +24,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   api = '';
   apiWake = '';
   apiExist = '';
+  origin = '';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
       validators: Validators.required,
@@ -110,6 +111,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.api = this.apiBase + '/sound-buttons';
     this.apiWake = this.apiBase + '/wake';
     this.apiExist = this.apiBase + '/cache-exists';
+    this.origin = this.env.origin;
   }
 
   ngOnInit(): void {
@@ -222,6 +224,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     const url = new URL('https://www.youtube.com/embed/' + videoId);
     url.searchParams.append('start', `${this.getFormControl('start').value ?? 0}`);
     url.searchParams.append('end', `${this.getFormControl('end').value ?? 0}`);
+    url.searchParams.append('playsinline', '1');
+    url.searchParams.append('enablejsapi', '1');
+    url.searchParams.append('origin', this.origin);
+    url.searchParams.append('widgetid', '1');
 
     this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
 
@@ -395,7 +401,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.routerSubscription?.unsubscribe();
   }
 
-  public getFormControl = (name: string): UntypedFormControl => this.form.get(name) as UntypedFormControl;
+  public getFormControl = (name: string): UntypedFormControl =>
+    this.form.get(name) as UntypedFormControl;
 
   groupNames = () => this.configService.groupNames;
 }

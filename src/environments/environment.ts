@@ -8,6 +8,7 @@ export const environment = {
     GA_TRACKING_ID: 'UA-XXXXXXXX-X',
   },
   api: 'http://localhost:7071/api',
+  origin: 'https://localhost:4200',
 };
 
 /*
