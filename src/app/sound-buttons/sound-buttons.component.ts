@@ -13,10 +13,11 @@ import { EnvironmentToken } from '../app.module';
 })
 export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
-  youtubeEmbedLink: SafeResourceUrl = '';
+  // youtubeEmbedLink: SafeResourceUrl = '';
   displaySet = 0;
   filterText = '';
   origin = '';
+  source: ISource | undefined;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -42,23 +43,25 @@ export class SoundButtonsComponent implements OnInit {
 
   changeYoutubeEmbed(source: ISource | undefined): void {
     if (source && source?.videoId && source?.videoId !== 'null') {
-      const url = new URL('https://www.youtube.com/embed/' + source.videoId);
-      url.searchParams.append('start', `${source.start}`);
-      url.searchParams.append('end', `${source.end}`);
-      url.searchParams.append('playsinline', '1');
-      url.searchParams.append('enablejsapi', '1');
-      url.searchParams.append('origin', this.origin);
-      url.searchParams.append('widget_referrer', this.origin);
-      url.searchParams.append('widgetid', '1');
-      url.searchParams.append('iv_load_policy', '3');
-      url.searchParams.append('controls', '0');
-      url.searchParams.append('fs', '0');
-      url.searchParams.append('rel', '0');
-      url.searchParams.append('autoplay', '0');
+      this.source = source;
+      // const url = new URL('https://www.youtube.com/embed/' + source.videoId);
+      // url.searchParams.append('start', `${source.start}`);
+      // url.searchParams.append('end', `${source.end}`);
+      // url.searchParams.append('playsinline', '1');
+      // url.searchParams.append('enablejsapi', '1');
+      // url.searchParams.append('origin', this.origin);
+      // url.searchParams.append('widget_referrer', this.origin);
+      // url.searchParams.append('widgetid', '1');
+      // url.searchParams.append('iv_load_policy', '3');
+      // url.searchParams.append('controls', '0');
+      // url.searchParams.append('fs', '0');
+      // url.searchParams.append('rel', '0');
+      // url.searchParams.append('autoplay', '0');
 
-      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
+      // this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
     } else {
-      this.youtubeEmbedLink = '';
+      this.source = undefined;
+      // this.youtubeEmbedLink = '';
     }
   }
 

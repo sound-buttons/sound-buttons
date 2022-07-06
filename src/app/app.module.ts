@@ -29,6 +29,7 @@ import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -74,6 +75,7 @@ declare let gtag: (...arg: unknown[]) => void;
       },
       defaultLanguage: 'zh',
     }),
+    YouTubePlayerModule,
   ],
   providers: [
     { provide: EnvironmentToken, useValue: environment },
