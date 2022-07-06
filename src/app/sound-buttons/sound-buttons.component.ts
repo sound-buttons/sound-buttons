@@ -1,7 +1,7 @@
 import { DisplayService } from './../services/display.service';
 import { AudioService } from './../services/audio.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton, ISource } from './Buttons';
 import { EnvironmentToken } from '../app.module';
@@ -17,6 +17,7 @@ export class SoundButtonsComponent implements OnInit {
   displaySet = 0;
   filterText = '';
   origin = '';
+  iframeHtml: string | SafeHtml = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -56,9 +57,15 @@ export class SoundButtonsComponent implements OnInit {
       url.searchParams.append('rel', '0');
       url.searchParams.append('autoplay', '0');
 
-      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
+      this.iframeHtml = this.sanitizer.bypassSecurityTrustHtml(`<iframe
+  src="${url.toString()}"
+  title="YouTube video player"
+  class="w-100 h-100"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+></iframe>`);
     } else {
-      this.youtubeEmbedLink = '';
+      this.iframeHtml = '';
     }
   }
 
