@@ -37,6 +37,16 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+          ORIGIN: ${{ secrets.ORIGIN }}
+          API: ${{ secrets.API }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: web
+          path: |
+            dist/sound-buttons
+          retention-days: 10
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
