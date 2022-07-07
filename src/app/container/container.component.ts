@@ -1,9 +1,10 @@
-import { DisplayService } from './../services/display.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AudioService } from '../services/audio.service';
 import { IFullConfig, ConfigService } from '../services/config.service';
+import { SEOService } from './../services/seo.service';
+import { DisplayService } from './../services/display.service';
 
 @Component({
   selector: 'app-container',
@@ -19,7 +20,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private configService: ConfigService,
     private audioService: AudioService,
-    private displayService: DisplayService
+    private displayService: DisplayService,
+    private SEOService: SEOService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
         } else {
           this.audioService.lastSource = undefined;
         }
+
+        this.SEOService.setTitle(config.fullName + ' - Sound Buttons');
+        this.SEOService.setOgUrl('https://sound-buttons.maki0419.com/' + config.name);
+        this.SEOService.setCanonicalLink('https://sound-buttons.maki0419.com/' + config.name);
       }
     });
     this.route.paramMap.subscribe((p) => {
