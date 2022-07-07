@@ -1,23 +1,14 @@
-<div class="youtubeContainer mx-auto" *ngIf="!source && displaySet == 0" translate>
+<div class="youtubeContainer mx-auto" *ngIf="!youtubeEmbedLink && displaySet == 0" translate>
   來源影片預覧
 </div>
-<!-- <iframe
+<iframe
   *ngIf="youtubeEmbedLink && displaySet == 0"
   [src]="youtubeEmbedLink"
   title="YouTube video player"
   frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   class="youtubeContainer mx-auto"
-></iframe> -->
-
-<youtube-player
-  *ngIf="source && displaySet == 0"
-  class="youtubeContainer mx-auto"
-  [videoId]="source?.videoId"
-  suggestedQuality="hd1080"
-  [startSeconds]="source?.start"
-  [endSeconds]="source?.end">
-</youtube-player>
+></iframe>
 
 <div class="container" role="main" [class.h-100]="displaySet == 1">
   <div *ngFor="let buttonGroup of buttonGroups">
