@@ -25,7 +25,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/staticwebapp.config.json"
+              "src/staticwebapp.config.json",
+              "src/sitemap.txt"
             ],
             "styles": [
               "src/styles.scss"
