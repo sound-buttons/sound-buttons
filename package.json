@@ -42,6 +42,7 @@
     "@angular/cli": "^14.0.4",
     "@angular/compiler-cli": "^14.0.4",
     "@biesbjerg/ngx-translate-extract": "^7.0.4",
+    "@types/gtag.js": "^0.0.11",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "4.16.1",
