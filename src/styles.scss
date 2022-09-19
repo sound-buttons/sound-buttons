@@ -24,6 +24,7 @@ a {
 }
 
 .btn {
+
   &-primary,
   &-primary:disabled,
   &-primary:hover,
@@ -32,18 +33,39 @@ a {
   &-primary.active {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
+
+    --bs-btn-hover-bg: var(--bs-primary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+
+    --bs-btn-active-bg: var(--bs-primary);
+    --bs-btn-active-border-color: var(--bs-primary);
+  }
+
+  &-primary:hover {
+    filter: brightness(1.5);
   }
 
   &-secondary,
   &-secondary:disabled,
-  &-secondary:hover {
+  &-secondary:hover,
+  &-secondary:focus,
+  &-secondary:active,
+  &-secondary.active {
     background-color: var(--bs-secondary);
-    border-color: var(--bs-secondary);
+    border-color: var(--bs-primary);
     color: var(--bs-primary);
+
+    --bs-btn-hover-bg: var(--bs-secondary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+    --bs-btn-hover-color: var(--bs-primary);
+
+    --bs-btn-active-bg: var(--bs-secondary);
+    --bs-btn-active-border-color: var(--bs-primary);
+    --bs-btn-active-color: var(--bs-primary);
   }
 
-  &:hover {
-    filter: brightness(1.5);
+  &-secondary:hover {
+    filter: brightness(0.9);
   }
 }
 
@@ -97,6 +119,7 @@ a {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M96,256c0-26.5-21.5-48-48-48S0,229.5,0,256c0,26.5,21.5,48,48,48S96,282.5,96,256z M108.9,355.1c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48c26.5,0,48-21.5,48-48C156.9,376.6,135.4,355.1,108.9,355.1z M108.9,60.9c-26.5,0-48,21.5-48,48 s21.5,48,48,48c26.5,0,48-21.5,48-48S135.4,60.9,108.9,60.9z M403.1,156.9c26.5,0,48-21.5,48-48s-21.5-48-48-48 c-26.5,0-48,21.5-48,48S376.6,156.9,403.1,156.9z M403.1,355.1c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48 C451.1,376.6,429.6,355.1,403.1,355.1z M256,416c-26.5,0-48,21.5-48,48s21.5,48,48,48s48-21.5,48-48S282.5,416,256,416z M464,208 c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48C512,229.5,490.5,208,464,208z M256,0c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48s48-21.5,48-48C304,21.5,282.5,0,256,0z'/%3E%3C/svg%3E");
 
     animation: spin 4s linear infinite;
+
     @keyframes spin {
       100% {
         -webkit-transform: rotate(360deg);

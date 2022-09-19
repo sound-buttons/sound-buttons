@@ -1,18 +1,33 @@
 @import 'variables';
 
-.navbar-brand {
-  padding: $navbar-padding-y;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  vertical-align: middle;
+.navbar {
+  padding: 0;
 
-  img {
-    height: 1.5rem;
+  &-brand {
+    padding: $navbar-padding-y;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    vertical-align: middle;
+
+    img {
+      height: 1.5rem;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0.2rem;
+    }
   }
 
-  @media only screen and (max-width: 425px) {
-    padding: 0.2rem;
+  &-nav {
+    flex-direction: row-reverse;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    min-width: fit-content;
+
+    .nav-link {
+      padding-left: 0.5rem;
+    }
   }
 }
 
@@ -24,17 +39,6 @@
 
 a {
   cursor: pointer;
-}
-
-.navbar-nav {
-  flex-direction: row-reverse;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  min-width: fit-content;
-
-  .nav-link {
-    padding-left: 0.5rem;
-  }
 }
 
 .pulse {
