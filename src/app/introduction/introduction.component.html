@@ -30,9 +30,9 @@
       type="button"
       class="btn btn-secondary"
       *ngIf="button && !isLiveUpdate"
-      (click)="button?.click($event)"
+      (click)="button.click($event)"
     >
-      {{ button?.text }}
+      {{ button.text }}
     </button>
     <p [innerHTML]="intro" *ngIf="!isLiveUpdate"></p>
 
