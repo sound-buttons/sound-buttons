@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IButton } from './../sound-buttons/Buttons';
 import { Component, Input, OnInit } from '@angular/core';
 import { ILink } from '../services/config.service';
+import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
 
 @Component({
   selector: 'app-introduction',
@@ -32,6 +33,8 @@ export class IntroductionComponent implements OnInit {
   @Input() button: IButton | undefined;
 
   isLiveUpdate = false;
+
+  menu = ContextMenuComponent;
 
   constructor(private route: ActivatedRoute, private configService: ConfigService) {}
 

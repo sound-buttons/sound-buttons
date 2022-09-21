@@ -31,6 +31,8 @@
       class="btn btn-secondary"
       *ngIf="button && !isLiveUpdate"
       (click)="button.click($event)"
+      [contextMenuTrigger]="menu"
+      [menuContext]="button"
     >
       {{ button.text }}
     </button>

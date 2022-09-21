@@ -29,6 +29,8 @@ import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
+import { ContextMenuModule } from '@ctrl/ngx-rightclick';
+import { ContextMenuComponent } from './sound-buttons/context-menu/context-menu.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -51,6 +53,7 @@ declare let gtag: (...arg: unknown[]) => void;
     DialogComponent,
     AudioControlComponent,
     ButtonFilterPipe,
+    ContextMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ declare let gtag: (...arg: unknown[]) => void;
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    ContextMenuModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     ToastrModule.forRoot({

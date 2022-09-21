@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton, ISource } from './Buttons';
 import { EnvironmentToken } from '../app.module';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 @Component({
   selector: 'app-sound-buttons',
@@ -17,6 +18,7 @@ export class SoundButtonsComponent implements OnInit {
   displaySet = 0;
   filterText = '';
   origin = '';
+  menu = ContextMenuComponent;
 
   constructor(
     private sanitizer: DomSanitizer,

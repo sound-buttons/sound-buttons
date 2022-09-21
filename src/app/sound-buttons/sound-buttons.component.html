@@ -25,6 +25,8 @@
           *ngFor="let btn of buttonGroup.buttons | buttonFilter: filterText"
           (click)="buttonClick($event, btn)"
           [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)"
+          [contextMenuTrigger]="menu"
+          [menuContext]="btn"
         >
           {{ btn.text }}
         </button>

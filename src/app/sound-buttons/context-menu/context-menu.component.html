@@ -1,0 +1,15 @@
+<div class="dropdown-menu show" style="position: relative">
+  <button class="dropdown-item" (click)="copyLink()">{{ '複製按鈕網址' | translate }}</button>
+  <button class="dropdown-item" (click)="download()">{{ '下載' | translate }}</button>
+  <div class="dropdown-divider"></div>
+  <button class="dropdown-item" (click)="copyYoutubeLink()">
+    {{ '複製 Youtube 網址' | translate }}
+  </button>
+  <button
+    class="dropdown-item"
+    (click)="openSource()"
+    [class.disabled]="!this.button.source?.videoId"
+  >
+    {{ '在 Youtube 上觀看' | translate }}
+  </button>
+</div>

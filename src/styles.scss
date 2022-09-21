@@ -64,6 +64,17 @@ a {
   }
 }
 
+.dropdown-menu {
+  --bs-dropdown-link-bg: var(--bs-secondary);
+  --bs-dropdown-link-border-color: var(--bs-secondary);
+  --bs-dropdown-link-hover-bg: var(--bs-secondary);
+  --bs-dropdown-link-hover-border-color: var(--bs-secondary);
+  --bs-dropdown-link-active-bg: var(--bs-secondary);
+  --bs-dropdown-link-active-border-color: var(--bs-secondary);
+  --bs-dropdown-link-disabled-bg: var(--bs-secondary);
+  --bs-dropdown-link-disabled-border-color: var(--bs-secondary);
+}
+
 .border-primary {
   border-color: var(--bs-primary) !important;
 }
@@ -88,6 +99,9 @@ a {
   text-align: center;
 }
 
+/**
+ * Toast
+ */
 .toast-bottom-center {
   right: 1rem;
 
@@ -122,4 +136,28 @@ a {
       }
     }
   }
+}
+
+/**
+ * Right click context menu
+ */
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ngx-contextmenu.cdk-overlay-pane {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+// not required but can help with mobile right click
+.target {
+  user-select: none;
 }
