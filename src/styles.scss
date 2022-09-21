@@ -25,47 +25,42 @@ a {
 
 .btn {
 
-  &-primary,
-  &-primary:disabled,
-  &-primary:hover,
-  &-primary:focus,
-  &-primary:active,
-  &-primary.active {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-
+  &-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
     --bs-btn-hover-bg: var(--bs-primary);
     --bs-btn-hover-border-color: var(--bs-primary);
-
     --bs-btn-active-bg: var(--bs-primary);
     --bs-btn-active-border-color: var(--bs-primary);
+    --bs-btn-disabled-bg: var(--bs-primary);
+    --bs-btn-disabled-border-color: var(--bs-primary);
+
+    &:hover {
+      filter: brightness(1.5);
+    }
   }
 
-  &-primary:hover {
-    filter: brightness(1.5);
-  }
-
-  &-secondary,
-  &-secondary:disabled,
-  &-secondary:hover,
-  &-secondary:focus,
-  &-secondary:active,
-  &-secondary.active {
-    background-color: var(--bs-secondary);
-    border-color: var(--bs-primary);
-    color: var(--bs-primary);
+  &-secondary {
 
     --bs-btn-hover-bg: var(--bs-secondary);
     --bs-btn-hover-border-color: var(--bs-primary);
     --bs-btn-hover-color: var(--bs-primary);
-
     --bs-btn-active-bg: var(--bs-secondary);
     --bs-btn-active-border-color: var(--bs-primary);
     --bs-btn-active-color: var(--bs-primary);
-  }
 
-  &-secondary:hover {
-    filter: brightness(0.9);
+    &,
+    &:disabled,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: var(--bs-secondary);
+    }
+
+    &:hover {
+      filter: brightness(0.9);
+    }
   }
 }
 
