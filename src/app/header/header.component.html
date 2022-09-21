@@ -19,7 +19,12 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" *ngIf="name" [collapse]="isCollapsed">
       <div class="navbar-nav ps-0 input-group">
-        <input type="text" placeholder="filter" (change)="setFilterText($event)" />
+        <input
+          type="text"
+          placeholder="filter"
+          (change)="setFilterText($event)"
+          [value]="displayService.getFilterText()"
+        />
       </div>
       <ul class="navbar-nav ps-0">
         <li class="nav-item">

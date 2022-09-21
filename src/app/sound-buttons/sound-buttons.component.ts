@@ -34,6 +34,7 @@ export class SoundButtonsComponent implements OnInit {
       this.changeYoutubeEmbed(this.audioService.lastSource);
     }
 
+    this.filterText = this.displayService.getFilterText();
     this.displayService.OnConfigChanged.subscribe((p) => {
       this.displaySet = p[0];
       this.filterText = p[1];
