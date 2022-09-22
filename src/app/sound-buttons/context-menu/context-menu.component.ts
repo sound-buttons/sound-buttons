@@ -68,17 +68,22 @@ export class ContextMenuComponent extends MenuComponent {
     this.close();
   }
 
+  private get generateYoutubeLink(): string {
+    return !this.button.source
+      ? ''
+      : `https://youtu.be/${this.button.source.videoId}?t=${Math.floor(this.button.source.start)}`;
+  }
+
   copyYoutubeLink(): void {
     if (this.button.source) {
-      const url = `https://youtu.be/${this.button.source.videoId}?t=${this.button.source.start}`;
-      navigator.clipboard.writeText(url);
+      navigator.clipboard.writeText(this.generateYoutubeLink);
     }
     this.close();
   }
 
   openSource(): void {
     if (this.button.source) {
-      window.open(`https://youtu.be/${this.button.source.videoId}?t=${this.button.source.start}`);
+      window.open(this.generateYoutubeLink);
     }
     this.close();
   }
