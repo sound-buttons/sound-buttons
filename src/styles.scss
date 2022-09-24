@@ -5,10 +5,10 @@
 */
 
 @import 'variables';
-@import '~ngx-toastr/toastr';
-@import '../node_modules/bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr';
 @import 'bootswatch';
-@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 :root {
   --bs-primary: #000000;
@@ -102,37 +102,41 @@ a {
 /**
  * Toast
  */
-.toast-bottom-center {
-  right: 1rem;
+.toast {
 
-  @include media-breakpoint-up(md) {
-    bottom: 3rem;
+  &-bottom-center {
+    right: 1rem;
+    width: auto;
+
+    @include media-breakpoint-up(md) {
+      bottom: 3rem;
+    }
   }
-}
 
-.toast-info {
-  background-image: unset;
+  &-info {
+    background-image: unset;
 
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    height: 100%;
-    overflow: hidden;
-    padding: 15px 15px 15px 30px;
-    background-position: 50% center;
-    background-repeat: no-repeat;
-    background-size: 24px;
-    color: #ffffff;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M96,256c0-26.5-21.5-48-48-48S0,229.5,0,256c0,26.5,21.5,48,48,48S96,282.5,96,256z M108.9,355.1c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48c26.5,0,48-21.5,48-48C156.9,376.6,135.4,355.1,108.9,355.1z M108.9,60.9c-26.5,0-48,21.5-48,48 s21.5,48,48,48c26.5,0,48-21.5,48-48S135.4,60.9,108.9,60.9z M403.1,156.9c26.5,0,48-21.5,48-48s-21.5-48-48-48 c-26.5,0-48,21.5-48,48S376.6,156.9,403.1,156.9z M403.1,355.1c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48 C451.1,376.6,429.6,355.1,403.1,355.1z M256,416c-26.5,0-48,21.5-48,48s21.5,48,48,48s48-21.5,48-48S282.5,416,256,416z M464,208 c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48C512,229.5,490.5,208,464,208z M256,0c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48s48-21.5,48-48C304,21.5,282.5,0,256,0z'/%3E%3C/svg%3E");
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      height: 100%;
+      overflow: hidden;
+      padding: 15px 15px 15px 30px;
+      background-position: 50% center;
+      background-repeat: no-repeat;
+      background-size: 24px;
+      color: #ffffff;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M96,256c0-26.5-21.5-48-48-48S0,229.5,0,256c0,26.5,21.5,48,48,48S96,282.5,96,256z M108.9,355.1c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48c26.5,0,48-21.5,48-48C156.9,376.6,135.4,355.1,108.9,355.1z M108.9,60.9c-26.5,0-48,21.5-48,48 s21.5,48,48,48c26.5,0,48-21.5,48-48S135.4,60.9,108.9,60.9z M403.1,156.9c26.5,0,48-21.5,48-48s-21.5-48-48-48 c-26.5,0-48,21.5-48,48S376.6,156.9,403.1,156.9z M403.1,355.1c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48 C451.1,376.6,429.6,355.1,403.1,355.1z M256,416c-26.5,0-48,21.5-48,48s21.5,48,48,48s48-21.5,48-48S282.5,416,256,416z M464,208 c-26.5,0-48,21.5-48,48c0,26.5,21.5,48,48,48s48-21.5,48-48C512,229.5,490.5,208,464,208z M256,0c-26.5,0-48,21.5-48,48 c0,26.5,21.5,48,48,48s48-21.5,48-48C304,21.5,282.5,0,256,0z'/%3E%3C/svg%3E");
 
-    animation: spin 4s linear infinite;
+      animation: spin 4s linear infinite;
 
-    @keyframes spin {
-      100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+      @keyframes spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
       }
     }
   }
