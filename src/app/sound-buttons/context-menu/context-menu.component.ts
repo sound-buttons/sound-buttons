@@ -5,6 +5,7 @@ import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightc
 import { AnimationEvent } from '@angular/animations';
 import * as mime from 'mime';
 import { TranslateService } from '@ngx-translate/core';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-context-menu',
@@ -30,7 +31,8 @@ export class ContextMenuComponent extends MenuComponent {
   constructor(
     public menuPackage: MenuPackage,
     public contextMenuService: ContextMenuService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public dialogService: DialogService
   ) {
     super(menuPackage, contextMenuService);
     this.button = menuPackage.context;
@@ -48,6 +50,7 @@ export class ContextMenuComponent extends MenuComponent {
   copyLink(): void {
     const url = `${location.origin}${location.pathname}?filter=${this.button.text}`;
     navigator.clipboard.writeText(url);
+    this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();
   }
 
@@ -65,6 +68,7 @@ export class ContextMenuComponent extends MenuComponent {
         anchor.href = window.URL.createObjectURL(file);
         anchor.click();
       });
+    this.dialogService.toastSuccess(this.translate.instant('已開始下載'), '', 2000);
     this.close();
   }
 
@@ -78,6 +82,7 @@ export class ContextMenuComponent extends MenuComponent {
     if (this.button.source) {
       navigator.clipboard.writeText(this.generateYoutubeLink);
     }
+    this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();
   }
 

@@ -28,8 +28,15 @@ export class DialogService {
   toastWarning(message: string, title?: string): void {
     this.toastr.warning(message, title);
   }
-  toastSuccess(message: string, title?: string): void {
-    this.toastr.success(message, title);
+  toastSuccess(message: string, title?: string, timeout?: number): void {
+    if (timeout) {
+      this.toastr.success(message, title, {
+        timeOut: timeout,
+        disableTimeOut: false,
+      });
+    } else {
+      this.toastr.success(message, title);
+    }
   }
 
   clearPending(): void {
