@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { EnvironmentToken } from '../app.module';
 
 @Component({
   selector: 'app-footer',

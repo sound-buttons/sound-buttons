@@ -9,7 +9,8 @@ export const environment = {
       GA_TRACKING_ID: '${process.env.GA_TRACKING_ID}'
    },
    api: '${process.env.API ?? 'https://soundbuttons.azure-api.net'}',
-   origin: '${process.env.ORIGIN ?? 'https://sound-buttons.maki0419.com'}'
+   origin: '${process.env.ORIGIN ?? 'https://sound-buttons.maki0419.com'}',
+   version: '${process.env.VERSION ?? ''}'
 };
 `;
 

@@ -1,8 +1,9 @@
 import { LanguageService } from './services/language.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationEnd, Router, Event, RouterEvent } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { EnvironmentToken } from './app.module';
 
 declare let gtag: (...arg: unknown[]) => void;
 
@@ -12,10 +13,19 @@ declare let gtag: (...arg: unknown[]) => void;
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(translateService: TranslateService, private router: Router) {
+  version = '';
+
+  constructor(
+    translateService: TranslateService,
+    private router: Router,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+    @Inject(EnvironmentToken) env: any
+  ) {
     translateService.setDefaultLang('zh');
     translateService.use(LanguageService.BrowserLanguage);
     // translateService.use('ja');
+
+    this.version = env.version ? `v.${env.version}` : '';
   }
 
   ngOnInit(): void {
