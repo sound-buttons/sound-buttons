@@ -30,6 +30,7 @@ export class HomePageComponent implements OnInit {
     this.SEOService.setCanonicalLink('https://sound-buttons.maki0419.com/');
 
     this.displayService.setDisplay(0);
+    this.displayService.setFilterText('');
   }
 
   OnMouseEnter($event: MouseEvent, config?: IConfig): void {

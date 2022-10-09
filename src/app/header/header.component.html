@@ -28,7 +28,9 @@
       </div>
       <ul class="navbar-nav ps-0">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="name + '/upload'">{{ '投稿' | translate }}</a>
+          <a class="nav-link" [routerLink]="name + '/upload'" queryParamsHandling="merge">{{
+            '投稿' | translate
+          }}</a>
         </li>
         <li class="nav-item">
           <a

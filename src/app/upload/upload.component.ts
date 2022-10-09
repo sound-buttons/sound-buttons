@@ -357,6 +357,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.form.reset();
     this.router.navigate(['/', this.config.name], {
       queryParams: { liveUpdate: '1' },
+      queryParamsHandling: 'merge',
     });
   }
 
