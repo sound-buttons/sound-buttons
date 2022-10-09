@@ -50,8 +50,8 @@ export class SoundButtonsComponent implements OnInit {
   changeYoutubeEmbed(source: ISource | undefined): void {
     if (source && source?.videoId && source?.videoId !== 'null') {
       const url = new URL('https://www.youtube.com/embed/' + source.videoId);
-      url.searchParams.append('start', `${source.start}`);
-      url.searchParams.append('end', `${source.end}`);
+      url.searchParams.append('start', `${Math.floor(source.start)}`);
+      url.searchParams.append('end', `${Math.ceil(source.end)}`);
       url.searchParams.append('playsinline', '1');
       url.searchParams.append('enablejsapi', '1');
       url.searchParams.append('origin', this.origin);
