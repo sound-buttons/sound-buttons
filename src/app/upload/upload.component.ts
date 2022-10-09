@@ -226,7 +226,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     url.searchParams.append('widget_referrer', this.origin);
     url.searchParams.append('widgetid', '1');
     url.searchParams.append('iv_load_policy', '3');
-    url.searchParams.append('controls', '0');
+    // url.searchParams.append('controls', '0');
     url.searchParams.append('fs', '0');
     url.searchParams.append('rel', '0');
     url.searchParams.append('autoplay', '1');
