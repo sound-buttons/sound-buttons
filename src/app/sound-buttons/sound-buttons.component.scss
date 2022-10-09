@@ -29,3 +29,7 @@
     grid-template-columns: repeat(auto-fit, 1em);
   }
 }
+
+.alert {
+  @include border-radius(true, var(--#{$prefix}alert-border-radius));
+}

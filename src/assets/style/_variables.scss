@@ -99,6 +99,6 @@ $list-group-disabled-color: lighten($list-group-bg, 30%) !default;
 // Footer
 $footer-height: 3rem;
 
-@import "/node_modules/bootstrap/scss/functions";
-@import "/node_modules/bootstrap/scss/variables";
-@import "/node_modules/bootstrap/scss/mixins";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";

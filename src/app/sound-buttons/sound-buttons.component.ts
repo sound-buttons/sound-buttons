@@ -1,3 +1,4 @@
+import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
 import { DisplayService } from './../services/display.service';
 import { AudioService } from './../services/audio.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
@@ -24,6 +25,7 @@ export class SoundButtonsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private audioService: AudioService,
     private displayService: DisplayService,
+    private buttonFilterPipe: ButtonFilterPipe,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -78,5 +80,14 @@ export class SoundButtonsComponent implements OnInit {
     len = len > 50 ? 50 : len;
     len = len < 10 ? 10 : len;
     return len;
+  }
+
+  isFilteredEmpty(): boolean {
+    return (
+      this.buttonFilterPipe
+        .transform(this.buttonGroups, this.filterText)
+        .map((group) => group.buttons)
+        .reduce((a, b) => a + b.length, 0) === 0
+    );
   }
 }

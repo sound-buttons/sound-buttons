@@ -86,6 +86,7 @@ declare let gtag: (...arg: unknown[]) => void;
     ColorService,
     AudioService,
     DialogService,
+    ButtonFilterPipe,
   ],
   bootstrap: [AppComponent],
   exports: [ButtonFilterPipe],
