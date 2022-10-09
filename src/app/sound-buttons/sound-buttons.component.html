@@ -1,8 +1,8 @@
-<div class="youtubeContainer mx-auto" *ngIf="!youtubeEmbedLink && displaySet == 0" translate>
+<div class="youtubeContainer mx-auto" *ngIf="!youtubeEmbedLink && displaySet === 0" translate>
   來源影片預覧
 </div>
 <iframe
-  *ngIf="youtubeEmbedLink && displaySet == 0"
+  *ngIf="youtubeEmbedLink && displaySet === 0"
   [src]="youtubeEmbedLink"
   title="YouTube video player"
   frameborder="0"
@@ -10,7 +10,7 @@
   class="youtubeContainer mx-auto"
 ></iframe>
 
-<div class="container" role="main" [class.h-100]="displaySet == 1">
+<div class="container" role="main" [class.h-100]="displaySet === 1">
   <div *ngFor="let buttonGroup of buttonGroups">
     <div
       class="card border-primary mb-3"

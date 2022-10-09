@@ -37,6 +37,8 @@ export class SoundButtonsComponent implements OnInit {
     }
 
     this.filterText = this.displayService.getFilterText();
+    this.displaySet = this.displayService.getDisplay();
+
     this.displayService.OnConfigChanged.subscribe((p) => {
       this.displaySet = p[0];
       this.filterText = p[1];

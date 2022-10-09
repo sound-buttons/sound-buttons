@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IConfig } from '../services/config.service';
+import { DisplayService } from '../services/display.service';
 import { SEOService } from './../services/seo.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class HomePageComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private colorService: ColorService,
-    private SEOService: SEOService
+    private SEOService: SEOService,
+    private displayService: DisplayService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,8 @@ export class HomePageComponent implements OnInit {
     this.SEOService.setTitle('Sound Buttons');
     this.SEOService.setOgUrl('https://sound-buttons.maki0419.com/');
     this.SEOService.setCanonicalLink('https://sound-buttons.maki0419.com/');
+
+    this.displayService.setDisplay(0);
   }
 
   OnMouseEnter($event: MouseEvent, config?: IConfig): void {
