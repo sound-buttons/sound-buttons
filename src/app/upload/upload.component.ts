@@ -23,7 +23,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   apiBase = '';
   api = '';
   apiWake = '';
-  apiExist = '';
   origin = '';
   public form = this.fb.group({
     nameZH: this.fb.control('', {
@@ -92,8 +91,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   youtubeEmbedLink: SafeResourceUrl = '';
   routerSubscription: Subscription | undefined;
 
-  cacheExists = false;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -110,7 +107,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.apiBase = this.env.api;
     this.api = this.apiBase + '/sound-buttons';
     this.apiWake = this.apiBase + '/wake';
-    this.apiExist = this.apiBase + '/cache-exists';
     this.origin = this.env.origin;
   }
 
@@ -206,7 +202,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     if ('' === videoId) {
       this.youtubeEmbedLink = '';
       this.updateValueAndValidity();
-      this.cacheExists = false;
       if ('' !== value) {
         this.dialogService.toastError('Invalid Link: ' + value);
       }
@@ -239,10 +234,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
 
     this.updateValueAndValidity();
-
-    this.http.get<boolean>(this.apiExist, { params: { id: videoId } }).subscribe((response) => {
-      this.cacheExists = response;
-    });
   }
 
   OnYoutubeClipChange($event: Event): void {
@@ -363,23 +354,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       );
     this.youtubeEmbedLink = '';
 
-    if (this.getFormControl('clip').value) {
-      this.translate
-        .get('剪輯片段在伺服器端才能檢查快取，若快取不存在有可能在下載中逾時')
-        .subscribe((res: string) => {
-          this.dialogService.showModal.emit({
-            title: 'Notice',
-            message: res,
-          });
-        });
-    } else if (!this.file && !this.cacheExists) {
-      this.translate.get('此影片尚未建立快取，有可能在下載中逾時').subscribe((res: string) => {
-        this.dialogService.showModal.emit({
-          title: 'Notice',
-          message: res,
-        });
-      });
-    }
     this.form.reset();
     this.router.navigate(['/', this.config.name], {
       queryParams: { liveUpdate: '1' },

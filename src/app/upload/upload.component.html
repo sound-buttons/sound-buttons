@@ -6,16 +6,7 @@
       <div class="row">
         <div class="col-md-8 col-12">
           <div class="mb-3">
-            <label for="videoId" class="form-label"
-              >{{ 'Youtube來源' | translate }}
-              <span
-                title="Is video cached?"
-                *ngIf="getFormControl('videoId').valid && !!getFormControl('videoId').value"
-                [class.text-danger]="!this.cacheExists"
-                [class.text-success]="this.cacheExists"
-                ><i class="bi bi-circle-fill"></i
-              ></span>
-            </label>
+            <label for="videoId" class="form-label">{{ 'Youtube來源' | translate }} </label>
             <div class="input-group">
               <span class="input-group-text">{{ 'Youtube分享連結' | translate }}</span>
               <input
