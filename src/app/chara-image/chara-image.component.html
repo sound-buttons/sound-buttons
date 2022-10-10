@@ -1,0 +1,9 @@
+<div class="chara">
+  <img
+    class="mx-auto d-block"
+    *ngFor="let img of imgs; index as i"
+    [class.back]="i !== nowDisplayImg"
+    [src]="img"
+    alt="intro image"
+  />
+</div>

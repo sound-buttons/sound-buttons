@@ -1,9 +1,11 @@
 @import 'variables';
 
-#chara {
-  max-height: 70%;
-  max-width: 100%;
-  filter: drop-shadow(2px 6px 3px rgba(0, 0, 0, 0.4));
+.container {
+  height: min(666px, 131vh);
+}
+
+app-chara-image {
+  height: 70%;
 }
 
 #linkIcon-container {

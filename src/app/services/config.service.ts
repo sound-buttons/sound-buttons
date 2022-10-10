@@ -185,7 +185,7 @@ export interface IFullConfig extends IConfig {
 export interface IConfig {
   name: string | never;
   fullName: string;
-  imgSrc: string;
+  imgSrc: string | string[];
   fullConfigURL: string;
   liveUpdateURL: string;
   color?: IColor;

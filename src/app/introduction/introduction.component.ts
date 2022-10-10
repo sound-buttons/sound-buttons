@@ -11,20 +11,9 @@ import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu
   styleUrls: ['./introduction.component.scss'],
 })
 export class IntroductionComponent implements OnInit {
-  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
-  private _imgSrc = '';
   initTime = Date.now();
 
-  get imgSrc(): string {
-    let url = this._imgSrc;
-    if (url.includes('file.core.windows.net')) {
-      url += '&timestamp=' + this.initTime;
-    }
-    return url;
-  }
-  @Input() set imgSrc(v: string) {
-    this._imgSrc = v;
-  }
+  @Input() imgs: string[] | string = [];
 
   @Input() public intro = '';
 

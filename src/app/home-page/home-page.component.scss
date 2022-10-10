@@ -1,7 +1,7 @@
 @import 'variables';
 
 h2,
-img {
+app-chara-image {
   z-index: 4;
   margin: auto;
 }
@@ -20,8 +20,9 @@ h2 {
     0 0 70px $white;
 }
 
-img {
-  width: 80%;
+app-chara-image {
+  width: inherit;
+  height: inherit;
   transition-property: width;
   transition-duration: 0.3s;
 }
@@ -67,15 +68,15 @@ img {
 
   @include media-breakpoint-up(xl) {
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 1.5vw;
+    grid-column-gap: 2vw;
     margin: 0 2.2vw 0 8vw;
   }
 
-  @include media-breakpoint-up(xxl) {
-    grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 1vw;
-    margin: 0 1.8vw 0 6.5vw;
-  }
+  // @include media-breakpoint-up(xxl) {
+  //   grid-template-columns: repeat(5, 1fr);
+  //   grid-column-gap: 1vw;
+  //   margin: 0 1.8vw 0 6.5vw;
+  // }
 
   // @media (min-width:1600px) {
   //   grid-template-columns: repeat(6, 1fr);
@@ -91,6 +92,8 @@ img {
   transition-duration: 0.3s;
   padding: 5%;
   cursor: pointer;
+
+  width: 260px;
 
   &:hover {
     z-index: 4;
@@ -121,7 +124,7 @@ img {
 .details {
   position: relative;
   z-index: 2;
-  width: 95%;
+  width: inherit;
   height: 50vh;
   top: 0;
   border-radius: 2vw;

@@ -31,6 +31,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 import { ContextMenuModule } from '@ctrl/ngx-rightclick';
 import { ContextMenuComponent } from './sound-buttons/context-menu/context-menu.component';
+import { CharaImageComponent } from './chara-image/chara-image.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -54,6 +55,7 @@ declare let gtag: (...arg: unknown[]) => void;
     AudioControlComponent,
     ButtonFilterPipe,
     ContextMenuComponent,
+    CharaImageComponent,
   ],
   imports: [
     BrowserModule,

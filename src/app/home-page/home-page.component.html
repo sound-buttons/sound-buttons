@@ -9,7 +9,7 @@
         (mouseleave)="OnMouseLeave($event)"
       >
         <div class="details">
-          <img [src]="config.imgSrc" />
+          <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
           <h2>{{ config.fullName }}</h2>
           <div
             class="background"
