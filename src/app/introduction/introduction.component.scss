@@ -2,6 +2,7 @@
 
 .container {
   height: min(666px, 131vh);
+  overflow-y: hidden;
 }
 
 app-chara-image {
