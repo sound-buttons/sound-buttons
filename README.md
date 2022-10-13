@@ -15,8 +15,7 @@
 ## Related Repos
 
 |                           |                                                            |
-| ------------------------- | ---------------------------------------------------------- |
+|---------------------------|------------------------------------------------------------|
 | Angular (Frontend)        | <https://github.com/jim60105/sound-buttons>                |
 | Main data for Website     | <https://github.com/jim60105/sound-buttons_configs>        |
 | Azure Funstions (Backend) | <https://github.com/jim60105/sound-buttons_upload-backend> |
-| Media cache service       | <https://github.com/jim60105/docker-sound-dl>              |
