@@ -35,6 +35,6 @@ export class CharaImageComponent {
       } else {
         this.nowDisplayImg = 0;
       }
-    }, 5000);
+    }, 4000);
   }
 }
