@@ -48,7 +48,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const url = `${location.origin}${location.pathname}?filter=${this.button.text}`;
+    const url = `${location.origin}${location.pathname}?filename=${this.button.filename}`;
     navigator.clipboard.writeText(url);
     this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();
