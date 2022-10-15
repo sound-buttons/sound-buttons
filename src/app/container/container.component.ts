@@ -36,8 +36,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
         }
 
         this.SEOService.setTitle(config.fullName + ' - Sound Buttons');
-        this.SEOService.setOgUrl('https://sound-buttons.maki0419.com/' + config.name);
-        this.SEOService.setCanonicalLink('https://sound-buttons.maki0419.com/' + config.name);
+        this.SEOService.setUrl('https://sound-buttons.maki0419.com/' + config.name);
       }
     });
     this.route.paramMap.subscribe((p) => {

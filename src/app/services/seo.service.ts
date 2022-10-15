@@ -14,13 +14,16 @@ export class SEOService {
 
   setTitle(title: string): void {
     this.titleSvc.setTitle(title);
+    this.metaSvc.updateTag({ property: 'og:title', content: title });
+    this.metaSvc.updateTag({ property: 'og:site_name', content: title });
   }
 
   setDescription(content: string): void {
     this.metaSvc.updateTag({ name: 'description', content });
+    this.metaSvc.updateTag({ property: 'og:description', content });
   }
 
-  setCanonicalLink(url: string): void {
+  private setCanonicalLink(url: string): void {
     this.dom.head.querySelector("link[rel='canonical']")?.remove();
 
     const link: HTMLLinkElement = this.dom.createElement('link');
@@ -29,7 +32,9 @@ export class SEOService {
     this.dom.head.appendChild(link);
   }
 
-  setOgUrl(url: string): void {
+  setUrl(url: string): void {
     this.metaSvc.updateTag({ property: 'og:url', content: url });
+
+    this.setCanonicalLink(url);
   }
 }

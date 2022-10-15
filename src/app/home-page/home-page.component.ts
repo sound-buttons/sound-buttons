@@ -26,8 +26,7 @@ export class HomePageComponent implements OnInit {
     this.configService.resetConfig();
 
     this.SEOService.setTitle('Sound Buttons');
-    this.SEOService.setOgUrl('https://sound-buttons.maki0419.com/');
-    this.SEOService.setCanonicalLink('https://sound-buttons.maki0419.com/');
+    this.SEOService.setUrl('https://sound-buttons.maki0419.com/');
 
     this.displayService.setDisplay(0);
     this.displayService.setFilterText('');
