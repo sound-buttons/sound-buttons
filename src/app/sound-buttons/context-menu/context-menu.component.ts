@@ -1,11 +1,12 @@
 import { IButton } from './../Buttons';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostBinding, HostListener } from '@angular/core';
+import { Component, HostBinding, HostListener, Inject } from '@angular/core';
 import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 import { AnimationEvent } from '@angular/animations';
 import * as mime from 'mime';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'src/app/services/dialog.service';
+import { EnvironmentToken } from '../../app.module';
 
 @Component({
   selector: 'app-context-menu',
@@ -25,6 +26,7 @@ export class ContextMenuComponent extends MenuComponent {
     super._onAnimationDone($event);
   }
   button: IButton;
+  button_origin: string;
 
   lazy = false;
 
@@ -32,10 +34,13 @@ export class ContextMenuComponent extends MenuComponent {
     public menuPackage: MenuPackage,
     public contextMenuService: ContextMenuService,
     public translate: TranslateService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+    @Inject(EnvironmentToken) private env: any
   ) {
     super(menuPackage, contextMenuService);
     this.button = menuPackage.context;
+    this.button_origin = this.env.button_origin;
   }
 
   /**
@@ -48,7 +53,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const url = `${location.origin}${location.pathname}?filename=${this.button.filename}`;
+    const url = `${this.button_origin}${location.pathname}/${this.button.filename}`;
     navigator.clipboard.writeText(url);
     this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();

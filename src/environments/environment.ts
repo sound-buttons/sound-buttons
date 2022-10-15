@@ -9,6 +9,7 @@ export const environment = {
   },
   api: 'http://localhost:7071/api',
   origin: 'https://localhost:4200',
+  button_origin: 'https://sound-buttons.jim60105.workers.dev',
   version: 'DEVELOP',
 };
 
