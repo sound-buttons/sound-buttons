@@ -3,10 +3,9 @@
 .container {
   margin: 5px;
   overflow-y: auto;
-  height: calc(100% - 34.75vh);
 
   @media only screen and (max-width: 767px) {
-    margin-bottom: $footer-height + 1;
+    margin-bottom: $footer-height + 2;
   }
 }
 
@@ -32,4 +31,12 @@
 
 .alert {
   @include border-radius(true, var(--#{$prefix}alert-border-radius));
+}
+
+iframe {
+  position: sticky;
+  bottom: 5px;
+  margin: 10px 0 0 auto;
+  width: 200px;
+  height: 112.5px;
 }

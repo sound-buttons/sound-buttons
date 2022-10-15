@@ -1,16 +1,4 @@
-<div class="youtubeContainer mx-auto" *ngIf="!youtubeEmbedLink && displaySet === 0" translate>
-  來源影片預覧
-</div>
-<iframe
-  *ngIf="youtubeEmbedLink && displaySet === 0"
-  [src]="youtubeEmbedLink"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  class="youtubeContainer mx-auto"
-></iframe>
-
-<div class="container" role="main" [class.h-100]="displaySet === 1">
+<div class="container h-100" role="main">
   <div *ngFor="let buttonGroup of buttonGroups | buttonFilter: filterText">
     <div
       class="card border-primary mb-3"
@@ -39,4 +27,12 @@
       <div translate>沒有符合條件的按鈕</div>
     </div>
   </div>
+  <iframe
+    *ngIf="youtubeEmbedLink"
+    [src]="youtubeEmbedLink"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    class="youtubeContainer"
+  ></iframe>
 </div>

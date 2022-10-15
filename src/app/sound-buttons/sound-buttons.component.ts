@@ -62,6 +62,7 @@ export class SoundButtonsComponent implements OnInit {
       url.searchParams.append('fs', '0');
       url.searchParams.append('rel', '0');
       url.searchParams.append('autoplay', '0');
+      // url.searchParams.append('modestbranding', '1');
 
       this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
     } else {
