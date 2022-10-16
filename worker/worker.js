@@ -77,7 +77,7 @@ async function handleRequest(request) {
               { html: true }
             );
             e.append(
-              '<meta property="og:video:type" content="video/mp4" /> <meta property="og:video:width" content="1024"> <meta property="og:video:height" content="2048">',
+              '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="1024"> <meta property="og:video:height" content="2048">',
               { html: true }
             );
 
