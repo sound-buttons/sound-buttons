@@ -13,9 +13,7 @@ import { IColor, ColorService } from './color.service';
 })
 export class ConfigService {
   private url = 'assets/configs/main.json';
-  private config: IFullConfig | undefined;
   public groupNames: string[] = [];
-
   public OnConfigChanged: EventEmitter<IFullConfig | undefined> = new EventEmitter();
 
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -37,6 +35,14 @@ export class ConfigService {
     this._name = value;
     this.reloadConfig();
   }
+
+  private _config: IFullConfig | undefined;
+  public get config(): IFullConfig | undefined {
+    return this._config;
+  }
+  // private set config(value: IFullConfig | undefined) {
+  //   this._config = value;
+  // }
 
   constructor(
     private http: HttpClient,
@@ -142,11 +148,11 @@ export class ConfigService {
   }
 
   resetConfig(): void {
-    this.config = undefined;
+    this._config = undefined;
     this._name = '';
     this._isLiveUpdate = false;
     this.colorService.resetColor();
-    this.OnConfigChanged.emit(this.config);
+    this.OnConfigChanged.emit(this._config);
   }
 
   reloadConfig(callback?: (result: IFullConfig) => void): void {
@@ -163,8 +169,8 @@ export class ConfigService {
       )
       .subscribe((config) => {
         if (config) {
-          this.config = config;
-          this.OnConfigChanged.emit(this.config);
+          this._config = config;
+          this.OnConfigChanged.emit(this._config);
         } else {
           this.resetConfig();
         }

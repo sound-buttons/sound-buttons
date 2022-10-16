@@ -12,4 +12,11 @@
   >
     {{ '在 Youtube 上觀看' | translate }}
   </button>
+  <div class="dropdown-divider"></div>
+  <button class="dropdown-item" (click)="shareToTwitter()">
+    {{ '分享到twitter' | translate }}
+  </button>
+  <button class="dropdown-item" (click)="shareToFacebook()">
+    {{ '分享到facebook' | translate }}
+  </button>
 </div>

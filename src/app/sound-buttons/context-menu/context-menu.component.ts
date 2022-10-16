@@ -1,3 +1,4 @@
+import { ConfigService } from './../../services/config.service';
 import { IButton } from './../Buttons';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, HostListener, Inject } from '@angular/core';
@@ -35,6 +36,7 @@ export class ContextMenuComponent extends MenuComponent {
     public contextMenuService: ContextMenuService,
     public translate: TranslateService,
     public dialogService: DialogService,
+    public configService: ConfigService,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -99,6 +101,38 @@ export class ContextMenuComponent extends MenuComponent {
     if (this.button.source) {
       window.open(this.generateYoutubeLink);
     }
+    this.close();
+  }
+
+  shareToTwitter(): void {
+    const filenameWithoutExtension =
+      this.button.filename.indexOf('.') > 0
+        ? this.button.filename.split('.').slice(0, -1).join('.')
+        : this.button.filename;
+    const url = `${this.button_origin}${location.pathname}/${encodeURI(filenameWithoutExtension)}`;
+    window.open(
+      `https://twitter.com/intent/tweet?text=${
+        `${encodeURIComponent(
+          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
+        )}` +
+        '%0A' +
+        encodeURIComponent(url)
+      }`
+    );
+    this.close();
+  }
+
+  shareToFacebook(): void {
+    const filenameWithoutExtension =
+      this.button.filename.indexOf('.') > 0
+        ? this.button.filename.split('.').slice(0, -1).join('.')
+        : this.button.filename;
+    const url = `${this.button_origin}${location.pathname}/${encodeURI(filenameWithoutExtension)}`;
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        url
+      )}&hashtag=%23sound_buttons`
+    );
     this.close();
   }
 }
