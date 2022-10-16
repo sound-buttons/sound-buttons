@@ -69,15 +69,15 @@ async function handleRequest(request) {
         .on('head', {
           element(e) {
             e.append(
-              `<meta property="og:video" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:video" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append(
-              `<meta property="og:video:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:video:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append(
-              `<meta property="og:video:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:video:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append(
@@ -99,15 +99,15 @@ async function handleRequest(request) {
             );
 
             e.append(
-              `<meta property="og:audio" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:audio" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append(
-              `<meta property="og:audio:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:audio:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append(
-              `<meta property="og:audio:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
+              `<meta property="og:audio:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
               { html: true }
             );
             e.append('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
