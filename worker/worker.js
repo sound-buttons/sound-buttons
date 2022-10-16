@@ -81,12 +81,11 @@ async function handleRequest(request) {
               { html: true }
             );
 
+            e.append(`<meta name="twitter:player" content="${url}?${searchParams}">`, {
+              html: true,
+            });
             e.append(
-              `<meta name="twitter:player" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[2]}">`,
-              { html: true }
-            );
-            e.append(
-              '<meta name="twitter:player:width" content="1024"> <meta name="twitter:player:height" content="2048">',
+              '<meta name="twitter:player:width" content="800"> <meta name="twitter:player:height" content="600">',
               { html: true }
             );
 
@@ -115,6 +114,11 @@ async function handleRequest(request) {
         .on('head > meta[property="og:image"], head > meta[name="twitter:image"]', {
           element(e) {
             e.setAttribute('content', imageUrl);
+          },
+        })
+        .on('head > meta[name="twitter:card"]', {
+          element(e) {
+            e.setAttribute('content', 'player');
           },
         })
         .on('head > link[rel="image_src"]', {
