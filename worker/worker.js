@@ -30,7 +30,11 @@ async function handleRequest(request) {
     );
     const configResponse = await fetch(configUrl);
     const config = await configResponse.json();
-    const filename = decodeURI(found[2]);
+    let filename = decodeURI(found[2]);
+    filename =
+      filename.indexOf('.') >= 0
+        ? filename.split('.').slice(0, -1).join('.') + '.webm'
+        : filename + '.webm';
 
     let button;
     config.buttonGroups?.forEach((group) => {

@@ -53,7 +53,11 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const url = `${this.button_origin}${location.pathname}/${this.button.filename}`;
+    const filenameWithoutExtension =
+      this.button.filename.indexOf('.') > 0
+        ? this.button.filename.split('.').slice(0, -1).join('.')
+        : this.button.filename;
+    const url = `${this.button_origin}${location.pathname}/${filenameWithoutExtension}`;
     navigator.clipboard.writeText(url);
     this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();

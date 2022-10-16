@@ -49,8 +49,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
           .subscribe((params) => {
             if (this.modalService.getModalsCount() === 0) {
               let button: IButton | undefined;
+              const filename =
+                (params.filename as string).indexOf('.') >= 0
+                  ? params.filename.split('.').slice(0, -1).join('.') + '.webm'
+                  : params.filename + '.webm';
               this.config.buttonGroups?.forEach((group) => {
-                button ??= group.buttons.find((btn) => btn.filename === params.filename);
+                button ??= group.buttons.find((btn) => btn.filename === filename);
               });
 
               if (typeof button !== 'undefined') {
