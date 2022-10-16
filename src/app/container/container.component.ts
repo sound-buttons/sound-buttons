@@ -9,6 +9,7 @@ import { IFullConfig, ConfigService } from '../services/config.service';
 import { SEOService } from './../services/seo.service';
 import { DisplayService } from './../services/display.service';
 import { DialogService } from './../services/dialog.service';
+import * as mime from 'mime';
 
 @Component({
   selector: 'app-container',
@@ -55,7 +56,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
               if (typeof button !== 'undefined') {
                 const audioElement = document.createElement('audio');
                 audioElement.controls = true;
-                audioElement.src = button.baseRoute + button.filename + button.SASToken;
+                const source = document.createElement('source');
+                source.src = button.baseRoute + button.filename + button.SASToken;
+                source.type = mime.getType(button.filename) ?? 'audio/webm';
+                audioElement.appendChild(source);
 
                 this.dialogService.showModal.emit({
                   title: button.text,
