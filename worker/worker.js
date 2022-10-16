@@ -15,7 +15,9 @@ async function handleRequest(request) {
     const searchParams = new URLSearchParams('filename=' + found[2]);
     const originalResponse = await fetch(`${url}?${searchParams}`);
 
-    const configUrl = new URL(`https://sound-buttons.maki0419.com/assets/configs/${found[1]}.json`);
+    const configUrl = new URL(
+      `https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[1]}.json`
+    );
     const configResponse = await fetch(configUrl);
     const config = await configResponse.json();
     const filename = decodeURI(found[2]);
