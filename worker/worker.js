@@ -1,9 +1,19 @@
 export default {
   async fetch(request, env) {
-    return await handleRequest(request).catch(
+    let cache = caches.default;
+    let cacheResponse = await cache.match(request);
+    if (!!cacheResponse) {
+      return cacheResponse;
+    }
+
+    const response = await handleRequest(request).catch(
       (err) => new Response('Internal Server Error', { status: 500 })
       // (err) => new Response(err.stack, { status: 500 })
     );
+
+    if (response.headers.status <= 299) cache.put(request, response);
+
+    return response;
   },
 };
 
