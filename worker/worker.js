@@ -81,7 +81,7 @@ async function handleRequest(request) {
               { html: true }
             );
             e.append(
-              '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="1024"> <meta property="og:video:height" content="2048">',
+              '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="640"> <meta property="og:video:height" content="1024">',
               { html: true }
             );
 
@@ -89,12 +89,12 @@ async function handleRequest(request) {
               html: true,
             });
             e.append(
-              '<meta name="twitter:player:width" content="800"> <meta name="twitter:player:height" content="600">',
+              '<meta name="twitter:player:width" content="800"> <meta name="twitter:player:height" content="800">',
               { html: true }
             );
 
             e.append(
-              '<meta name="og:image:width" content="1024"> <meta name="og:image:height" content="2048">',
+              '<meta name="og:image:width" content="640"> <meta name="og:image:height" content="1024">',
               { html: true }
             );
 
