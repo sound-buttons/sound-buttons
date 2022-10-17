@@ -37,4 +37,9 @@ export class SEOService {
 
     this.setCanonicalLink(url);
   }
+
+  setImage(url: string): void {
+    this.metaSvc.updateTag({ property: 'og:image', content: url });
+    this.metaSvc.updateTag({ name: 'twitter:image', content: url });
+  }
 }
