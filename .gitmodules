@@ -1,4 +1,4 @@
 [submodule "src/assets/configs"]
-	path = src/assets/configs
-	url = https://github.com/jim60105/sound-buttons_configs.git
-	branch = minify
+path = src/assets/configs
+url = https://github.com/sound-buttons/sound-buttons_configs.git
+branch = minify
