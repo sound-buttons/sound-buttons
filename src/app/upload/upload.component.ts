@@ -155,7 +155,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    if (!this.file.type.startsWith('audio')) {
+    if (!this.file.type.startsWith('audio') && !this.file.type.startsWith('video')) {
       this.translate.get('僅限上傳音訊檔案').subscribe((res: string) => {
         clearFile(`${res}!!`);
       });
