@@ -1,7 +1,11 @@
 @import 'variables';
 
 .container {
-  height: min(666px, 131vh);
+  @media only screen and (max-width: 767px) {
+    height: 100vh;
+  }
+
+  height: 100%;
   overflow-y: hidden;
 }
 
