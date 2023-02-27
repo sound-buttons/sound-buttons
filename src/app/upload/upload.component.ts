@@ -30,7 +30,10 @@ export class UploadComponent implements OnInit, OnDestroy {
       updateOn: 'blur',
     }),
     nameJP: '',
-    group: '',
+    group: this.fb.control('', {
+      validators: Validators.required,
+      updateOn: 'blur',
+    }),
     videoId: this.fb.control('', {
       validators: [
         (c) =>
