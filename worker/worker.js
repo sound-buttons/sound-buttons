@@ -21,8 +21,7 @@ async function handleRequest(request) {
   const found = new URL(request.url).pathname.match(/\/(\w+)\/(.+)/);
   if (found) {
     const url = new URL('https://sound-buttons.maki0419.com/');
-    url.pathname = '/' + found[1];
-    const searchParams = new URLSearchParams('filename=' + found[2]);
+    url.pathname = `/${found[1]}`;
     const originalResponse = await fetch(`${url}?${searchParams}`);
 
     const configUrl = new URL(
@@ -30,6 +29,7 @@ async function handleRequest(request) {
     );
     const configResponse = await fetch(configUrl);
     const config = await configResponse.json();
+    let id = decodeURI(found[2]);
     let filename = decodeURI(found[2]);
     filename =
       filename.indexOf('.') >= 0
@@ -39,11 +39,13 @@ async function handleRequest(request) {
     let button;
     config.buttonGroups?.forEach((group) => {
       button ??= group.buttons.find((btn) => btn.filename === filename);
+      button ??= group.buttons.find((btn) => btn.id === id);
     });
 
     if (typeof button === 'undefined' || !button) {
       return new Response('', { status: 302, headers: { Location: `${url}?${searchParams}` } });
     }
+    url.pathname += `/${id}`;
 
     const buttonName = button.text['zh-tw'] || button.text['ja'] || filename;
     const imageUrl = config.imgSrc[0];
@@ -150,10 +152,9 @@ async function handleRequest(request) {
         })
         .on('body', {
           element(e) {
-            e.append(
-              `<script>window.onload = function() { location.href = "${url}?${searchParams}"; }</script>`,
-              { html: true }
-            );
+            e.append(`<script>window.onload = function() { location.href = "${url}"; }</script>`, {
+              html: true,
+            });
           },
         })
         .transform(originalResponse)
