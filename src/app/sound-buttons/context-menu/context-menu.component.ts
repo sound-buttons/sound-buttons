@@ -55,11 +55,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const filenameWithoutExtension =
-      this.button.filename.indexOf('.') > 0
-        ? this.button.filename.split('.').slice(0, -1).join('.')
-        : this.button.filename;
-    const url = `${this.button_origin}${location.pathname}/${filenameWithoutExtension}`;
+    const url = `${this.button_origin}${location.pathname}/${this.button.id}`;
     navigator.clipboard.writeText(url);
     this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();
@@ -105,11 +101,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   shareToTwitter(): void {
-    const filenameWithoutExtension =
-      this.button.filename.indexOf('.') > 0
-        ? this.button.filename.split('.').slice(0, -1).join('.')
-        : this.button.filename;
-    const url = `${this.button_origin}${location.pathname}/${encodeURI(filenameWithoutExtension)}`;
+    const url = `${this.button_origin}${location.pathname}/${encodeURI(this.button.id)}`;
     window.open(
       `https://twitter.com/intent/tweet?text=${
         `${encodeURIComponent(
@@ -123,11 +115,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   shareToFacebook(): void {
-    const filenameWithoutExtension =
-      this.button.filename.indexOf('.') > 0
-        ? this.button.filename.split('.').slice(0, -1).join('.')
-        : this.button.filename;
-    const url = `${this.button_origin}${location.pathname}/${encodeURI(filenameWithoutExtension)}`;
+    const url = `${this.button_origin}${location.pathname}/${encodeURI(this.button.id)}`;
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         url
