@@ -22,7 +22,7 @@ async function handleRequest(request) {
   if (found) {
     const url = new URL('https://sound-buttons.maki0419.com/');
     url.pathname = `/${found[1]}`;
-    const originalResponse = await fetch(`${url}?${searchParams}`);
+    const originalResponse = await fetch(`${url}`);
 
     const configUrl = new URL(
       `https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[1]}.json`
@@ -43,11 +43,12 @@ async function handleRequest(request) {
     });
 
     if (typeof button === 'undefined' || !button) {
-      return new Response('', { status: 302, headers: { Location: `${url}?${searchParams}` } });
+      return new Response('', { status: 302, headers: { Location: `${url}` } });
     }
     url.pathname += `/${id}`;
 
     const buttonName = button.text['zh-tw'] || button.text['ja'] || filename;
+    filename = button.filename || filename;
     const imageUrl = config.imgSrc[0];
 
     // https://developers.cloudflare.com/workers/runtime-apis/html-rewriter
@@ -87,7 +88,7 @@ async function handleRequest(request) {
               { html: true }
             );
 
-            e.append(`<meta name="twitter:player" content="${url}?${searchParams}">`, {
+            e.append(`<meta name="twitter:player" content="${url}">`, {
               html: true,
             });
             e.append(

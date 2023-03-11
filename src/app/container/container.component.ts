@@ -46,43 +46,22 @@ export class ContainerComponent implements OnInit, OnDestroy {
           `https://sound-buttons.maki0419.com/assets/img/preview/${config.name}.png`
         );
 
-        this.route.queryParams
-          .pipe(
-            filter((p) => !!p.filename),
-            take(1)
-          )
-          .subscribe((params) => {
-            if (this.modalService.getModalsCount() === 0) {
-              let button: IButton | undefined;
-              const filename =
-                (params.filename as string).indexOf('.') >= 0
-                  ? params.filename.split('.').slice(0, -1).join('.') + '.webm'
-                  : params.filename + '.webm';
-              this.config.buttonGroups?.forEach((group) => {
-                button ??= group.buttons.find((btn) => btn.filename === filename);
-              });
-
-              this.showDetail(button);
-
-              this.router.navigate([], {
-                relativeTo: this.route,
-                queryParams: { filename: null },
-                queryParamsHandling: 'merge',
-              });
-            }
-          });
-
         this.route.params
           .pipe(
-            filter((p) => p.has('id') && p.get('id') !== 'upload'),
+            filter((p) => 'id' in p && p.id !== 'upload'),
             take(1)
           )
           .subscribe((p) => {
             if (this.modalService.getModalsCount() === 0) {
               let button: IButton | undefined;
               const id = p.id;
+              const filename =
+                (p.id as string).indexOf('.') >= 0
+                  ? p.id.split('.').slice(0, -1).join('.') + '.webm'
+                  : p.id + '.webm';
               this.config.buttonGroups?.forEach((group) => {
                 button ??= group.buttons.find((btn) => btn.id === id);
+                button ??= group.buttons.find((btn) => btn.filename === filename);
               });
 
               this.showDetail(button);
