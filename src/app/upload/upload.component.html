@@ -133,14 +133,14 @@
             <label for="nameZH" class="form-label">{{ '中文名' | translate }}</label>
             <input
               type="text"
-              class="form-control left-border left-border-red"
+              class="form-control"
               id="nameZH"
               formControlName="nameZH"
               [attr.placeholder]="'顯示在按鈕上的文字' | translate"
-              [class.is-invalid]="
-                getFormControl('nameZH').touched && getFormControl('nameZH').invalid
-              "
             />
+            <span class="form-text">
+              {{ 'STT' | translate }}
+            </span>
           </div>
 
           <div class="mb-3">
@@ -152,6 +152,9 @@
               formControlName="nameJP"
               [attr.placeholder]="'顯示在按鈕上的日文版文字' | translate"
             />
+            <span class="form-text">
+              {{ 'STT' | translate }}
+            </span>
           </div>
 
           <div class="mb-3">

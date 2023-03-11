@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
@@ -29,7 +30,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private displayService: DisplayService,
     private SEOService: SEOService,
     private dialogService: DialogService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -60,25 +62,36 @@ export class ContainerComponent implements OnInit, OnDestroy {
                 button ??= group.buttons.find((btn) => btn.filename === filename);
               });
 
-              if (typeof button !== 'undefined') {
-                const audioElement = document.createElement('audio');
-                audioElement.controls = true;
-                const source = document.createElement('source');
-                source.src = button.baseRoute + button.filename + button.SASToken;
-                source.type = mime.getType(button.filename) ?? 'audio/webm';
-                audioElement.appendChild(source);
+              this.showDetail(button);
 
-                this.dialogService.showModal.emit({
-                  title: button.text,
-                  message: audioElement.outerHTML,
-                });
+              this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: { filename: null },
+                queryParamsHandling: 'merge',
+              });
+            }
+          });
 
-                this.router.navigate([], {
-                  relativeTo: this.route,
-                  queryParams: { filename: null },
-                  queryParamsHandling: 'merge',
-                });
-              }
+        this.route.params
+          .pipe(
+            filter((p) => p.has('id') && p.get('id') !== 'upload'),
+            take(1)
+          )
+          .subscribe((p) => {
+            if (this.modalService.getModalsCount() === 0) {
+              let button: IButton | undefined;
+              const id = p.id;
+              this.config.buttonGroups?.forEach((group) => {
+                button ??= group.buttons.find((btn) => btn.id === id);
+              });
+
+              this.showDetail(button);
+
+              this.router.navigate(['../'], {
+                relativeTo: this.route,
+                queryParams: { filename: null },
+                queryParamsHandling: 'merge',
+              });
             }
           });
       }
@@ -94,6 +107,22 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.displayService.OnConfigChanged.subscribe((p) => {
       this.displaySet = p[0];
     });
+  }
+
+  private showDetail(button: IButton | undefined) {
+    if (typeof button !== 'undefined') {
+      const audioElement = document.createElement('audio');
+      audioElement.controls = true;
+      const source = document.createElement('source');
+      source.src = button.baseRoute + button.filename + button.SASToken;
+      source.type = mime.getType(button.filename) ?? 'audio/webm';
+      audioElement.appendChild(source);
+
+      this.dialogService.showModal.emit({
+        title: button.text,
+        message: audioElement.outerHTML,
+      });
+    }
   }
 
   ngOnDestroy(): void {

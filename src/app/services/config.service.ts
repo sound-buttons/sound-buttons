@@ -97,6 +97,7 @@ export class ConfigService {
             const b = source.introButton;
             target.introButton = new Button(
               this.audioService,
+              b.id,
               b.filename,
               b.text,
               b.baseRoute,
@@ -117,6 +118,7 @@ export class ConfigService {
                 buttons.push(
                   new Button(
                     this.audioService,
+                    b.id,
                     b.filename,
                     b.text,
                     b.baseRoute,

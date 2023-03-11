@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', component: ContainerComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent },
+      { path: ':id', component: ContainerComponent },
     ],
   },
 ];

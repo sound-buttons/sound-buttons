@@ -6,6 +6,7 @@ export const defaultBaseRoute = 'assets/sound/';
 export class Button implements IButton {
   constructor(
     private audioService: AudioService,
+    public id: string,
     public filename: string,
     public text: string | never = filename,
     public baseRoute = defaultBaseRoute,
@@ -38,6 +39,7 @@ export class Button implements IButton {
 }
 
 export interface IButton {
+  id: string;
   filename: string;
   text: string | never;
   baseRoute: string;
