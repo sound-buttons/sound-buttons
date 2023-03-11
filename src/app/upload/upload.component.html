@@ -130,6 +130,22 @@
 
         <div class="col-md-4 col-12">
           <div class="mb-3">
+            <label for="group" class="form-label">{{ '分組' | translate }}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="group"
+              formControlName="group"
+              [attr.placeholder]="'分組名稱' | translate"
+              autocomplete="off"
+              [typeahead]="groupNames()"
+              [typeaheadScrollable]="true"
+              [typeaheadOptionsInScrollableView]="7"
+              [typeaheadMinLength]="0"
+            />
+          </div>
+
+          <div class="mb-3">
             <label for="nameZH" class="form-label">{{ '中文名' | translate }}</label>
             <input
               type="text"
@@ -155,22 +171,6 @@
             <span class="form-text">
               {{ 'STT' | translate }}
             </span>
-          </div>
-
-          <div class="mb-3">
-            <label for="group" class="form-label">{{ '分組' | translate }}</label>
-            <input
-              type="text"
-              class="form-control"
-              id="group"
-              formControlName="group"
-              [attr.placeholder]="'分組名稱' | translate"
-              autocomplete="off"
-              [typeahead]="groupNames()"
-              [typeaheadScrollable]="true"
-              [typeaheadOptionsInScrollableView]="7"
-              [typeaheadMinLength]="0"
-            />
           </div>
 
           <div class="mb-3">
