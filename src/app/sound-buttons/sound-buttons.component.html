@@ -10,7 +10,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          *ngFor="let btn of buttonGroup.buttons.slice().reverse()"
+          *ngFor="let btn of buttonGroup.buttons.slice().reverse(); trackBy: trackById"
           (click)="buttonClick($event, btn)"
           [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)"
           [contextMenuTrigger]="menu"
@@ -34,5 +34,6 @@
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     class="youtubeContainer"
+    loading="lazy"
   ></iframe>
 </div>

@@ -95,6 +95,7 @@ app-chara-image {
 
   width: 260px;
 
+  will-change: z-index, top;
   &:hover {
     z-index: 4;
     top: 64%;
@@ -106,10 +107,16 @@ app-chara-image {
     }
   }
 
+  img {
+    will-change: width;
+  }
   &:hover img {
     width: 100%;
   }
 
+  h2 {
+    will-change: font-size;
+  }
   &:hover h2 {
     font-size: 2.4rem;
   }
@@ -140,6 +147,7 @@ app-chara-image {
   align-items: center;
 
   margin-left: auto;
+  will-change: transform;
 
   @include media-breakpoint-up(md) {
     margin-left: unset;

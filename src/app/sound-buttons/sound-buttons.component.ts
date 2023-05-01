@@ -91,4 +91,8 @@ export class SoundButtonsComponent implements OnInit {
         .reduce((a, b) => a + b.length, 0) === 0
     );
   }
+
+  trackById(_index: number, item: IButton): string {
+    return item.id;
+  }
 }

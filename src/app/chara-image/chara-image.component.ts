@@ -22,9 +22,12 @@ export class CharaImageComponent {
   }
   @Input() set imgs(v: string[] | string) {
     if (typeof v === 'string') {
-      this._imgs = [v];
+      this._imgs = [v.replace('.png', '')];
     } else {
-      this._imgs = v;
+      this._imgs = v.reduce((acc, cur) => {
+        acc.push(cur.replace('.png', ''));
+        return acc;
+      }, [] as string[]);
     }
   }
 
