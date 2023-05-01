@@ -2,7 +2,7 @@
   "navigationFallback": {
     "rewrite": "index.html",
     "exclude": [
-      "/assets/*.{png,jpg,gif,ico}",
+      "/assets/*.{png,jpg,gif,ico,avif,webp}",
       "/*.{css,scss,js}"
     ]
   }
