@@ -201,6 +201,7 @@ export interface IConfig {
 
 export interface ILink {
   youtube?: string;
+  twitch?: string;
   twitter?: string;
   facebook?: string;
   instagram?: string;
