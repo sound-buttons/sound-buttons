@@ -42,6 +42,8 @@ async function handlePageRequest(request) {
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
     const config = configs.find((c) => c.name === found[1]);
+    if (!config) return new Response('Not found.', { status: 404 });
+
     Title = `${config.fullName} | Sound Buttons`;
     Description = `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說...`;
     Thumbnail = `https://sound-buttons.maki0419.com/assets/img/preview/${found[1]}.png`;
@@ -117,6 +119,12 @@ async function handleButtonRequest(request) {
     );
     const configResponse = await fetch(configUrl);
     const config = await configResponse.json();
+    if (!config) {
+      return new Response('Not found. Redirect to homepage.', {
+        status: 302,
+        headers: { Location: `${url}` },
+      });
+    }
     let id = decodeURI(found[2]);
     let filename = decodeURI(found[2]);
     filename =
@@ -130,9 +138,13 @@ async function handleButtonRequest(request) {
       button ??= group.buttons.find((btn) => btn.id === id);
     });
 
-    if (typeof button === 'undefined' || !button) {
-      return new Response('', { status: 302, headers: { Location: `${url}` } });
+    if (!button) {
+      return new Response('Not found. Redirect to homepage.', {
+        status: 302,
+        headers: { Location: `${url}` },
+      });
     }
+
     url.pathname += `/${id}`;
 
     const buttonName = button.text['zh-tw'] || button.text['ja'] || filename;
