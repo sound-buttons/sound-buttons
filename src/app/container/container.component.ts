@@ -94,7 +94,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
       audioElement.controls = true;
       const source = document.createElement('source');
       source.src = button.baseRoute + button.filename + button.SASToken;
-      source.type = mime.getType(button.filename) ?? 'audio/webm';
+      source.type = mime.lookup(button.filename) ?? 'audio/webm';
       audioElement.appendChild(source);
 
       this.dialogService.showModal.emit({

@@ -4,10 +4,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, HostBinding, HostListener, Inject } from '@angular/core';
 import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 import { AnimationEvent } from '@angular/animations';
-import * as mime from 'mime';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'src/app/services/dialog.service';
 import { EnvironmentToken } from '../../app.module';
+import * as mime from 'mime';
 
 @Component({
   selector: 'app-context-menu',
@@ -68,7 +68,7 @@ export class ContextMenuComponent extends MenuComponent {
       .then((response) => response.blob())
       .then((response) => {
         const file = new Blob([response], {
-          type: mime.getType(this.button.filename) ?? response.type,
+          type: mime.lookup(this.button.filename) ?? response.type,
         });
         const anchor = document.createElement('a');
         anchor.download = this.button.filename;
