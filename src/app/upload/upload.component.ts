@@ -26,7 +26,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   origin = '';
   public form = this.fb.group({
     nameZH: '',
-    nameJP: '',
+    nameJP: this.fb.control({ value: '', disabled: false }),
+    useSTT: this.fb.control(false),
     group: this.fb.control('', {
       validators: Validators.required,
       updateOn: 'blur',
@@ -256,10 +257,12 @@ export class UploadComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // const formData: any = new FormData();
     const formData = new FormData();
     formData.append('nameZH', this.getFormControl('nameZH').value);
-    formData.append('nameJP', this.getFormControl('nameJP').value);
+    formData.append(
+      'nameJP',
+      this.getFormControl('useSTT').value ? '[useSTT]' : this.getFormControl('nameJP').value
+    );
     formData.append('group', this.getFormControl('group').value);
     formData.append('videoId', this.getFormControl('videoId').value);
     formData.append('clip', this.getFormControl('clip').value);

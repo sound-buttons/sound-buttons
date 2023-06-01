@@ -155,9 +155,6 @@
               formControlName="nameZH"
               [attr.placeholder]="'顯示在按鈕上的文字' | translate"
             />
-            <span class="form-text">
-              {{ 'STT' | translate }}
-            </span>
           </div>
 
           <div class="mb-3">
@@ -169,9 +166,20 @@
               formControlName="nameJP"
               [attr.placeholder]="'顯示在按鈕上的日文版文字' | translate"
             />
-            <span class="form-text">
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="useSTT"
+              formControlName="useSTT"
+              (change)="getFormControl('useSTT').value ? getFormControl('nameJP').disable() : getFormControl('nameJP').enable()"
+            />
+            <label class="form-check-label" for="useSTT">
               {{ 'STT' | translate }}
-            </span>
+            </label>
           </div>
 
           <div class="mb-3">
