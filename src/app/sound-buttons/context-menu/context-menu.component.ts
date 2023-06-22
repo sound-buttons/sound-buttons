@@ -68,7 +68,7 @@ export class ContextMenuComponent extends MenuComponent {
       .then((response) => response.blob())
       .then((response) => {
         const file = new Blob([response], {
-          type: mime.lookup(this.button.filename) ?? response.type,
+          type: mime.getType(this.button.filename) ?? response.type,
         });
         const anchor = document.createElement('a');
         anchor.download = this.button.filename;
