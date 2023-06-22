@@ -79,7 +79,7 @@ async function handlePageRequest(request) {
           element.setAttribute('content', `https://sound-buttons.maki0419.com/${found[1]}`);
         },
       })
-      .on('meta[property="og:image"], meta[property="twitter:image"]', {
+      .on('meta[property="og:image"], meta[name="twitter:image"]', {
         element(element) {
           element.setAttribute('content', Thumbnail);
         },
@@ -158,6 +158,8 @@ async function handleButtonRequest(request) {
     const buttonName = button.text['zh-tw'] || button.text['ja'] || filename;
     filename = button.filename || filename;
     const imageUrl = config.imgSrc[0];
+    const audioUrl = `https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}`;
+    const creator = '@' + config.link.twitter.match(/[^/]+$/)[0];
 
     // https://developers.cloudflare.com/workers/runtime-apis/html-rewriter
     const rewriter = new HTMLRewriter()
@@ -169,18 +171,9 @@ async function handleButtonRequest(request) {
       })
       .on('head', {
         element(e) {
-          e.append(
-            `<meta property="og:video" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
-          e.append(
-            `<meta property="og:video:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
-          e.append(
-            `<meta property="og:video:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
+          e.append(`<meta property="og:video" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:video:url" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:video:secure_url" content="${audioUrl}">`, { html: true });
           e.append(
             '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="640"> <meta property="og:video:height" content="1024">',
             { html: true }
@@ -190,7 +183,7 @@ async function handleButtonRequest(request) {
             html: true,
           });
           e.append(
-            '<meta name="twitter:player:width" content="800"> <meta name="twitter:player:height" content="800">',
+            '<meta name="twitter:player:width" content="640"> <meta name="twitter:player:height" content="1024">',
             { html: true }
           );
 
@@ -199,18 +192,9 @@ async function handleButtonRequest(request) {
             { html: true }
           );
 
-          e.append(
-            `<meta property="og:audio" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
-          e.append(
-            `<meta property="og:audio:url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
-          e.append(
-            `<meta property="og:audio:secure_url" content="https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}">`,
-            { html: true }
-          );
+          e.append(`<meta property="og:audio" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:audio:url" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:audio:secure_url" content="${audioUrl}">`, { html: true });
           e.append('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
             html: true,
           });
@@ -221,14 +205,19 @@ async function handleButtonRequest(request) {
           e.setAttribute('content', imageUrl);
         },
       })
-      .on('head > meta[name="twitter:card"]', {
-        element(e) {
-          e.setAttribute('content', 'player');
-        },
-      })
       .on('head > link[rel="image_src"]', {
         element(e) {
           e.setAttribute('href', imageUrl);
+        },
+      })
+      .on('head > meta[name="twitter:creator"]', {
+        element(e) {
+          e.setAttribute('content', creator);
+        },
+      })
+      .on('head > meta[name="twitter:card"]', {
+        element(e) {
+          e.setAttribute('content', 'player');
         },
       })
       .on('head > meta[property="og:title"]', {
@@ -259,6 +248,7 @@ async function handleButtonRequest(request) {
     console.log('Filename:', filename);
     console.log('Image:', imageUrl);
     console.log('URL:', url);
+    console.log('Audio:', audioUrl);
 
     if (response.status === 200) await cache.put(request, newResponse.clone());
     console.log('Cache updated.');
