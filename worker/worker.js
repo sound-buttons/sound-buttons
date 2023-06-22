@@ -8,6 +8,7 @@ export default {
 };
 
 async function handlePageRequest(request) {
+  console.log('Handle page request: ', request.url);
   const response = await fetch(request);
   const headers = new Headers(response.headers);
 
@@ -17,6 +18,7 @@ async function handlePageRequest(request) {
     !headers.get('content-type')?.includes('text/html') ||
     new URL(request.url).pathname === '/'
   ) {
+    console.log('Not HTML, or not ok, or root path. Return original response.');
     return response;
   }
 
@@ -34,6 +36,7 @@ async function handlePageRequest(request) {
   const found = new URL(request.url).pathname.match(/\/(\w+)\/?/);
   // root
   if (!found) {
+    console.log('Not found (root page), return original response.');
     return response;
   }
 
@@ -93,14 +96,19 @@ async function handlePageRequest(request) {
       });
 
     const newResponse = rewriter.transform(response);
+    console.log('Title: ', Title);
+    console.log('Description: ', Description);
+    console.log('Thumbnail: ', Thumbnail);
 
     if (response.status === 200) await cache.put(request, newResponse.clone());
+    console.log('Cache updated.');
 
     return newResponse;
   }
 }
 
 async function handleButtonRequest(request) {
+  console.log('Handle button request: ', request.url);
   const found = new URL(request.url).pathname.match(/\/(\w+)\/(.+)/);
   if (found) {
     const url = new URL('https://sound-buttons.maki0419.com/');
@@ -247,8 +255,13 @@ async function handleButtonRequest(request) {
       });
 
     const newResponse = rewriter.transform(response);
+    console.log('ButtonName:', buttonName);
+    console.log('Filename:', filename);
+    console.log('Image:', imageUrl);
+    console.log('URL:', url);
 
     if (response.status === 200) await cache.put(request, newResponse.clone());
+    console.log('Cache updated.');
 
     return newResponse;
   } else {
