@@ -1,7 +1,10 @@
 export default {
   async fetch(request) {
     const url = new URL(request.url);
-    return url.origin === 'https://sound-buttons.maki0419.com'
+
+    return url.pathname === '/sitemap.txt'
+      ? GetSitemap(url.origin)
+      : url.origin === 'https://sound-buttons.maki0419.com'
       ? handlePageRequest(request)
       : handleButtonRequest(request);
   },
@@ -256,5 +259,45 @@ async function handleButtonRequest(request) {
     return newResponse;
   } else {
     return new Response('Bad Request', { status: 400 });
+  }
+}
+
+async function GetSitemap(origin) {
+  console.log('Start to generate sitemap');
+
+  try {
+    const configUrl = new URL(`https://sound-buttons.maki0419.com/assets/configs/main.json`);
+    const configResponse = await fetch(configUrl);
+    const configs = await configResponse.json();
+
+    const buttonUrls = await Promise.all(
+      configs.map(async (config) => {
+        const configUrl = new URL(`${origin}/${config.fullConfigURL}`);
+        const configResponse = await fetch(configUrl);
+        const fullConfig = await configResponse.json();
+
+        const groupButtonUrls = fullConfig.buttonGroups.flatMap((group) =>
+          group.buttons.map(
+            (btn) => `https://button.sound-buttons.maki0419.com/${fullConfig.name}/${btn.id}`
+          )
+        );
+
+        console.log('Get config', fullConfig.name, fullConfig.buttonGroups.length);
+        return groupButtonUrls;
+      })
+    );
+
+    const allButtonUrls = buttonUrls.flat();
+    const urls = configs.map((config) => `${origin}/${config.name}`).concat(allButtonUrls);
+    const staticRoutes = `${origin}/\n`;
+
+    return new Response(staticRoutes + urls.join('\n'), {
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8',
+      },
+    });
+  } catch (e) {
+    console.error('Error:', e);
+    throw e;
   }
 }
