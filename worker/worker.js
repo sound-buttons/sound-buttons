@@ -77,6 +77,11 @@ async function handlePageRequest(request) {
           element.setAttribute('content', 'website');
         },
       })
+      .on('link[rel="canonical"]', {
+        element(element) {
+          element.setAttribute('href', `https://sound-buttons.maki0419.com/${found[1]}`);
+        },
+      })
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
           element.setAttribute('content', `https://sound-buttons.maki0419.com/${found[1]}`);
@@ -166,7 +171,7 @@ async function handleButtonRequest(request) {
 
     // https://developers.cloudflare.com/workers/runtime-apis/html-rewriter
     const rewriter = new HTMLRewriter()
-      .on('head > meta[property="og:type"]', {
+      .on('meta[property="og:type"]', {
         element(e) {
           e.setAttribute('content', 'video.other');
           // e.setAttribute('content','music.song');
@@ -203,39 +208,55 @@ async function handleButtonRequest(request) {
           });
         },
       })
-      .on('head > meta[property="og:image"], head > meta[name="twitter:image"]', {
+      .on('meta[property="og:image"], meta[name="twitter:image"]', {
         element(e) {
           e.setAttribute('content', imageUrl);
         },
       })
-      .on('head > link[rel="image_src"]', {
+      .on('link[rel="image_src"]', {
         element(e) {
           e.setAttribute('href', imageUrl);
         },
       })
-      .on('head > meta[name="twitter:creator"]', {
+      .on('meta[name="twitter:creator"]', {
         element(e) {
           e.setAttribute('content', creator);
         },
       })
-      .on('head > meta[name="twitter:card"]', {
+      .on('meta[name="twitter:card"]', {
         element(e) {
           e.setAttribute('content', 'player');
         },
       })
-      .on('head > meta[property="og:title"]', {
+      .on('meta[property="og:title"]', {
         element(e) {
           e.setAttribute('content', `${buttonName} | ${config.fullName} | Sound Buttons`);
         },
       })
-      .on('head > title', {
+      .on('title', {
         element(e) {
           e.setInnerContent(`${buttonName} | ${config.fullName} | Sound Buttons`);
         },
       })
-      .on('head > meta[property="og:description"], head > meta[name="description"]', {
+      .on('meta[property="og:description"], meta[name="description"]', {
         element(e) {
           e.setAttribute('content', `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說 ${buttonName}`);
+        },
+      })
+      .on('link[rel="canonical"]', {
+        element(element) {
+          element.setAttribute(
+            'href',
+            `https://button.sound-buttons.maki0419.com/${creator}/${id}`
+          );
+        },
+      })
+      .on('meta[property="og:url"], meta[property="twitter:url"]', {
+        element(element) {
+          element.setAttribute(
+            'content',
+            `https://button.sound-buttons.maki0419.com/${creator}/${id}`
+          );
         },
       })
       .on('body', {
