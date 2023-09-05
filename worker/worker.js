@@ -65,7 +65,7 @@ async function handlePageRequest(request) {
         },
       })
       .on(
-        'meta[name="description"], meta[property="og:description"], meta[property="twitter:description"]',
+        'meta[name="description"], meta[property="og:description"], meta[property="twitter:description"], meta[property="og:image:alt"]',
         {
           element(element) {
             element.setAttribute('content', Description);
@@ -195,11 +195,6 @@ async function handleButtonRequest(request) {
             { html: true }
           );
 
-          e.append(
-            '<meta name="og:image:width" content="640"> <meta name="og:image:height" content="1024">',
-            { html: true }
-          );
-
           e.append(`<meta property="og:audio" content="${audioUrl}">`, { html: true });
           e.append(`<meta property="og:audio:url" content="${audioUrl}">`, { html: true });
           e.append(`<meta property="og:audio:secure_url" content="${audioUrl}">`, { html: true });
@@ -211,6 +206,16 @@ async function handleButtonRequest(request) {
       .on('meta[property="og:image"], meta[name="twitter:image"]', {
         element(e) {
           e.setAttribute('content', imageUrl);
+        },
+      })
+      .on('meta[property="og:image:width"]', {
+        element(e) {
+          e.setAttribute('content', '640');
+        },
+      })
+      .on('meta[property="og:image:height"]', {
+        element(e) {
+          e.setAttribute('content', '1024');
         },
       })
       .on('link[rel="image_src"]', {
@@ -238,11 +243,17 @@ async function handleButtonRequest(request) {
           e.setInnerContent(`${buttonName} | ${config.fullName} | Sound Buttons`);
         },
       })
-      .on('meta[property="og:description"], meta[name="description"]', {
-        element(e) {
-          e.setAttribute('content', `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說 ${buttonName}`);
-        },
-      })
+      .on(
+        'meta[property="og:description"], meta[name="description"], meta[property="og:image:alt"]',
+        {
+          element(e) {
+            e.setAttribute(
+              'content',
+              `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說 ${buttonName}`
+            );
+          },
+        }
+      )
       .on('link[rel="canonical"]', {
         element(element) {
           element.setAttribute(
