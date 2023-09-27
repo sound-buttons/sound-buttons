@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { SEOService } from './../services/seo.service';
 import { DisplayService } from './../services/display.service';
 import { DialogService } from './../services/dialog.service';
 import * as mime from 'mime';
+import { EnvironmentToken } from '../app.module';
 
 @Component({
   selector: 'app-container',
@@ -21,6 +22,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
   configSubscription: Subscription | undefined;
   displaySet = 0;
+  origin = '';
 
   constructor(
     private router: Router,
@@ -31,8 +33,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private SEOService: SEOService,
     private dialogService: DialogService,
     private modalService: BsModalService,
-    private location: Location
-  ) {}
+    private location: Location,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Inject(EnvironmentToken) private env: any
+  ) {
+    this.origin = this.env.origin;
+  }
 
   ngOnInit(): void {
     this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
@@ -41,10 +47,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
         this.audioService.lastSource = undefined;
 
         this.SEOService.setTitle(config.fullName + ' - Sound Buttons');
-        this.SEOService.setUrl('https://sound-buttons.click/' + config.name);
-        this.SEOService.setImage(
-          `https://sound-buttons.click/assets/img/preview/${config.name}.png`
-        );
+        this.SEOService.setUrl(`${this.origin}/${config.name}`);
+        this.SEOService.setImage(`${this.origin}/assets/img/preview/${config.name}.png`);
 
         this.route.params
           .pipe(

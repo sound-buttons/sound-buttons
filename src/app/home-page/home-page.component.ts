@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IConfig } from '../services/config.service';
 import { DisplayService } from '../services/display.service';
 import { SEOService } from './../services/seo.service';
+import { EnvironmentToken } from '../app.module';
 
 @Component({
   selector: 'app-home-page',
@@ -13,21 +14,26 @@ import { SEOService } from './../services/seo.service';
 })
 export class HomePageComponent implements OnInit {
   public configs$!: Observable<IConfig[]>;
+  origin = '';
 
   constructor(
     private configService: ConfigService,
     private colorService: ColorService,
     private SEOService: SEOService,
-    private displayService: DisplayService
-  ) {}
+    private displayService: DisplayService,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Inject(EnvironmentToken) private env: any
+  ) {
+    this.origin = this.env.origin;
+  }
 
   ngOnInit(): void {
     this.configs$ = this.configService.getBriefConfig();
     this.configService.resetConfig();
 
     this.SEOService.setTitle('Sound Buttons');
-    this.SEOService.setUrl('https://sound-buttons.click/');
-    this.SEOService.setImage('https://sound-buttons.click/assets/img/preview/home-page.png');
+    this.SEOService.setUrl(this.origin);
+    this.SEOService.setImage(`${this.origin}/assets/img/preview/home-page.png`);
 
     this.displayService.setDisplay(0);
     this.displayService.setFilterText('');
