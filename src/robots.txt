@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /assets/
 
-Sitemap: https://sound-buttons.maki0419.com/sitemap.txt
+Sitemap: https://sound-buttons.click/sitemap.txt

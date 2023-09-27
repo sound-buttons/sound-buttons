@@ -4,7 +4,7 @@ export default {
 
     return url.pathname === '/sitemap.txt'
       ? GetSitemap(url.origin)
-      : url.origin === 'https://sound-buttons.maki0419.com'
+      : url.origin === 'https://sound-buttons.click'
       ? handlePageRequest(request)
       : handleButtonRequest(request);
   },
@@ -34,7 +34,7 @@ async function handlePageRequest(request) {
 
   let Title = 'Sound Buttons';
   let Description = '在Vtuber聲音按鈕網站上聽她說...';
-  let Thumbnail = 'https://sound-buttons.maki0419.com/assets/img/preview/home-page.png';
+  let Thumbnail = 'https://sound-buttons.click/assets/img/preview/home-page.png';
 
   const found = new URL(request.url).pathname.match(/\/(\w+)\/?/);
   // root
@@ -44,7 +44,7 @@ async function handlePageRequest(request) {
   }
 
   if (found) {
-    const configUrl = new URL(`https://sound-buttons.maki0419.com/assets/configs/main.json`);
+    const configUrl = new URL(`https://sound-buttons.click/assets/configs/main.json`);
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
     const config = configs.find((c) => c.name === found[1]);
@@ -52,7 +52,7 @@ async function handlePageRequest(request) {
 
     Title = `${config.fullName} | Sound Buttons`;
     Description = `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說...`;
-    Thumbnail = `https://sound-buttons.maki0419.com/assets/img/preview/${found[1]}.png`;
+    Thumbnail = `https://sound-buttons.click/assets/img/preview/${found[1]}.png`;
     const rewriter = new HTMLRewriter()
       .on('title', {
         element(element) {
@@ -79,12 +79,12 @@ async function handlePageRequest(request) {
       })
       .on('link[rel="canonical"]', {
         element(element) {
-          element.setAttribute('href', `https://sound-buttons.maki0419.com/${found[1]}`);
+          element.setAttribute('href', `https://sound-buttons.click/${found[1]}`);
         },
       })
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
-          element.setAttribute('content', `https://sound-buttons.maki0419.com/${found[1]}`);
+          element.setAttribute('content', `https://sound-buttons.click/${found[1]}`);
         },
       })
       .on('meta[property="og:image"], meta[name="twitter:image"]', {
@@ -119,7 +119,7 @@ async function handleButtonRequest(request) {
   console.log('Handle button request: ', request.url);
   const found = new URL(request.url).pathname.match(/\/(\w+)\/(.+)/);
   if (found) {
-    const url = new URL('https://sound-buttons.maki0419.com/');
+    const url = new URL('https://sound-buttons.click/');
     url.pathname = `/${found[1]}`;
     const response = await fetch(`${url}`);
 
@@ -256,18 +256,12 @@ async function handleButtonRequest(request) {
       )
       .on('link[rel="canonical"]', {
         element(element) {
-          element.setAttribute(
-            'href',
-            `https://button.sound-buttons.maki0419.com/${creator}/${id}`
-          );
+          element.setAttribute('href', `https://button.sound-buttons.click/${creator}/${id}`);
         },
       })
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
-          element.setAttribute(
-            'content',
-            `https://button.sound-buttons.maki0419.com/${creator}/${id}`
-          );
+          element.setAttribute('content', `https://button.sound-buttons.click/${creator}/${id}`);
         },
       })
       .on('body', {
@@ -298,7 +292,7 @@ async function GetSitemap(origin) {
   console.log('Start to generate sitemap');
 
   try {
-    const configUrl = new URL(`https://sound-buttons.maki0419.com/assets/configs/main.json`);
+    const configUrl = new URL(`https://sound-buttons.click/assets/configs/main.json`);
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
 
@@ -310,7 +304,7 @@ async function GetSitemap(origin) {
 
         const groupButtonUrls = fullConfig.buttonGroups.flatMap((group) =>
           group.buttons.map(
-            (btn) => `https://button.sound-buttons.maki0419.com/${fullConfig.name}/${btn.id}`
+            (btn) => `https://button.sound-buttons.click/${fullConfig.name}/${btn.id}`
           )
         );
 
