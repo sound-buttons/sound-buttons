@@ -1,66 +1,69 @@
 @import 'variables';
 
-$footer-font-size: 1.2em;
-$social-width: 25%;
+$footer-font-size: 1.1em;
+$social-width: 33.2%;
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 footer {
   width: 100%;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   background-color: var(--bs-secondary);
   line-height: $footer-height;
 
   @media only screen and (max-width: 767px) {
-    height: 0px;
+    display: none;
   }
 
   .copyright {
-    width: 50%;
-    float: left;
+    flex: 1;
     max-height: $footer-height;
 
-    @media (max-width: 600px) {
-      width: 100%;
-    }
-
     p {
-      padding-left: 10%;
+      // padding-left: 10%;
+      text-align: center;
       color: $white;
-      font-size: 0.7rem;
+      // font-size: 0.7rem;
       text-transform: capitalize;
       letter-spacing: 1px;
-
-      @media (max-width: 600px) {
-        text-align: center;
-        padding: 0;
-      }
     }
   }
 
-  .social {
-    width: 50%;
-    float: right;
-    font-size: $footer-font-size;
+  .view-counter {
+    max-height: $footer-height;
 
-    @media (max-width: 600px) {
-      width: 100%;
-    }
+    img {
+      display: flex;
 
-    a {
-      float: left;
       text-decoration: none;
       color: white;
       text-align: center;
       font-weight: bold;
       transition: all 0.3s;
 
+      height: $footer-height;
+    }
+  }
+
+  .social {
+    display: flex;
+    flex: 1;
+    font-size: $footer-font-size;
+
+    a {
+      flex: 1;
+      text-decoration: none;
+      color: white;
+      text-align: center;
+      // font-weight: bold;
+      transition: all 0.3s;
+
       &:hover {
-        background-color: var(--bs-primary);
+        filter: brightness(1.3);
       }
     }
   }
@@ -68,25 +71,16 @@ footer {
 
 .youtube {
   background-color: $red;
-  width: $social-width;
 }
 
 .blogger {
-  background-color: $orange;
-  width: $social-width;
-}
-
-.face {
-  background-color: $blue;
-  width: $social-width;
+  background-color: #fd6602;
 }
 
 .tweet {
-  background-color: $light-blue;
-  width: $social-width;
+  background-color: #000000;
 }
 
 .support {
-  background-color: $dark;
-  width: $social-width * 2;
+  background-color: #222222;
 }
