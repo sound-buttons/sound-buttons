@@ -34,7 +34,7 @@ async function handlePageRequest(request) {
 
   let Title = 'Sound Buttons';
   let Description = '在Vtuber聲音按鈕網站上聽她說...';
-  let Thumbnail = 'https://sound-buttons.click/assets/img/preview/home-page.png';
+  let Thumbnail = 'https://sound-buttons.click/assets/img/preview/open-graph.png';
 
   const found = new URL(request.url).pathname.match(/\/(\w+)\/?/);
   // root
