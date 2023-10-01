@@ -3,6 +3,8 @@
 <router-outlet class="h-100"></router-outlet>
 <app-footer
   [copyText]="
-    (this.version | slice: 0:9 | uppercase) + ' | Website MIT Licensed | Voice copyright by artists'
+    (this.version | slice : 0 : 9 | uppercase) +
+    ' | Website MIT Licensed | Voice copyright by ' +
+    this.fullName
   "
 ></app-footer>
