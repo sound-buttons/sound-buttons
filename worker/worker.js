@@ -2,7 +2,7 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    return url.pathname === '/sitemap.txt'
+    return url.pathname.startsWith('/sitemap')
       ? GetSitemap(url.origin)
       : url.origin === 'https://sound-buttons.click'
       ? handlePageRequest(request)
@@ -315,7 +315,7 @@ async function GetSitemap(origin) {
 
     const allButtonUrls = buttonUrls.flat();
     const urls = configs.map((config) => `${origin}/${config.name}`).concat(allButtonUrls);
-    const staticRoutes = `${origin}/\n`;
+    const staticRoutes = `${origin}\n${origin}/sitemap.txt\n`;
 
     return new Response(staticRoutes + urls.join('\n'), {
       headers: {
