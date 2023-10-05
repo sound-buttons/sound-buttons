@@ -46,7 +46,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
         this.config = config;
         this.audioService.lastSource = undefined;
 
-        this.SEOService.setTitle(config.fullName + ' - Sound Buttons');
+        this.SEOService.setTitle(config.fullName + ' | Sound Buttons');
         this.SEOService.setUrl(`${this.origin}/${config.name}`);
         this.SEOService.setImage(`${this.origin}/assets/img/preview/${config.name}.png`);
 
