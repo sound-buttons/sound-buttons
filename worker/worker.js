@@ -1,16 +1,25 @@
+const origin = 'https://sound-buttons.click';
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    return url.pathname.startsWith('/sitemap')
-      ? GetSitemap(url.origin)
-      : url.origin === 'https://sound-buttons.click'
-      ? handlePageRequest(request)
-      : handleButtonRequest(request);
+    if (url.pathname.startsWith('/sitemap')) return GetSitemap(url.origin);
+
+    const parts = url.pathname.split('/');
+
+    if (parts.length === 3 && parts[2] !== 'upload') {
+      return handleButtonRequest(request);
+    } else {
+      return handlePageRequest(request);
+    }
   },
 };
 
 async function handlePageRequest(request) {
+  const userAgent = request.headers.get('User-Agent') || '';
+  const isBot = userAgent.includes('bot') || userAgent.includes('InspectionTool');
+
   console.log('Handle page request: ', request.url);
   const response = await fetch(request);
   const headers = new Headers(response.headers);
@@ -25,7 +34,7 @@ async function handlePageRequest(request) {
     return response;
   }
 
-  let cache = caches.default;
+  let cache = isBot ? await caches.open('bot') : caches.default;
   let cacheResponse = await cache.match(request);
   if (cacheResponse) {
     console.log('Cache hit!');
@@ -34,7 +43,7 @@ async function handlePageRequest(request) {
 
   let Title = 'Sound Buttons';
   let Description = '在Vtuber聲音按鈕網站上聽她說...';
-  let Thumbnail = 'https://sound-buttons.click/assets/img/preview/open-graph.png';
+  let Thumbnail = origin + '/assets/img/preview/open-graph.png';
 
   const found = new URL(request.url).pathname.match(/\/(\w+)\/?/);
   // root
@@ -44,7 +53,7 @@ async function handlePageRequest(request) {
   }
 
   if (found) {
-    const configUrl = new URL(`https://sound-buttons.click/assets/configs/main.json`);
+    const configUrl = new URL(`${origin}/assets/configs/main.json`);
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
     const config = configs.find((c) => c.name === found[1]);
@@ -52,7 +61,7 @@ async function handlePageRequest(request) {
 
     Title = `${config.fullName} | Sound Buttons`;
     Description = `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說...`;
-    Thumbnail = `https://sound-buttons.click/assets/img/preview/${found[1]}.png`;
+    Thumbnail = `${origin}/assets/img/preview/${found[1]}.png`;
     const rewriter = new HTMLRewriter()
       .on('title', {
         element(element) {
@@ -79,12 +88,12 @@ async function handlePageRequest(request) {
       })
       .on('link[rel="canonical"]', {
         element(element) {
-          element.setAttribute('href', `https://sound-buttons.click/${found[1]}`);
+          element.setAttribute('href', `${origin}/${found[1]}`);
         },
       })
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
-          element.setAttribute('content', `https://sound-buttons.click/${found[1]}`);
+          element.setAttribute('content', `${origin}/${found[1]}`);
         },
       })
       .on('meta[property="og:image"], meta[name="twitter:image"]', {
@@ -103,6 +112,19 @@ async function handlePageRequest(request) {
         },
       });
 
+    if (isBot) {
+      rewriter.on('body', {
+        element(e) {
+          e.setInnerContent(
+            `<a href="${origin}" target="_self">Please click here if the page does not redirect successfully.</a>`,
+            {
+              html: true,
+            }
+          );
+        },
+      });
+    }
+
     const newResponse = rewriter.transform(response);
     console.log('Title: ', Title);
     console.log('Description: ', Description);
@@ -116,14 +138,17 @@ async function handlePageRequest(request) {
 }
 
 async function handleButtonRequest(request) {
+  const userAgent = request.headers.get('User-Agent') || '';
+  const isBot = userAgent.includes('bot') || userAgent.includes('InspectionTool');
+
   console.log('Handle button request: ', request.url);
   const found = new URL(request.url).pathname.match(/\/(\w+)\/(.+)/);
   if (found) {
-    const url = new URL('https://sound-buttons.click/');
+    const url = new URL(origin);
     url.pathname = `/${found[1]}`;
     const response = await fetch(`${url}`);
 
-    let cache = caches.default;
+    let cache = isBot ? await caches.open('bot') : caches.default;
     let cacheResponse = await cache.match(request);
     if (cacheResponse) {
       console.log('Cache hit!');
@@ -256,25 +281,19 @@ async function handleButtonRequest(request) {
       )
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
-          element.setAttribute('content', `https://button.sound-buttons.click/${creator}/${id}`);
-        },
-      })
-      .on('body', {
-        element(e) {
-          e.setInnerContent(
-            `<a href="${url}" target="_self">Please click here if the page does not redirect successfully.</a>`,
-            { html: true }
-          );
+          element.setAttribute('content', `${origin}/${creator}/${id}`);
         },
       });
 
-    const userAgent = request.headers.get('User-Agent') || '';
-    if (!userAgent.includes('bot')) {
+    if (isBot) {
       rewriter.on('body', {
         element(e) {
-          e.append(`<script>window.onload = function() { location.href = "${url}"; }</script>`, {
-            html: true,
-          });
+          e.setInnerContent(
+            `<a href="${origin}" target="_self">Please click here if the page does not redirect successfully.</a>`,
+            {
+              html: true,
+            }
+          );
         },
       });
     }
@@ -300,7 +319,7 @@ async function GetSitemap(origin) {
   console.log('Start to generate sitemap');
 
   try {
-    const configUrl = new URL(`https://sound-buttons.click/assets/configs/main.json`);
+    const configUrl = new URL(`${origin}/assets/configs/main.json`);
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
 
