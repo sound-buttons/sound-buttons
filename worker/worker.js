@@ -261,13 +261,26 @@ async function handleButtonRequest(request) {
       })
       .on('body', {
         element(e) {
+          e.setInnerContent(
+            `<a href="${url}" target="_self">Please click here if the page does not redirect successfully.</a>`,
+            { html: true }
+          );
+        },
+      });
+
+    const userAgent = request.headers.get('User-Agent') || '';
+    if (!userAgent.includes('bot')) {
+      rewriter.on('body', {
+        element(e) {
           e.append(`<script>window.onload = function() { location.href = "${url}"; }</script>`, {
             html: true,
           });
         },
       });
+    }
 
     const newResponse = rewriter.transform(response);
+    console.log('UserAgent:', userAgent);
     console.log('ButtonName:', buttonName);
     console.log('Filename:', filename);
     console.log('Image:', imageUrl);
