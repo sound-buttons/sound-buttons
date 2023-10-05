@@ -10,7 +10,6 @@ export const environment = {
    },
    api: '${process.env.API ?? 'https://soundbuttons.azure-api.net'}',
    origin: '${process.env.ORIGIN ?? 'https://sound-buttons.click'}',
-   button_origin: '${process.env.BUTTON_ORIGIN ?? 'https://button.sound-buttons.click'}',
    version: '${process.env.VERSION ?? ''}'
 };
 `;

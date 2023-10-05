@@ -27,7 +27,7 @@ export class ContextMenuComponent extends MenuComponent {
     super._onAnimationDone($event);
   }
   button: IButton;
-  button_origin: string;
+  origin: string;
 
   lazy = false;
 
@@ -42,7 +42,7 @@ export class ContextMenuComponent extends MenuComponent {
   ) {
     super(menuPackage, contextMenuService);
     this.button = menuPackage.context;
-    this.button_origin = this.env.button_origin;
+    this.origin = this.env.origin;
   }
 
   /**
@@ -55,7 +55,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const url = `${this.button_origin}${location.pathname}/${this.button.id}`;
+    const url = `${this.origin}${location.pathname}/${this.button.id}`;
     navigator.clipboard.writeText(url);
     this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
     this.close();
@@ -101,7 +101,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   shareToTwitter(): void {
-    const url = `${this.button_origin}${location.pathname}/${encodeURI(this.button.id)}`;
+    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
     window.open(
       `https://twitter.com/intent/tweet?text=${
         `${encodeURIComponent(
@@ -115,7 +115,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   shareToFacebook(): void {
-    const url = `${this.button_origin}${location.pathname}/${encodeURI(this.button.id)}`;
+    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         url
