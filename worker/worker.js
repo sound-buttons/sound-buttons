@@ -254,11 +254,6 @@ async function handleButtonRequest(request) {
           },
         }
       )
-      .on('link[rel="canonical"]', {
-        element(element) {
-          element.setAttribute('href', `https://button.sound-buttons.click/${creator}/${id}`);
-        },
-      })
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
           element.setAttribute('content', `https://button.sound-buttons.click/${creator}/${id}`);
