@@ -281,7 +281,7 @@ async function handleButtonRequest(request) {
       )
       .on('meta[property="og:url"], meta[property="twitter:url"]', {
         element(element) {
-          element.setAttribute('content', `${origin}/${creator}/${id}`);
+          element.setAttribute('content', `${origin}/${found[1]}/${id}`);
         },
       });
 
@@ -330,7 +330,10 @@ async function GetSitemap(origin) {
         const fullConfig = await configResponse.json();
 
         const groupButtonUrls = fullConfig.buttonGroups.flatMap((group) =>
-          group.buttons.map((btn) => `${origin}/${fullConfig.name}/${encodeURI(btn.filename.replace(/\.[^/.]+$/, ""))}`)
+          group.buttons.map(
+            (btn) =>
+              `${origin}/${fullConfig.name}/${encodeURI(btn.filename.replace(/\.[^/.]+$/, ''))}`
+          )
         );
 
         console.log('Get config', fullConfig.name, fullConfig.buttonGroups.length);
