@@ -8,6 +8,7 @@ export class DialogService {
   constructor(private toastr: ToastrService) {}
 
   showModal = new EventEmitter();
+  onHideModal = new EventEmitter();
   // confirmModal = new EventEmitter();
 
   disablePending(toastId: number): void {

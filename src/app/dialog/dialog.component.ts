@@ -26,6 +26,10 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
       this.modalData.message = m.message;
       this.modalRef = this.modalService.show(this.modal);
     });
+
+    this.modalService.onHidden.subscribe(() => {
+      this.dialogService.onHideModal.emit();
+    });
   }
 
   // modalYes(): void{

@@ -22,6 +22,8 @@ export class ConfigService {
     return this._isLiveUpdate;
   }
   public set isLiveUpdate(value: boolean) {
+    if (value === this._isLiveUpdate) return;
+
     this._isLiveUpdate = value;
     this.reloadConfig();
   }

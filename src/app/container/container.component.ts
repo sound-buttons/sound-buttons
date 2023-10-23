@@ -19,10 +19,12 @@ import { EnvironmentToken } from '../app.module';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit, OnDestroy {
-  config!: IFullConfig;
+  config: IFullConfig | undefined;
   configSubscription: Subscription | undefined;
   displaySet = 0;
   origin = '';
+  onHide: Subscription | undefined;
+  routerParams: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -41,22 +43,39 @@ export class ContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((p) => {
+      this.configService.name = p.get('name') ?? 'template';
+    });
+
+    this.route.queryParamMap.subscribe((q) => {
+      this.configService.isLiveUpdate = q.has('liveUpdate');
+    });
+
+    this.dialogService.onHideModal.subscribe(() => {
+      this.router.navigate(['/', this.config?.name], {
+        relativeTo: this.route,
+        queryParams: { filename: null },
+        queryParamsHandling: 'merge',
+      });
+    });
+
     this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
       if (config) {
         this.config = config;
         this.audioService.lastSource = undefined;
 
-        this.SEOService.setTitle(config.fullName + ' | Sound Buttons');
-        this.SEOService.setUrl(`${this.origin}/${config.name}`);
-        this.SEOService.setImage(`${this.origin}/assets/img/preview/${config.name}.png`);
-
-        this.route.params
+        if (this.routerParams) this.routerParams.unsubscribe();
+        this.routerParams = this.route.params
           .pipe(
-            filter((p) => 'id' in p && p.id !== 'upload'),
+            filter((p) => !('id' in p) || p.id !== 'upload'),
             take(1)
           )
           .subscribe((p) => {
-            if (this.modalService.getModalsCount() === 0) {
+            if (!this.config) return;
+
+            if (this.modalService.getModalsCount() !== 0) return;
+
+            if (p.id) {
               let button: IButton | undefined;
               const id = p.id;
               const filename =
@@ -68,22 +87,21 @@ export class ContainerComponent implements OnInit, OnDestroy {
                 button ??= group.buttons.find((btn) => btn.filename === filename);
               });
 
-              this.showDetail(button);
+              if (button) {
+                this.showDetail(button);
 
-              this.router.navigate(['../'], {
-                relativeTo: this.route,
-                queryParams: { filename: null },
-                queryParamsHandling: 'merge',
-              });
+                const buttonName = button.text || filename;
+
+                this.SEOService.setTitle(`${buttonName} | ${this.config.fullName} | Sound Buttons`);
+                this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
+              }
+            } else {
+              this.SEOService.setTitle(config.fullName + ' | Sound Buttons');
+              this.SEOService.setUrl(`${this.origin}/${config.name}`);
+              this.SEOService.setImage(`${this.origin}/assets/img/preview/${config.name}.png`);
             }
           });
       }
-    });
-    this.route.paramMap.subscribe((p) => {
-      this.configService.name = p.get('name') ?? 'template';
-    });
-    this.route.queryParamMap.subscribe((q) => {
-      this.configService.isLiveUpdate = q.has('liveUpdate');
     });
 
     this.displaySet = this.displayService.getDisplay();

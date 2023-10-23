@@ -48,3 +48,4 @@ Thumbs.db
 src/assets/sound/Windows*
 
 sitemap.txt
+src/environments/environment.prod.ts
