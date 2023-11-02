@@ -14,7 +14,7 @@ export class AudioService {
 
   public add(url: string, source?: ISource, volume = 1): void {
     const audio = new Audio(url);
-    audio.volume = volume * this.nowVolume;
+    audio.volume = Math.min(1, volume * this.nowVolume);
     audio.playbackRate = this.nowSpeed;
     audio.addEventListener('ended', () => {
       this.audioQueue.splice(this.audioQueue.indexOf(audio), 1);
