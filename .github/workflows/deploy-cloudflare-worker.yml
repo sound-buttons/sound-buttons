@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy Cloudflare Worker
     steps:
-      - uses: actions/checkout@v3
-      - name: install dependencies
-        run: 'npm install'
-      - name: deploy using wrangler
-        run: 'npx wrangler publish worker/worker.js --name sound-buttons --compatibility-date 2022-10-15'
-        env:
-          # CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Publish
+        uses: cloudflare/wrangler-action@v3
+        with:
+          # accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: 'deploy worker/worker.js --name sound-buttons --compatibility-date 2022-10-15'
