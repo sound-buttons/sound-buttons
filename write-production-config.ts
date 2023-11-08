@@ -10,7 +10,8 @@ export const environment = {
    },
    api: '${process.env.API ?? 'https://soundbuttons.azure-api.net'}',
    origin: '${process.env.ORIGIN ?? 'https://sound-buttons.click'}',
-   version: '${process.env.VERSION ?? ''}'
+   version: '${process.env.VERSION ?? ''}',
+   CLARITY_TRACKING_ID: '${process.env.CLARITY_TRACKING_ID ?? ''}'
 };
 `;
 

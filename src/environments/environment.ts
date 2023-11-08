@@ -10,6 +10,7 @@ export const environment = {
   api: 'http://localhost:7071/api',
   origin: 'https://localhost:4200',
   version: 'DEVELOP',
+  CLARITY_TRACKING_ID: '',
 };
 
 /*

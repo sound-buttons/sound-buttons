@@ -97,5 +97,18 @@ export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {
     gtag('config', this.env.google.GA_TRACKING_ID);
+
+    (function (c: any, l: Document, a: string, r: string, i: string, t: any, y: any) {
+      c[a] =
+        c[a] ||
+        function (...args: any[]) {
+          (c[a].q = c[a].q || []).push(args);
+        };
+      t = l.createElement(r);
+      t.async = 1;
+      t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0];
+      y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', this.env.CLARITY_TRACKING_ID, undefined, undefined);
   }
 }
