@@ -62,7 +62,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
       if (config) {
         this.config = config;
-        this.audioService.lastSource = undefined;
 
         if (this.routerParams) this.routerParams.unsubscribe();
         this.routerParams = this.route.params

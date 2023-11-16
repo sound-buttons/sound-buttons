@@ -15,7 +15,6 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 })
 export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
-  youtubeEmbedLink: SafeResourceUrl = '';
   displaySet = 0;
   filterText = '';
   origin = '';
@@ -33,11 +32,6 @@ export class SoundButtonsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.audioService.OnSourceChanged.subscribe((s) => this.changeYoutubeEmbed(s));
-    if (this.audioService.lastSource) {
-      this.changeYoutubeEmbed(this.audioService.lastSource);
-    }
-
     this.filterText = this.displayService.getFilterText();
     this.displaySet = this.displayService.getDisplay();
 
@@ -45,29 +39,6 @@ export class SoundButtonsComponent implements OnInit {
       this.displaySet = p[0];
       this.filterText = p[1];
     });
-  }
-
-  changeYoutubeEmbed(source: ISource | undefined): void {
-    if (source && source?.videoId && source?.videoId !== 'null') {
-      const url = new URL('https://www.youtube.com/embed/' + source.videoId);
-      url.searchParams.append('start', `${Math.floor(source.start)}`);
-      url.searchParams.append('end', `${Math.ceil(source.end)}`);
-      url.searchParams.append('playsinline', '1');
-      url.searchParams.append('enablejsapi', '1');
-      url.searchParams.append('origin', this.origin);
-      url.searchParams.append('widget_referrer', this.origin);
-      url.searchParams.append('widgetid', '1');
-      url.searchParams.append('iv_load_policy', '3');
-      url.searchParams.append('controls', '0');
-      url.searchParams.append('fs', '0');
-      url.searchParams.append('rel', '0');
-      url.searchParams.append('autoplay', '0');
-      // url.searchParams.append('modestbranding', '1');
-
-      this.youtubeEmbedLink = this.sanitizer.bypassSecurityTrustResourceUrl(url.toString());
-    } else {
-      this.youtubeEmbedLink = '';
-    }
   }
 
   buttonClick($event: MouseEvent, btn: IButton): void {

@@ -7,7 +7,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class AudioService {
   audioQueue: HTMLAudioElement[] = [];
 
-  public lastSource: ISource | undefined = undefined;
   public OnSourceChanged: EventEmitter<ISource | undefined> = new EventEmitter();
   private nowVolume = 1;
   private nowSpeed = 1;
@@ -22,7 +21,6 @@ export class AudioService {
     this.audioQueue.push(audio);
     audio.play();
 
-    this.lastSource = source;
     this.OnSourceChanged.emit(source);
   }
 
