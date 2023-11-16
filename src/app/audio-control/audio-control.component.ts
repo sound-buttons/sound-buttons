@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AudioControlComponent implements OnInit {
   constructor(private audioService: AudioService) {}
 
-  volume = 0.8;
+  volume = 0.5;
 
   ngOnInit(): void {
     this.audioService.volume(this.volume);
