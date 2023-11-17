@@ -1,9 +1,15 @@
 {
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -16,10 +22,19 @@
   },
   "editor.formatOnSave": true,
   "cSpell.words": [
+    "azureedge",
     "chara",
+    "devkit",
     "enablejsapi",
+    "googletagmanager",
+    "gtag",
+    "nocookie",
     "playsinline",
+    "rightclick",
+    "soundbuttons",
     "typeahead",
-    "widgetid"
+    "vendure",
+    "widgetid",
+    "youtu"
   ]
 }

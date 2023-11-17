@@ -1,7 +1,7 @@
 <div class="container" *ngIf="config">
   <h1>{{ config.fullName }} {{ '上傳表單' | translate }}</h1>
 
-  <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit($event)">
+  <form class="form" [formGroup]="form" (ngSubmit)="OnSubmit()">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-12">
@@ -55,7 +55,7 @@
                 style="border-top: 0"
                 formControlName="clip"
                 placeholder="https://youtube.com/clip/Ugkxxxxxxxxxx......."
-                (change)="OnYoutubeClipChange($event)"
+                (change)="OnYoutubeClipChange()"
               />
             </div>
             <div class="form-text">

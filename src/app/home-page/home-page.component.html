@@ -6,7 +6,7 @@
         *ngFor="let config of configs$ | async"
         [routerLink]="['/', config.name]"
         (mouseenter)="OnMouseEnter($event, config)"
-        (mouseleave)="OnMouseLeave($event)"
+        (mouseleave)="OnMouseLeave()"
       >
         <div class="details">
           <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
@@ -28,7 +28,7 @@
         <div
           class="chara-card"
           (mouseenter)="OnMouseEnter($event)"
-          (mouseleave)="OnMouseLeave($event)"
+          (mouseleave)="OnMouseLeave()"
         >
           <div class="details">
             <!-- <img [src]="config.imgSrc"> -->

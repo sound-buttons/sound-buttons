@@ -1,10 +1,8 @@
 import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
 import { DisplayService } from './../services/display.service';
-import { AudioService } from './../services/audio.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IButtonGroup } from './ButtonGroup';
-import { IButton, ISource } from './Buttons';
+import { IButton } from './Buttons';
 import { EnvironmentToken } from '../app.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 
@@ -21,8 +19,6 @@ export class SoundButtonsComponent implements OnInit {
   menu = ContextMenuComponent;
 
   constructor(
-    private sanitizer: DomSanitizer,
-    private audioService: AudioService,
     private displayService: DisplayService,
     private buttonFilterPipe: ButtonFilterPipe,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

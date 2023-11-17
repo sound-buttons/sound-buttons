@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, InjectionToken, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DialogService } from './../services/dialog.service';
@@ -241,7 +239,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.updateValueAndValidity();
   }
 
-  OnYoutubeClipChange($event: Event): void {
+  OnYoutubeClipChange(): void {
     const clip: string = this.form.get('clip')?.value ?? '';
 
     if (
@@ -253,7 +251,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.updateValueAndValidity();
   }
 
-  OnSubmit($event: Event): void {
+  OnSubmit(): void {
     if (this.form.invalid) {
       this.translate.get('請填入必填欄位').subscribe((res: string) => {
         this.dialogService.toastError(`${res}!`);

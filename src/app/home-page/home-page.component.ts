@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ColorService } from '../services/color.service';
@@ -47,7 +46,7 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  OnMouseLeave($event: MouseEvent): void {
+  OnMouseLeave(): void {
     this.colorService.color = this.colorService.defaultColor;
   }
 }

@@ -1,7 +1,7 @@
 import { LanguageService } from './services/language.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationEnd, Router, Event, RouterEvent, NavigationStart } from '@angular/router';
+import { Router, Event, RouterEvent } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { EnvironmentToken } from './app.module';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ declare let gtag: (...arg: unknown[]) => void;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   configSubscription: Subscription | undefined;
   version = '';
   fullName = 'Artists';
