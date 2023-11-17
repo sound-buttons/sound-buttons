@@ -6,9 +6,9 @@
       <div class="row">
         <div class="col-md-8 col-12">
           <div class="mb-3">
-            <label for="videoId" class="form-label">{{ 'Youtube來源' | translate }} </label>
+            <label for="videoId" class="form-label">{{ 'Youtube 來源' | translate }} </label>
             <div class="input-group">
-              <span class="input-group-text">{{ 'Youtube分享連結' | translate }}</span>
+              <span class="input-group-text">{{ 'Youtube 分享連結' | translate }}</span>
               <input
                 type="text"
                 class="form-control w-25 left-border left-border-green"
@@ -46,7 +46,7 @@
             </div>
             <div class="input-group">
               <span class="input-group-text" style="border-top: 0">{{
-                'Youtube剪輯片段' | translate
+                'Youtube 剪輯片段' | translate
               }}</span>
               <input
                 type="text"
@@ -54,23 +54,23 @@
                 id="clip"
                 style="border-top: 0"
                 formControlName="clip"
-                [attr.placeholder]="'https://youtube.com/clip/Ugkxxxxxxxxxx.......' | translate"
+                placeholder="https://youtube.com/clip/Ugkxxxxxxxxxx......."
                 (change)="OnYoutubeClipChange($event)"
               />
             </div>
             <div class="form-text">
               <div>
                 <span [class.text-danger]="getFormControl('end').invalid">{{
-                  '音檔上限180秒' | translate
+                  '音檔上限 180 秒' | translate
                 }}</span
-                >；{{ '約需3~5分鐘轉檔' | translate }}；
+                >；{{ '約需 3~5 分鐘轉檔' | translate }}；
                 <span class="text-nowrap">{{
-                  '伺服器會在運算超過5分鐘時判定超時 (轉檔失敗)' | translate
+                  '伺服器會在運算超過 5 分鐘時判定超時 (轉檔失敗)' | translate
                 }}</span>
               </div>
               <div>
-                「{{ '檔案上傳' | translate }}」、「{{ 'Youtube分享連結' | translate }}」、「{{
-                  'Youtube剪輯片段' | translate
+                「{{ '檔案上傳' | translate }}」、「{{ 'Youtube 分享連結' | translate }}」、「{{
+                  'Youtube 剪輯片段' | translate
                 }}」
                 <span
                   [class.text-danger]="
@@ -96,8 +96,8 @@
                     getFormControl('clip').invalid
                   "
                 >
-                  「{{ '檔案上傳' | translate }}」、「{{ 'Youtube分享連結' | translate }}」、「{{
-                    'Youtube剪輯片段' | translate
+                  「{{ '檔案上傳' | translate }}」、「{{ 'Youtube 分享連結' | translate }}」、「{{
+                    'Youtube 剪輯片段' | translate
                   }}」<br />
                   {{ '請只選擇一種' | translate }}
                 </div>
@@ -105,14 +105,14 @@
                   *ngIf="getFormControl('videoId').value || getFormControl('clip').value"
                   class="m-3"
                 >
-                  「{{ 'Youtube來源' | translate }}」{{ '約需3~5分鐘轉檔' | translate }}<br />
+                  「{{ 'Youtube 來源' | translate }}」{{ '約需 3~5 分鐘轉檔' | translate }}<br />
                   {{ '若5分鐘後預覧未出現，請改用「檔案上傳」功能' | translate }}
                 </div>
                 <div *ngIf="getFormControl('clip').value" class="m-3">
-                  「{{ 'Youtube剪輯片段' | translate }}」{{ '沒有影片預覧' | translate }}
+                  「{{ 'Youtube 剪輯片段' | translate }}」{{ '沒有影片預覧' | translate }}
                 </div>
                 <div *ngIf="getFormControl('file').value" class="m-3">
-                  {{ '使用Youtube來源更易於將流量導向回Vtuber的頻道' | translate }}
+                  {{ '使用 Youtube 來源更易於將流量導向回 Vtuber 的頻道' | translate }}
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@
               class="form-text"
               [class.text-danger]="getFormControl('file').dirty && getFormControl('file').invalid"
             >
-              {{ '上限30MB' | translate }}
+              {{ '上限 30 MB' | translate }}
             </span>
           </div>
 

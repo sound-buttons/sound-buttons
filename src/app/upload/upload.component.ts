@@ -292,7 +292,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           const uri = acceptResponse.statusQueryGetUri;
           if (!uri) {
             this.dialogService.clearPending();
-            this.translate.get('上傳失敗，伺服器未回應輪詢URI').subscribe((res: string) => {
+            this.translate.get('上傳失敗，伺服器未回應輪詢 URI').subscribe((res: string) => {
               this.dialogService.toastError(res);
             });
             throw Error('No recall location.');
