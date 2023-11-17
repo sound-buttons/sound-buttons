@@ -38,10 +38,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  expand(flag: boolean): void {
-    this.displayService.setDisplay(+flag);
-  }
-
   setFilterText($event: Event): void {
     this.displayService.setFilterText(($event.target as HTMLInputElement).value ?? '');
   }

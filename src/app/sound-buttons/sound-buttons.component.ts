@@ -13,7 +13,6 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 })
 export class SoundButtonsComponent implements OnInit {
   @Input() buttonGroups: IButtonGroup[] = [];
-  displaySet = 0;
   filterText = '';
   origin = '';
   menu = ContextMenuComponent;
@@ -29,11 +28,9 @@ export class SoundButtonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterText = this.displayService.getFilterText();
-    this.displaySet = this.displayService.getDisplay();
 
-    this.displayService.OnConfigChanged.subscribe((p) => {
-      this.displaySet = p[0];
-      this.filterText = p[1];
+    this.displayService.OnConfigChanged.subscribe((filterText) => {
+      this.filterText = filterText;
     });
   }
 

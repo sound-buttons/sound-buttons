@@ -34,7 +34,6 @@ export class HomePageComponent implements OnInit {
     this.SEOService.setUrl(this.origin);
     this.SEOService.setImage(`${this.origin}/assets/img/preview/open-graph.png`);
 
-    this.displayService.setDisplay(0);
     this.displayService.setFilterText('');
   }
 

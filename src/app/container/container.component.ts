@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IButton } from './../sound-buttons/Buttons';
-import { AudioService } from '../services/audio.service';
 import { IFullConfig, ConfigService } from '../services/config.service';
 import { SEOService } from './../services/seo.service';
-import { DisplayService } from './../services/display.service';
 import { DialogService } from './../services/dialog.service';
 import * as mime from 'mime';
 import { EnvironmentToken } from '../app.module';
@@ -30,12 +27,9 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private configService: ConfigService,
-    private audioService: AudioService,
-    private displayService: DisplayService,
     private SEOService: SEOService,
     private dialogService: DialogService,
     private modalService: BsModalService,
-    private location: Location,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -101,11 +95,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
             }
           });
       }
-    });
-
-    this.displaySet = this.displayService.getDisplay();
-    this.displayService.OnConfigChanged.subscribe((p) => {
-      this.displaySet = p[0];
     });
   }
 

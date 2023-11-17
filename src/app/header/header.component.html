@@ -48,16 +48,6 @@
             >{{ '回正式版' | translate }}</a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link pulse" *ngIf="displayService.getDisplay() === 0" (click)="expand(true)"
-            ><i class="bi bi-arrows-angle-expand"></i
-          ></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="displayService.getDisplay() === 1" (click)="expand(false)"
-            ><i class="bi bi-arrows-angle-contract"></i
-          ></a>
-        </li>
       </ul>
     </div>
   </div>

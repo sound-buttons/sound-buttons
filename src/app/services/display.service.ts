@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providedIn: 'root',
 })
 export class DisplayService {
-  public OnConfigChanged: EventEmitter<[number, string]> = new EventEmitter();
-  private displaySet = 0;
+  public OnConfigChanged: EventEmitter<string> = new EventEmitter();
   private filterText = '';
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -15,14 +14,6 @@ export class DisplayService {
         this.setFilterText(params.filter ?? '');
       }
     });
-  }
-
-  public setDisplay(i: number): void {
-    this.displaySet = i;
-    this.OnConfigChanged.emit([this.displaySet, this.filterText]);
-  }
-  public getDisplay(): number {
-    return this.displaySet;
   }
 
   public setFilterText(s: string): void {
@@ -36,7 +27,7 @@ export class DisplayService {
       queryParamsHandling: 'merge',
     });
 
-    this.OnConfigChanged.emit([this.displaySet, this.filterText]);
+    this.OnConfigChanged.emit(this.filterText);
   }
   public getFilterText(): string {
     return this.filterText;
