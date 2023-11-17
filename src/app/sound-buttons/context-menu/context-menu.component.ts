@@ -100,6 +100,20 @@ export class ContextMenuComponent extends MenuComponent {
     this.close();
   }
 
+  shareToMastodon(): void {
+    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
+    window.open(
+      `https://toot.kytta.dev/?text=${
+        `${encodeURIComponent(
+          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
+        )}` +
+        '%0A' +
+        encodeURIComponent(url)
+      }`
+    );
+    this.close();
+  }
+
   shareToTwitter(): void {
     const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
     window.open(
