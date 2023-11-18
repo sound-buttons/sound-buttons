@@ -1,18 +1,17 @@
-import { AudioService } from './../services/audio.service';
 import { LanguageService } from '../services/language.service';
 
 export const defaultBaseRoute = 'assets/sound/';
 
 export class Button implements IButton {
   constructor(
-    private audioService: AudioService,
     public id: string,
     public filename: string,
     public text: string | never = filename,
     public baseRoute = defaultBaseRoute,
     public volume = 1,
     public source?: ISource,
-    public SASToken?: string
+    public SASToken?: string,
+    public index?: number
   ) {
     // 套用text中的多語系
     if (typeof this.text !== 'string') {
@@ -24,18 +23,6 @@ export class Button implements IButton {
       this.SASToken = '';
     }
   }
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
-  click = (): void => {
-    if (this.baseRoute.slice(-1) !== '/') {
-      this.baseRoute += '/';
-    }
-    this.audioService.add(
-      `${this.baseRoute}${this.filename}${this.SASToken}`,
-      this.source,
-      this.volume
-    );
-  };
 }
 
 export interface IButton {
@@ -46,7 +33,7 @@ export interface IButton {
   volume: number;
   source?: ISource;
   SASToken?: string;
-  click($event: MouseEvent): void;
+  index?: number;
 }
 
 export interface ISource {

@@ -1,5 +1,5 @@
-import { LanguageService } from '../services/language.service';
 import { IButton, defaultBaseRoute } from './Buttons';
+import { LanguageService } from '../services/language.service';
 
 export class ButtonGroup implements IButtonGroup {
   constructor(public name: string, public baseRoute: string, public buttons: IButton[]) {
@@ -8,6 +8,9 @@ export class ButtonGroup implements IButtonGroup {
     }
     this.buttons.forEach((btn) => {
       if (!btn.baseRoute || btn.baseRoute === defaultBaseRoute) {
+        if (this.baseRoute.slice(-1) !== '/') {
+          this.baseRoute += '/';
+        }
         btn.baseRoute = this.baseRoute;
       }
     });

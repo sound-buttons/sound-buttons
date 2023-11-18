@@ -1,11 +1,11 @@
-import { LanguageService } from './language.service';
-import { AudioService } from './audio.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ButtonGroup, IButtonGroup } from '../sound-buttons/ButtonGroup';
 import { Button, IButton } from '../sound-buttons/Buttons';
+import { LanguageService } from './language.service';
+import { AudioService } from './audio.service';
 import { IColor, ColorService } from './color.service';
 
 @Injectable({
@@ -98,7 +98,6 @@ export class ConfigService {
           if (source.introButton) {
             const b = source.introButton;
             target.introButton = new Button(
-              this.audioService,
               b.id,
               b.filename,
               b.text,
@@ -118,16 +117,7 @@ export class ConfigService {
               for (const b of bg.buttons) {
                 // 重點在此處重建Button，這樣才會有click方法屬性
                 buttons.push(
-                  new Button(
-                    this.audioService,
-                    b.id,
-                    b.filename,
-                    b.text,
-                    b.baseRoute,
-                    b.volume,
-                    b.source,
-                    b.SASToken
-                  )
+                  new Button(b.id, b.filename, b.text, b.baseRoute, b.volume, b.source, b.SASToken)
                 );
               }
               buttonGroups.push(new ButtonGroup(bg.name, bg.baseRoute, buttons));

@@ -1,11 +1,11 @@
-import { ClickService } from './../services/click.service';
-import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
-import { DisplayService } from './../services/display.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton } from './Buttons';
 import { EnvironmentToken } from '../app.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
+import { DisplayService } from './../services/display.service';
+import { AudioService } from '../services/audio.service';
 
 @Component({
   selector: 'app-sound-buttons',
@@ -21,7 +21,7 @@ export class SoundButtonsComponent implements OnInit {
   constructor(
     private displayService: DisplayService,
     private buttonFilterPipe: ButtonFilterPipe,
-    private clickService: ClickService,
+    private audioService: AudioService,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -37,8 +37,8 @@ export class SoundButtonsComponent implements OnInit {
   }
 
   buttonClick($event: MouseEvent, btn: IButton): void {
-    btn.click($event);
-    this.clickService.StepClicks();
+    this.audioService.add(btn);
+    if (!this.audioService.isPaused() && !this.audioService.isPlaying()) this.audioService.play();
   }
 
   gridColumnLen(str: string): number {

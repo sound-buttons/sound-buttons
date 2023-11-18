@@ -1,9 +1,10 @@
-import { ConfigService } from './../services/config.service';
 import { ActivatedRoute } from '@angular/router';
-import { IButton } from './../sound-buttons/Buttons';
 import { Component, Input, OnInit } from '@angular/core';
+import { IButton } from './../sound-buttons/Buttons';
 import { ILink } from '../services/config.service';
 import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
+import { ConfigService } from './../services/config.service';
+import { AudioService } from '../services/audio.service';
 
 @Component({
   selector: 'app-introduction',
@@ -25,7 +26,11 @@ export class IntroductionComponent implements OnInit {
 
   menu = ContextMenuComponent;
 
-  constructor(private route: ActivatedRoute, private configService: ConfigService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private configService: ConfigService,
+    private audioService: AudioService
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((m) => {
@@ -35,5 +40,10 @@ export class IntroductionComponent implements OnInit {
 
   reloadConfig(): void {
     this.configService.reloadConfig(() => (this.initTime = Date.now()));
+  }
+
+  buttonClick($event: MouseEvent, btn: IButton): void {
+    this.audioService.add(btn);
+    if (!this.audioService.isPaused() && !this.audioService.isPlaying()) this.audioService.play();
   }
 }

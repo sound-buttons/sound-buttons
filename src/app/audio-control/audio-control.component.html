@@ -1,8 +1,4 @@
 <div class="control-container">
-  <i role="button" class="bi bi-stop-fill clickable" (click)="OnStopClick()"></i>
-  <i role="button" class="bi bi-skip-forward-fill clickable" (click)="OnFastClick()"></i>
-  <i role="button" class="bi bi-arrow-repeat clickable" (click)="OnRecover()"></i>
-  <i role="button" class="bi bi-skip-backward-fill clickable" (click)="OnSlowClick()"></i>
   <i class="bi bi-volume-up"></i>
   <input
     type="range"
@@ -12,4 +8,33 @@
     [value]="volume"
     (change)="OnVolumeChange($event)"
   />
+  <i
+    role="button"
+    class="bi bi-shuffle clickable"
+    (click)="OnShuffleClick()"
+    *ngIf="audioService.isEmpty()"
+  ></i>
+  <i
+    role="button"
+    class="bi bi-play-fill clickable"
+    (click)="OnPlayClick()"
+    *ngIf="audioService.canPlay()"
+  ></i>
+  <i
+    role="button"
+    class="bi bi-pause-fill clickable"
+    (click)="OnPauseClick()"
+    *ngIf="audioService.canPause()"
+  ></i>
+  <div class="buttonContainer">
+    <button
+      type="button"
+      class="btn btn-primary"
+      *ngFor="let button of buttons().slice(); trackBy: trackById"
+      (click)="buttonClick($event, button)"
+    >
+      {{ button.text }}
+    </button>
+  </div>
+  <i role="button" class="bi bi-trash3 clickable" (click)="OnStopClick()"></i>
 </div>

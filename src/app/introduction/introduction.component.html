@@ -34,7 +34,7 @@
       type="button"
       class="btn btn-secondary font-weight-bold"
       *ngIf="button && !isLiveUpdate"
-      (click)="button.click($event)"
+      (click)="buttonClick($event, button)"
       [contextMenuTrigger]="menu"
       [menuContext]="button"
     >
