@@ -126,15 +126,14 @@ footer {
 
   .copyright {
     width: 100vw;
-    max-height: $footer-height;
 
     p {
-      // padding-left: 10%;
+      padding: 0 1vw;
       text-align: center;
       color: $white;
-      // font-size: 0.7rem;
-      // text-transform: capitalize;
       letter-spacing: 1px;
+      line-height: 2.5rem;
+      filter: grayscale(60%) opacity(60%);
     }
   }
 }
