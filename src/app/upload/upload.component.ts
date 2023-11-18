@@ -79,7 +79,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             +!!c.parent?.get('videoId')?.value +
             +!!c.parent?.get('file')?.value !==
             1 ||
-          !('' + c.value).match(/^(?:https?:\/\/(?:www.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
+          !('' + c.value).match(/^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
             ? { clip: true }
             : null,
       ],
@@ -244,7 +244,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (
       clip !== '' &&
-      !clip.match(/^(?:https?:\/\/(?:www.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
+      !clip.match(/^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
     ) {
       this.dialogService.toastError('Invalid Clip Link: ' + clip);
     }
