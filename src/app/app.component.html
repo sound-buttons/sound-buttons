@@ -1,8 +1,6 @@
 <app-header></app-header>
 <app-dialog></app-dialog>
-<router-outlet class="container"></router-outlet>
+<router-outlet></router-outlet>
 <app-footer
-  [copyText]="
-    'Sound Buttons v.' + (this.version | slice : 0 : 7 | uppercase) + ' | AGPLv3 Licensed'
-  "
+  [version]="this.version"
 ></app-footer>

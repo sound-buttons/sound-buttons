@@ -3,7 +3,7 @@
     <a
       href="https://github.com/sound-buttons"
       target="_blank"
-      rel="noreferrer noopener"
+      rel="noopener"
       class="support"
     >
       <img src="assets/img/favicon/icon-trim.png" alt="icon" width="100" />
@@ -14,7 +14,7 @@
     <a
       href="https://github.com/sound-buttons/sound-buttons/blob/master/LICENSE"
       target="_blank"
-      rel="noreferrer noopener"
+      rel="noopener"
       class="support"
     >
       <img src="assets/img/AGPLv3_Logo.svg" alt="agpl" />
@@ -25,6 +25,15 @@
     <div class="ribbon">{{ clicks }}</div>
   </div>
   <div class="copyright">
-    <p>{{ copyText + ' | Total ' + clicks + ' Clicks' }}</p>
+    <p>
+      Copyright © 2021 Sound Buttons |
+      <a
+        [href]="'https://github.com/sound-buttons/sound-buttons/tree/' + version"
+        target="_blank"
+        rel="noopener"
+        >v.{{ this.version | slice : 0 : 7 | uppercase }}</a
+      >
+      | AGPLv3 Licensed | Total {{ clicks }} Clicks
+    </p>
   </div>
 </footer>

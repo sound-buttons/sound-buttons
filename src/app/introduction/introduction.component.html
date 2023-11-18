@@ -1,30 +1,30 @@
 <div class="container position-relative">
   <div id="linkIcon-container" *ngIf="link">
-    <a class="linkIcon" [href]="link!.youtube" target="_blank" *ngIf="link!.youtube">
+    <a class="linkIcon" [href]="link!.youtube" target="_blank" rel="noopener" *ngIf="link!.youtube">
       <img src="assets/img/youtube.svg" alt="youtube" />
     </a>
 
-    <a class="linkIcon" [href]="link!.twitch" target="_blank" *ngIf="link!.twitch">
+    <a class="linkIcon" [href]="link!.twitch" target="_blank" rel="noopener" *ngIf="link!.twitch">
       <img src="assets/img/twitch.svg" alt="twitch" />
     </a>
 
-    <a class="linkIcon" [href]="link!.twitter" target="_blank" *ngIf="link!.twitter">
+    <a class="linkIcon" [href]="link!.twitter" target="_blank" rel="noopener" *ngIf="link!.twitter">
       <img src="assets/img/twitter.svg" alt="twitter" />
     </a>
 
-    <a class="linkIcon" [href]="link!.facebook" target="_blank" *ngIf="link!.facebook">
+    <a class="linkIcon" [href]="link!.facebook" target="_blank" rel="noopener" *ngIf="link!.facebook">
       <img src="assets/img/facebook.svg" alt="facebook" />
     </a>
 
-    <a class="linkIcon" [href]="link!.discord" target="_blank" *ngIf="link!.discord">
+    <a class="linkIcon" [href]="link!.discord" target="_blank" rel="noopener" *ngIf="link!.discord">
       <img src="assets/img/discord.svg" alt="discord" />
     </a>
 
-    <a class="linkIcon" [href]="link!.instagram" target="_blank" *ngIf="link!.instagram">
+    <a class="linkIcon" [href]="link!.instagram" target="_blank" rel="noopener" *ngIf="link!.instagram">
       <img src="assets/img/instagram.svg" alt="instagram" />
     </a>
 
-    <a class="linkIcon" [href]="link!.other" target="_blank" *ngIf="link!.other">
+    <a class="linkIcon" [href]="link!.other" target="_blank" rel="noopener nofollow" *ngIf="link!.other">
       <img src="assets/img/other.svg" alt="other" />
     </a>
   </div>
@@ -48,6 +48,7 @@
         <a
           href="https://github.com/sound-buttons/sound-buttons_configs/discussions/3"
           target="_blank"
+          rel="noopener"
           >Github discussion</a
         ><br />
         <button class="btn btn-primary" type="button" (click)="reloadConfig()">
