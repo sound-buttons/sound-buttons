@@ -3,7 +3,6 @@
 .navbar {
   display: flex;
   padding: 0;
-  height: 3rem;
 
   &-brand {
     padding: $navbar-padding-y;
@@ -11,6 +10,7 @@
     align-items: center;
     cursor: pointer;
     vertical-align: middle;
+    min-height: 3rem;
 
     img {
       height: 1.5rem;
