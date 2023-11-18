@@ -1,3 +1,4 @@
+import { ClickService } from './../services/click.service';
 import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
 import { DisplayService } from './../services/display.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
@@ -20,6 +21,7 @@ export class SoundButtonsComponent implements OnInit {
   constructor(
     private displayService: DisplayService,
     private buttonFilterPipe: ButtonFilterPipe,
+    private clickService: ClickService,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -36,6 +38,7 @@ export class SoundButtonsComponent implements OnInit {
 
   buttonClick($event: MouseEvent, btn: IButton): void {
     btn.click($event);
+    this.clickService.StepClicks();
   }
 
   gridColumnLen(str: string): number {
