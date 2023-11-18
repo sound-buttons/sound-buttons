@@ -40,25 +40,25 @@ app-chara-image {
     transform: skewY(-4.398705355deg);
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 3vw;
-    padding-left: 7.5vw;
+    padding-left: 9.5vw;
   }
 
   @include media-breakpoint-up(lg) {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2vw;
-    padding-left: 5vw;
+    padding-left: 7vw;
   }
 
   @include media-breakpoint-up(xl) {
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 2vw;
-    padding-left: 4vw;
+    padding-left: 6vw;
   }
 
   @media (min-width:1600px) {
     grid-template-columns: repeat(5, 1fr);
     grid-column-gap: 2vw;
-    padding-left: 1vw;
+    padding-left: 0;
   }
 }
 
