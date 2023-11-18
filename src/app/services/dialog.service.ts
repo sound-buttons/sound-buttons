@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DialogService {
   constructor(private toastr: ToastrService) {}
 
-  showModal = new EventEmitter();
+  showModal = new EventEmitter<{ title: string; message: string }>();
   onHideModal = new EventEmitter();
   // confirmModal = new EventEmitter();
 
@@ -26,8 +26,15 @@ export class DialogService {
   toastError(message: string, title?: string): void {
     this.toastr.error(message, title);
   }
-  toastWarning(message: string, title?: string): void {
-    this.toastr.warning(message, title);
+  toastWarning(message: string, title?: string, timeout?: number): void {
+    if (timeout) {
+      this.toastr.warning(message, title, {
+        timeOut: timeout,
+        disableTimeOut: false,
+      });
+    } else {
+      this.toastr.warning(message, title);
+    }
   }
   toastSuccess(message: string, title?: string, timeout?: number): void {
     if (timeout) {

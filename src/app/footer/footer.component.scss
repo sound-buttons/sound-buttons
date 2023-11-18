@@ -39,6 +39,7 @@ footer {
   .license {
     text-align: center;
     padding: 10px;
+    cursor: pointer;
 
     img {
       width: 200px;
@@ -126,6 +127,7 @@ footer {
 
   .copyright {
     width: 100vw;
+    cursor: default;
 
     p {
       padding: 0 1vw;

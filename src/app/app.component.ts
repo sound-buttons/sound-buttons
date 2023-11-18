@@ -5,7 +5,6 @@ import { Router, Event, RouterEvent } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { EnvironmentToken } from './app.module';
 import { Subscription } from 'rxjs';
-import { ConfigService } from './services/config.service';
 
 declare let gtag: (...arg: unknown[]) => void;
 
@@ -17,11 +16,9 @@ declare let gtag: (...arg: unknown[]) => void;
 export class AppComponent implements OnInit, OnDestroy {
   configSubscription: Subscription | undefined;
   version = '';
-  fullName = 'Artists';
 
   constructor(
     translateService: TranslateService,
-    private configService: ConfigService,
     private router: Router,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     @Inject(EnvironmentToken) env: any
@@ -47,15 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((x: Event) => {
         const url = (x as RouterEvent).url;
         gtag('event', 'page_view', { page_path: url });
-        if (url === '/') {
-          this.fullName = 'Artists';
-        }
       });
-    this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
-      if (config) {
-        this.fullName = config.fullName;
-      }
-    });
   }
 
   ngOnDestroy(): void {

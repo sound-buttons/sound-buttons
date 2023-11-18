@@ -45,14 +45,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
       this.configService.isLiveUpdate = q.has('liveUpdate');
     });
 
-    this.dialogService.onHideModal.subscribe(() => {
-      this.router.navigate(['/', this.config?.name], {
-        relativeTo: this.route,
-        queryParams: { filename: null },
-        queryParamsHandling: 'merge',
-      });
-    });
-
     this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
       if (config) {
         this.config = config;
@@ -87,6 +79,14 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
                 this.SEOService.setTitle(`${buttonName} | ${this.config.fullName} | Sound Buttons`);
                 this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
+
+                this.dialogService.onHideModal.pipe(take(1)).subscribe(() => {
+                  this.router.navigate(['/', this.config?.name], {
+                    relativeTo: this.route,
+                    queryParams: { filename: null },
+                    queryParamsHandling: 'merge',
+                  });
+                });
               }
             } else {
               this.SEOService.setTitle(config.fullName + ' | Sound Buttons');
