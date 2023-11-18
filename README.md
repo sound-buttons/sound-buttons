@@ -35,11 +35,12 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 
 ## Related Repos
 
-|                           |                                                                 |
-|---------------------------|-----------------------------------------------------------------|
-| Angular (Frontend)        | <https://github.com/sound-buttons/sound-buttons>                |
-| Main data for Website     | <https://github.com/sound-buttons/sound-buttons_configs>        |
-| Azure Functions (Backend) | <https://github.com/sound-buttons/sound-buttons_upload-backend> |
+|                                   |                                                                 |                                                                                                                                                                                                                                                 |
+| --------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend (Angular)                | <https://github.com/sound-buttons/sound-buttons>                | [![CodeQL](https://github.com/sound-buttons/sound-buttons/actions/workflows/codeql.yml/badge.svg)](https://github.com/sound-buttons/sound-buttons/actions/workflows/codeql.yml)                                                                 |
+| Data (JSON)                       | <https://github.com/sound-buttons/sound-buttons_configs>        |                                                                                                                                                                                                                                                 |
+| Backend (Azure Function)          | <https://github.com/sound-buttons/sound-buttons_upload-backend> | [![CodeQL](https://github.com/sound-buttons/sound-buttons_upload-backend/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/sound-buttons/sound-buttons_upload-backend/actions/workflows/github-code-scanning/codeql) |
+| Click counter (Cloudflare Worker) | <https://github.com/sound-buttons/worker-click-counter>         | [![CodeQL](https://github.com/sound-buttons/worker-click-counter/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/sound-buttons/worker-click-counter/actions/workflows/github-code-scanning/codeql)                 |
 
 ## Preview
 
@@ -63,6 +64,6 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ### Sound and Character Pictures
 
-The original artists hold the copyrights to all the sounds and character pictures. We have utilized them in accordance with their Derivative Works Guidelines (Secondary Creation Guidelines). 
+The original artists hold the copyrights to all the sounds and character pictures. We have utilized them in accordance with their Derivative Works Guidelines (Secondary Creation Guidelines).
 
 In case you wish to remove your data through a DMCA Takedown, kindly report it [here](https://github.com/sound-buttons/sound-buttons_configs/discussions/3).
