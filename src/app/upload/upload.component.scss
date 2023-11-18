@@ -1,8 +1,8 @@
 @import 'variables';
 
 .container {
-  margin: 3vh auto;
-  height: calc(93vh - 100px);
+  margin: 15px auto;
+  min-height: calc(100vh - 3rem - 30px - 215px);
 }
 
 .ng-invalid {

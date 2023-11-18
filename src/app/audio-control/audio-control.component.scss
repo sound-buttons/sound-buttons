@@ -2,7 +2,7 @@
 
 .control-container {
   position: fixed;
-  bottom: calc(3rem - 1px);
+  bottom: 0;
   left: 0;
   width: 80px;
   height: 200px;
@@ -20,6 +20,8 @@
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, 1fr);
+
+  z-index: 100;
 }
 
 i {

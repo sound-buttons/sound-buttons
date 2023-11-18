@@ -1,7 +1,9 @@
 @import 'variables';
 
 .navbar {
+  display: flex;
   padding: 0;
+  height: 3rem;
 
   &-brand {
     padding: $navbar-padding-y;
@@ -29,33 +31,19 @@
       padding-left: 0.5rem;
     }
   }
-}
 
-.fullName {
-  justify-content: center;
-  flex-grow: 4;
-  align-items: center;
-}
-
-a {
-  cursor: pointer;
-}
-
-.pulse {
-  animation: pulse 1s infinite ease-in-out alternate;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(0.8);
+  .fullName {
+    justify-content: center;
+    flex-grow: 4;
+    align-items: center;
   }
 
-  to {
-    transform: scale(1.2);
+  a {
+    cursor: pointer;
   }
-}
 
-input {
-  border: 0;
-  width: 10em;
+  input {
+    border: 0;
+    width: 10em;
+  }
 }

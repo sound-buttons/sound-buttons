@@ -1,34 +1,30 @@
-<footer class="fixed-bottom">
-  <div class="copyright">
-    <p>{{ copyText }}</p>
-  </div>
-  <div class="social">
+<footer>
+  <div class="logo" title="Project Github">
     <a
       href="https://github.com/sound-buttons"
       target="_blank"
       rel="noreferrer noopener"
       class="support"
-      >GitHub</a
     >
-    <a
-      href="https://blog.maki0419.com/2021/05/soundbuttons.html"
-      target="_blank"
-      rel="noreferrer noopener"
-      class="blogger"
-      >Blogger</a
-    >
-    <a
-      href="https://x.com/search?q=(%23sound_buttons)"
-      target="_blank"
-      rel="noreferrer noopener"
-      class="tweet"
-      >𝕏</a
-    >
+      <img src="assets/img/favicon/icon-trim.png" alt="icon" width="100" />
+      <p>Sound Buttons</p>
+    </a>
   </div>
-  <div class="view-counter">
-    <img
-      src="https://view-counter.sound-buttons.click?label=Visitors&style=flat&labelColor=666&color=777&scale=2"
-      alt="View counter badge"
-    />
+  <div class="license" title="Project Licensed">
+    <a
+      href="https://github.com/sound-buttons/sound-buttons/blob/master/LICENSE.md"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="support"
+    >
+      <img src="assets/img/AGPLv3_Logo.svg" alt="agpl" />
+    </a>
+  </div>
+  <div class="badge" title="Total Clicks">
+    <div class="circle"><i class="bi bi-hand-index-thumb"></i></div>
+    <div class="ribbon">{{ clicks }}</div>
+  </div>
+  <div class="copyright">
+    <p>{{ copyText + ' | Total ' + clicks + ' Clicks' }}</p>
   </div>
 </footer>

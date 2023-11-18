@@ -27,62 +27,39 @@ app-chara-image {
   transition-duration: 0.3s;
 }
 
-.outer {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.inner {
-  overflow-y: scroll;
-  /* Increase/decrease this value for cross-browser compatibility */
-  padding-right: 17px;
-  /* So the width will be 100% + 17px */
-  box-sizing: content-box;
-  width: 100%;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-}
-
 .container {
-  height: calc(100vh - 2.6rem);
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   transform-origin: top right;
-  // margin: 0 6.4vw 0 28%;
+  // margin-top: 0;
+  padding-bottom: 20vw;
+  margin: 15px auto 0;
 
   @include media-breakpoint-up(md) {
-    height: calc(100vh - 5.5rem);
     transform: skewY(-4.398705355deg);
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 3vw;
-    margin: 0 3.9vw 0 15vw;
+    padding-left: 7.5vw;
   }
 
   @include media-breakpoint-up(lg) {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2vw;
-    margin: 0 2.8vw 0 10vw;
+    padding-left: 5vw;
   }
 
   @include media-breakpoint-up(xl) {
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 2vw;
-    margin: 0 2.2vw 0 8vw;
+    padding-left: 4vw;
   }
 
-  // @include media-breakpoint-up(xxl) {
-  //   grid-template-columns: repeat(5, 1fr);
-  //   grid-column-gap: 1vw;
-  //   margin: 0 1.8vw 0 6.5vw;
-  // }
-
-  // @media (min-width:1600px) {
-  //   grid-template-columns: repeat(6, 1fr);
-  //   grid-column-gap: 1vw;
-  //   margin: 0 1.5vw 0 5.5vw;
-  // }
+  @media (min-width:1600px) {
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 2vw;
+    padding-left: 1vw;
+  }
 }
 
 .chara-card {
@@ -91,6 +68,7 @@ app-chara-image {
   transition-property: z-index, top;
   transition-duration: 0.3s;
   padding: 5% 0;
+  margin: 0 auto;
   cursor: pointer;
 
   width: 260px;
@@ -163,4 +141,10 @@ app-chara-image {
     width: 100%;
     height: 100%;
   }
+}
+
+:host(app-home-page) {
+  width: calc(100vw - 18px);
+  overflow: hidden;
+  display: block;
 }

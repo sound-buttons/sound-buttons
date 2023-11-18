@@ -1,10 +1,8 @@
 <app-header></app-header>
 <app-dialog></app-dialog>
-<router-outlet class="h-100"></router-outlet>
+<router-outlet class="container"></router-outlet>
 <app-footer
   [copyText]="
-    (this.version | slice : 0 : 9 | uppercase) +
-    ' | Website MIT Licensed | Voice copyright by ' +
-    this.fullName
+    'Sound Buttons v.' + (this.version | slice : 0 : 7 | uppercase) + ' | AGPLv3 Licensed'
   "
 ></app-footer>

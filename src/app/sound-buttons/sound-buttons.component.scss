@@ -2,7 +2,9 @@
 
 .container {
   margin: 5px;
+  margin-bottom: -16px;
   overflow-y: auto;
+  max-width: unset;
 
   @media only screen and (max-width: 767px) {
     margin-bottom: $footer-height + 2;

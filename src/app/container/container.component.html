@@ -1,17 +1,15 @@
 <div class="container">
-  <div class="row h-100" *ngIf="config">
-    <div class="col-12 col-md-4 h-100" *ngIf="displaySet === 0">
+  <div class="row" *ngIf="config">
+    <div class="col-12 col-md-4 min-h-100">
       <app-introduction
-        class="h-100"
         [imgs]="config.imgSrc"
         [intro]="config.intro"
         [link]="config.link"
         [button]="config.introButton"
       ></app-introduction>
     </div>
-    <div class="col-12 h-100" [class.col-md-8]="displaySet === 0">
+    <div class="col-12 col-md-8">
       <app-sound-buttons
-        class="h-100"
         *ngIf="config.buttonGroups"
         [buttonGroups]="config.buttonGroups"
       ></app-sound-buttons>

@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     translateService.use(LanguageService.BrowserLanguage);
     // translateService.use('ja');
 
-    this.version = env.version ? `v.${env.version}` : '';
+    this.version = env.version ? `${env.version}` : '';
   }
 
   ngOnInit(): void {

@@ -1,42 +1,34 @@
-<div class="outer">
-  <div class="inner">
-    <div class="container">
+<div class="container">
+  <div
+    class="chara-card"
+    *ngFor="let config of configs$ | async"
+    [routerLink]="['/', config.name]"
+    (mouseenter)="OnMouseEnter($event, config)"
+    (mouseleave)="OnMouseLeave()"
+  >
+    <div class="details">
+      <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
+      <h2>{{ config.fullName }}</h2>
       <div
-        class="chara-card"
-        *ngFor="let config of configs$ | async"
-        [routerLink]="['/', config.name]"
-        (mouseenter)="OnMouseEnter($event, config)"
-        (mouseleave)="OnMouseLeave()"
-      >
-        <div class="details">
-          <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
-          <h2>{{ config.fullName }}</h2>
-          <div
-            class="background"
-            *ngIf="config.color"
-            [style.backgroundColor]="config.color['secondary']"
-          ></div>
-        </div>
-      </div>
-
-      <a
-        href="https://github.com/sound-buttons/sound-buttons_configs/discussions/2"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="color: #444"
-      >
-        <div
-          class="chara-card"
-          (mouseenter)="OnMouseEnter($event)"
-          (mouseleave)="OnMouseLeave()"
-        >
-          <div class="details">
-            <!-- <img [src]="config.imgSrc"> -->
-            <h2>？？？</h2>
-            <div class="background" [style.backgroundColor]="'#777'"></div>
-          </div>
-        </div>
-      </a>
+        class="background"
+        *ngIf="config.color"
+        [style.backgroundColor]="config.color['secondary']"
+      ></div>
     </div>
   </div>
+
+  <a
+    href="https://github.com/sound-buttons/sound-buttons_configs/discussions/2"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="color: #444"
+  >
+    <div class="chara-card" (mouseenter)="OnMouseEnter($event)" (mouseleave)="OnMouseLeave()">
+      <div class="details">
+        <!-- <img [src]="config.imgSrc"> -->
+        <h2>？？？</h2>
+        <div class="background" [style.backgroundColor]="'#777'"></div>
+      </div>
+    </div>
+  </a>
 </div>
