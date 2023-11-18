@@ -19,8 +19,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Checkout submodules to latest
-        run: git submodule update --init --recursive && git submodule update --recursive --remote
+      - name: Initialize and checkout submodule to minify branch
+        run: |
+          git submodule update --init
+          cd src/assets/configs
+          git checkout minify
+          git pull origin minify
 
       - name: Build And Deploy
         id: builddeploy
