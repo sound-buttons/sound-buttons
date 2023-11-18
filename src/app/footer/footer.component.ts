@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
   constructor(private clickService: ClickService) {}
 
   ngOnInit(): void {
-    this.clickService.OnClick.subscribe((clicks) => {
+    this.clickService.UpdateClicks.subscribe((clicks) => {
       this.clicks = clicks;
     });
   }
