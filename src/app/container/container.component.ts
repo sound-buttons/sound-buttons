@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import * as mime from 'mime';
 import { IButton } from './../sound-buttons/Buttons';
 import { IFullConfig, ConfigService } from '../services/config.service';
 import { SEOService } from './../services/seo.service';
 import { DialogService } from './../services/dialog.service';
-import * as mime from 'mime';
 import { EnvironmentToken } from '../app.module';
 
 @Component({
@@ -16,16 +17,16 @@ import { EnvironmentToken } from '../app.module';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit, OnDestroy {
-  config: IFullConfig | undefined;
   configSubscription: Subscription | undefined;
+  config: IFullConfig | undefined;
   displaySet = 0;
   origin = '';
-  onHide: Subscription | undefined;
-  routerParams: Subscription | undefined;
+  buttonGuid: string | undefined = undefined;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private configService: ConfigService,
     private SEOService: SEOService,
     private dialogService: DialogService,
@@ -45,73 +46,74 @@ export class ContainerComponent implements OnInit, OnDestroy {
       this.configService.isLiveUpdate = q.has('liveUpdate');
     });
 
+    this.route.params.pipe(filter((p) => p.id !== 'upload')).subscribe((p) => {
+      this.buttonGuid = p.id;
+    });
+
     this.configSubscription = this.configService.OnConfigChanged.subscribe((config) => {
-      if (config) {
-        this.config = config;
+      this.config = config;
+      if (!this.config) return;
 
-        if (this.routerParams) this.routerParams.unsubscribe();
-        this.routerParams = this.route.params
-          .pipe(
-            filter((p) => !('id' in p) || p.id !== 'upload'),
-            take(1)
-          )
-          .subscribe((p) => {
-            if (!this.config) return;
+      if (this.buttonGuid) {
+        if (this.modalService.getModalsCount() !== 0) return;
+        let button: IButton | undefined;
+        const filename =
+          (this.buttonGuid as string).indexOf('.') >= 0
+            ? this.buttonGuid.split('.').slice(0, -1).join('.') + '.webm'
+            : this.buttonGuid + '.webm';
+        this.config.buttonGroups?.forEach((group) => {
+          button ??= group.buttons.find((btn) => btn.id === this.buttonGuid);
+          button ??= group.buttons.find((btn) => btn.filename === filename);
+        });
 
-            if (this.modalService.getModalsCount() !== 0) return;
+        if (!button) return;
 
-            if (p.id) {
-              let button: IButton | undefined;
-              const id = p.id;
-              const filename =
-                (p.id as string).indexOf('.') >= 0
-                  ? p.id.split('.').slice(0, -1).join('.') + '.webm'
-                  : p.id + '.webm';
-              this.config.buttonGroups?.forEach((group) => {
-                button ??= group.buttons.find((btn) => btn.id === id);
-                button ??= group.buttons.find((btn) => btn.filename === filename);
-              });
-
-              if (button) {
-                this.showDetail(button);
-
-                const buttonName = button.text || filename;
-
-                this.SEOService.setTitle(`${buttonName} | ${this.config.fullName} | Sound Buttons`);
-                this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
-
-                this.dialogService.onHideModal.pipe(take(1)).subscribe(() => {
-                  this.router.navigate(['/', this.config?.name], {
-                    relativeTo: this.route,
-                    queryParams: { filename: null },
-                    queryParamsHandling: 'merge',
-                  });
-                });
-              }
-            } else {
-              this.SEOService.setTitle(config.fullName + ' | Sound Buttons');
-              this.SEOService.setUrl(`${this.origin}/${config.name}`);
-              this.SEOService.setImage(`${this.origin}/assets/img/preview/${config.name}.png`);
-            }
+        this.dialogService.onHideModal.pipe(take(1)).subscribe(() => {
+          this.buttonGuid = undefined;
+          const url = this.router.createUrlTree(['/', this.config?.name], {
+            preserveFragment: true,
+            queryParams: { filename: null },
+            queryParamsHandling: 'merge',
           });
+          this.location.go(url.toString());
+          this.setMeta();
+        });
+
+        this.showButton(button);
+        this.setMeta(button);
+      } else {
+        this.setMeta();
       }
     });
   }
 
-  private showDetail(button: IButton | undefined) {
-    if (typeof button !== 'undefined') {
-      const audioElement = document.createElement('audio');
-      audioElement.controls = true;
-      const source = document.createElement('source');
-      source.src = button.baseRoute + button.filename + button.SASToken;
-      source.type = mime.getType(button.filename) ?? 'audio/webm';
-      audioElement.appendChild(source);
+  private setMeta(button?: IButton) {
+    if (!this.config) return;
 
-      this.dialogService.showModal.emit({
-        title: button.text,
-        message: audioElement.outerHTML,
-      });
+    this.SEOService.setImage(`${this.origin}/assets/img/preview/${this.config.name}.png`);
+    if (button) {
+      this.SEOService.setTitle(
+        `${button.text || button.filename} | ${this.config.fullName} | Sound Buttons`
+      );
+      this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
+    } else {
+      this.SEOService.setTitle(this.config.fullName + ' | Sound Buttons');
+      this.SEOService.setUrl(`${this.origin}/${this.config.name}`);
     }
+  }
+
+  private showButton(button: IButton) {
+    const audioElement = document.createElement('audio');
+    audioElement.controls = true;
+    const source = document.createElement('source');
+    source.src = button.baseRoute + button.filename + button.SASToken;
+    source.type = mime.getType(button.filename) ?? 'audio/webm';
+    audioElement.appendChild(source);
+
+    this.dialogService.showModal.emit({
+      title: button.text,
+      message: audioElement.outerHTML,
+    });
   }
 
   ngOnDestroy(): void {
