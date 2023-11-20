@@ -1,8 +1,8 @@
-import { DisplayService } from './../services/display.service';
-import { ConfigService } from './../services/config.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { DisplayService } from './../services/display.service';
+import { ConfigService } from './../services/config.service';
 
 @Component({
   selector: 'app-header',

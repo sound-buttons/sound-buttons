@@ -1,10 +1,14 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import * as tocbot from 'tocbot';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton } from './Buttons';
 import { EnvironmentToken } from '../app.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
 import { DisplayService } from './../services/display.service';
+import { ConfigService } from './../services/config.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
@@ -12,7 +16,8 @@ import { AudioService } from '../services/audio.service';
   templateUrl: './sound-buttons.component.html',
   styleUrls: ['./sound-buttons.component.scss'],
 })
-export class SoundButtonsComponent implements OnInit {
+export class SoundButtonsComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   @Input() buttonGroups: IButtonGroup[] = [];
   filterText = '';
   origin = '';
@@ -22,6 +27,7 @@ export class SoundButtonsComponent implements OnInit {
     private displayService: DisplayService,
     private buttonFilterPipe: ButtonFilterPipe,
     private audioService: AudioService,
+    private configService: ConfigService,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Inject(EnvironmentToken) private env: any
   ) {
@@ -31,9 +37,33 @@ export class SoundButtonsComponent implements OnInit {
   ngOnInit(): void {
     this.filterText = this.displayService.getFilterText();
 
-    this.displayService.OnConfigChanged.subscribe((filterText) => {
+    this.displayService.OnConfigChanged.pipe(takeUntil(this.destroy$)).subscribe((filterText) => {
       this.filterText = filterText;
+      this.tocRefresh();
     });
+
+    this.configService.OnConfigChanged.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.tocRefresh();
+    });
+  }
+
+  private tocSetting = () => {
+    return {
+      tocSelector: '#toc',
+      contentSelector: 'app-sound-buttons',
+      headingSelector: 'h2',
+      scrollSmooth: false,
+      basePath: window.location.pathname + window.location.search,
+      hasInnerContainers: true,
+      disableTocScrollSync: true,
+      activeLinkClass: 'active',
+    };
+  };
+
+  private tocRefresh() {
+    setTimeout(() => {
+      tocbot.refresh(this.tocSetting());
+    }, 0);
   }
 
   buttonClick($event: MouseEvent, btn: IButton): void {
@@ -61,5 +91,14 @@ export class SoundButtonsComponent implements OnInit {
 
   trackById(_index: number, item: IButton): string {
     return item.id;
+  }
+
+  ngAfterViewInit(): void {
+    tocbot.init(this.tocSetting());
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

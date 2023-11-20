@@ -1,14 +1,16 @@
 <div class="container">
-  <div class="row" *ngIf="config">
-    <div class="col-12 col-md-4 min-h-100">
+  <div class="d-flex flex-wrap" *ngIf="config">
+    <div class="side">
       <app-introduction
         [imgs]="config.imgSrc"
         [intro]="config.intro"
         [link]="config.link"
         [button]="config.introButton"
       ></app-introduction>
+      <hr />
+      <div id="toc"></div>
     </div>
-    <div class="col-12 col-md-8">
+    <div class="main flex-grow-1">
       <app-sound-buttons
         *ngIf="config.buttonGroups"
         [buttonGroups]="config.buttonGroups"

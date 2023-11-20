@@ -3,12 +3,12 @@
 /* Bootswatch - Pulse
    https://bootswatch.com/
 */
-
 @import 'variables';
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr';
-@import 'bootswatch';
+// @import 'bootswatch';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+// @import 'tocbot/src/scss/tocbot';
 
 :root {
   --bs-primary: #000000;
@@ -24,7 +24,6 @@ a {
 }
 
 .btn {
-
   &-primary {
     --bs-btn-bg: var(--bs-primary);
     --bs-btn-border-color: var(--bs-primary);
@@ -41,7 +40,6 @@ a {
   }
 
   &-secondary {
-
     --bs-btn-hover-bg: var(--bs-secondary);
     --bs-btn-hover-border-color: var(--bs-primary);
     --bs-btn-hover-color: var(--bs-primary);
@@ -103,7 +101,6 @@ a {
  * Toast
  */
 .toast {
-
   &-bottom-center {
     right: 1rem;
     width: auto;
@@ -164,4 +161,33 @@ a {
 // not required but can help with mobile right click
 .target {
   user-select: none;
+}
+
+#toc ol {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+#toc ol ol {
+  padding-left: 5px;
+}
+
+#toc a {
+  display: block;
+  padding: 0.125rem 0 0.125rem 8px;
+  color: gray;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+#toc a:hover,
+#toc a.active {
+  color: var(--bs-primary);
+  border-left-color: var(--bs-primary);
+}
+
+#toc a.active {
+  font-weight: bold;
+  background: color-mix(in srgb, currentColor 20%, transparent);
 }

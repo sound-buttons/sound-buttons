@@ -1,61 +1,102 @@
-<div class="container position-relative">
-  <div id="linkIcon-container" *ngIf="link">
-    <a class="linkIcon" [href]="link!.youtube" target="_blank" rel="noopener" *ngIf="link!.youtube">
-      <img src="assets/img/youtube.svg" alt="youtube" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.twitch" target="_blank" rel="noopener" *ngIf="link!.twitch">
-      <img src="assets/img/twitch.svg" alt="twitch" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.twitter" target="_blank" rel="noopener" *ngIf="link!.twitter">
-      <img src="assets/img/twitter.svg" alt="twitter" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.facebook" target="_blank" rel="noopener" *ngIf="link!.facebook">
-      <img src="assets/img/facebook.svg" alt="facebook" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.discord" target="_blank" rel="noopener" *ngIf="link!.discord">
-      <img src="assets/img/discord.svg" alt="discord" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.instagram" target="_blank" rel="noopener" *ngIf="link!.instagram">
-      <img src="assets/img/instagram.svg" alt="instagram" />
-    </a>
-
-    <a class="linkIcon" [href]="link!.other" target="_blank" rel="noopener nofollow" *ngIf="link!.other">
-      <img src="assets/img/other.svg" alt="other" />
-    </a>
-  </div>
-  <app-chara-image [imgs]="imgs"></app-chara-image>
-  <div class="position-relative info">
-    <button
-      type="button"
-      class="btn btn-secondary font-weight-bold"
-      *ngIf="button && !isLiveUpdate"
-      (click)="buttonClick($event, button)"
-      [contextMenuTrigger]="menu"
-      [menuContext]="button"
-    >
-      {{ button.text }}
-    </button>
-    <p [innerHTML]="intro" *ngIf="!isLiveUpdate"></p>
-
-    <div class="notice" *ngIf="isLiveUpdate">
-      <div>
-        <span [innerHTML]="'previewMessage' | translate"></span>:
+<div class="w-100" (mouseleave)="expanded = false" (mouseenter)="expanded = true">
+  <div
+    class="d-flex flex-wrap align-items-center justify-content-center"
+    (click)="expanded = !expanded"
+  >
+    <picture>
+      <source [srcset]="icon() + '.avif'" type="image/avif" />
+      <source [srcset]="icon() + '.webp'" type="image/webp" />
+      <img [src]="icon() + '.png'" class="icon" alt="icon image" width="100px" />
+    </picture>
+    <div class="m-2 flex-grow-1">
+      <h1 class="text-center">{{ fullName() }}</h1>
+      <div id="linkIcon-container" *ngIf="link">
         <a
-          href="https://github.com/sound-buttons/sound-buttons_configs/discussions/3"
+          class="linkIcon"
+          [href]="link!.youtube"
           target="_blank"
           rel="noopener"
-          >Github discussion</a
-        ><br />
-        <button class="btn btn-primary" type="button" (click)="reloadConfig()">
-          {{ '重新整理本頁內容' | translate }}</button
-        ><br />
-        {{ initTime | date: 'yyyy/MM/dd hh:mm:ss' }}
+          *ngIf="link!.youtube"
+        >
+          <img src="assets/img/youtube.svg" alt="youtube" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.twitch"
+          target="_blank"
+          rel="noopener"
+          *ngIf="link!.twitch"
+        >
+          <img src="assets/img/twitch.svg" alt="twitch" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.twitter"
+          target="_blank"
+          rel="noopener"
+          *ngIf="link!.twitter"
+        >
+          <img src="assets/img/twitter.svg" alt="twitter" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.facebook"
+          target="_blank"
+          rel="noopener"
+          *ngIf="link!.facebook"
+        >
+          <img src="assets/img/facebook.svg" alt="facebook" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.discord"
+          target="_blank"
+          rel="noopener"
+          *ngIf="link!.discord"
+        >
+          <img src="assets/img/discord.svg" alt="discord" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.instagram"
+          target="_blank"
+          rel="noopener"
+          *ngIf="link!.instagram"
+        >
+          <img src="assets/img/instagram.svg" alt="instagram" />
+        </a>
+
+        <a
+          class="linkIcon"
+          [href]="link!.other"
+          target="_blank"
+          rel="noopener nofollow"
+          *ngIf="link!.other"
+        >
+          <img src="assets/img/other.svg" alt="other" />
+        </a>
       </div>
+    </div>
+  </div>
+  <div class="detail position-relative" [class.expanded]="expanded">
+    <app-chara-image [imgs]="imgs"></app-chara-image>
+    <div class="position-relative info">
+      <button
+        type="button"
+        class="btn btn-secondary font-weight-bold"
+        *ngIf="button && !isLiveUpdate"
+        (click)="buttonClick($event, button)"
+        [contextMenuTrigger]="menu"
+        [menuContext]="button"
+      >
+        {{ button.text }}
+      </button>
+      <p [innerHTML]="intro"></p>
     </div>
   </div>
 </div>

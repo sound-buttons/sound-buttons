@@ -1,9 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { IButton } from './../sound-buttons/Buttons';
-import { ILink } from '../services/config.service';
 import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
-import { ConfigService } from './../services/config.service';
+import { ILink, ConfigService } from './../services/config.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
@@ -15,15 +14,16 @@ export class IntroductionComponent implements OnInit {
   initTime = Date.now();
 
   @Input() imgs: string[] | string = [];
-
-  @Input() public intro = '';
-
+  @Input() intro = '';
   @Input() link: ILink | undefined;
-
   @Input() button: IButton | undefined;
 
   isLiveUpdate = false;
-
+  expanded = false;
+  icon = () => {
+    const regex = /\/([^/]+)\.\w+$/;
+    return this.imgs[0].replace(regex, '/icon');
+  };
   menu = ContextMenuComponent;
 
   constructor(
@@ -38,6 +38,7 @@ export class IntroductionComponent implements OnInit {
     });
   }
 
+  fullName = () => this.configService.config?.fullName;
   reloadConfig(): void {
     this.configService.reloadConfig(() => (this.initTime = Date.now()));
   }

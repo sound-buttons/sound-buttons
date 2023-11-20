@@ -1,12 +1,10 @@
-<div class="chara">
-  <picture *ngFor="let img of imgs; index as i">
-    <source [srcset]="img + '.avif'" type="image/avif" />
-    <source [srcset]="img + '.webp'" type="image/webp" />
-    <img
-      [src]="img + '.png'"
-      class="mx-auto d-block"
-      [class.back]="i !== nowDisplayImg"
-      alt="intro image"
-    />
-  </picture>
-</div>
+<picture *ngFor="let img of imgs; index as i">
+  <source [srcset]="img + '.avif'" type="image/avif" />
+  <source [srcset]="img + '.webp'" type="image/webp" />
+  <img
+    [src]="img + '.png'"
+    class="mx-auto d-block"
+    [class.back]="i !== nowDisplayImg"
+    alt="intro image"
+  />
+</picture>

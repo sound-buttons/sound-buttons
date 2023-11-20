@@ -1,5 +1,40 @@
-.container{
+@import 'variables';
+
+.container {
   margin: 15px auto;
   min-height: calc(100vh - 3rem - 30px - 215px);
   max-width: 87vw;
+}
+
+.side{
+  width: 100%;
+  margin: 5px;
+  padding: 12px;
+  padding-right: 0;
+}
+
+.main{
+  width: 250px;
+}
+
+@include media-breakpoint-up(md){
+  .side{
+    width: unset;
+    margin: unset;
+    padding: unset;
+  }
+
+  #toc {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    left: 0;
+    z-index: 2;
+    overflow-y: auto;
+    margin: 5px;
+  }
+}
+
+#toc {
+  font-size: 1rem;
 }
