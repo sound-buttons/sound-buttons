@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-scroll-to-top-button',
@@ -9,20 +9,26 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
     type="button"
     class="btn btn-primary"
     [style.bottom]="bottom"
-    [style.visibility]="window.scrollY > 300 ? 'visible' : 'hidden'"
-    [style.opacity]="window.scrollY > 300 ? '1' : '0'"
-    (click)="OnClick()"
+    [style.visibility]="show ? 'visible' : 'hidden'"
+    [style.opacity]="show ? '1' : '0'"
+    (click)="onClick()"
   >
     <i class="bi bi-chevron-up"></i>
   </button>`,
   styleUrls: ['./scroll-to-top-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ScrollToTopButtonComponent {
-  window = window;
+export class ScrollToTopButtonComponent implements OnInit {
   @Input() bottom: string = '20px';
 
-  OnClick = (): void => {
+  show = false;
+
+  ngOnInit(): void {
+    window.addEventListener('scroll', () => {
+      this.show = window.scrollY > 300;
+    });
+  }
+
+  onClick = (): void => {
     window.scroll({
       top: 0,
       left: 0,
