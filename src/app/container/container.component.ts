@@ -105,6 +105,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
   private showButton(button: IButton) {
     const audioElement = document.createElement('audio');
     audioElement.controls = true;
+    audioElement.classList.add('w-100');
+
     const source = document.createElement('source');
     source.src = button.baseRoute + button.filename + button.SASToken;
     source.type = mime.getType(button.filename) ?? 'audio/webm';

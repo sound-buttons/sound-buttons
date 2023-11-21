@@ -5,7 +5,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 // @import 'tocbot/src/scss/tocbot';
 
-html{
+html {
   scroll-padding-top: 63px;
 }
 
@@ -191,3 +191,19 @@ a {
   font-weight: bold;
   background: color-mix(in srgb, currentColor 20%, transparent);
 }
+
+.modal {
+  --bs-modal-border-color: var(--bs-primary);
+
+  .modal-content {
+    border-radius: var(--bs-modal-border-radius);
+  }
+}
+
+.card {
+  border-radius: var(--bs-card-border-radius);
+  .card-header:first-child {
+    border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+  }
+}
+
