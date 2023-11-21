@@ -1,5 +1,41 @@
 @import 'variables';
 
+.out {
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    left: 0;
+    z-index: 2;
+    overflow-y: auto;
+  }
+
+  &.expanded {
+    position: inherit;
+    height: 100%;
+    overflow-y: unset;
+
+    .detail {
+      max-height: 300vh;
+      max-width: 350px;
+    }
+
+    #toc {
+      @include media-breakpoint-up(md) {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 4rem;
+        left: 0;
+        z-index: 2;
+        overflow-y: auto;
+        margin: 5px;
+      }
+    }
+  }
+}
+
 app-chara-image {
   display: block;
   height: 70vh;
@@ -14,11 +50,6 @@ app-chara-image {
   max-height: 0;
   min-width: min(250px, 30vw);
   max-width: 10px;
-
-  &.expanded {
-    max-height: 300vh;
-    max-width: 350px;
-  }
 
   @include media-breakpoint-down(md) {
     max-width: 100% !important;
@@ -96,4 +127,8 @@ h1 {
       margin: 0 2px !important;
     }
   }
+}
+
+#toc {
+  font-size: 1rem;
 }

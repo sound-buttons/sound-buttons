@@ -39,6 +39,19 @@ export class IntroductionComponent implements OnInit {
   }
 
   fullName = () => this.configService.config?.fullName;
+
+  iconClick = () => {
+    this.expanded = !this.expanded;
+
+    if (this.expanded) {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   reloadConfig(): void {
     this.configService.reloadConfig(() => (this.initTime = Date.now()));
   }
