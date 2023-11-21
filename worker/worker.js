@@ -156,7 +156,7 @@ async function handleButtonRequest(request) {
     }
 
     const configUrl = new URL(
-      `https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${found[1]}.json`
+      `https://blob.sound-buttons.click/sound-buttons/${found[1]}/${found[1]}.json`
     );
     const configResponse = await fetch(configUrl);
     const config = await configResponse.json();
@@ -191,7 +191,7 @@ async function handleButtonRequest(request) {
     const buttonName = button.text['zh-tw'] || button.text['ja'] || filename;
     filename = button.filename || filename;
     const imageUrl = config.imgSrc[0];
-    const audioUrl = `https://soundbuttons.blob.core.windows.net/sound-buttons/${found[1]}/${filename}`;
+    const audioUrl = `https://blob.sound-buttons.click/sound-buttons/${found[1]}/${filename}`;
     const creator = '@' + config.link.twitter.match(/[^/]+$/)[0];
 
     // https://developers.cloudflare.com/workers/runtime-apis/html-rewriter
