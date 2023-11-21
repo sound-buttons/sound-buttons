@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isCollapsed = true;
   configSubscription: Subscription | undefined;
   filterText = '';
+  window = window;
 
   constructor(
     private configService: ConfigService,
@@ -38,9 +39,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  setFilterText($event: Event): void {
-    this.displayService.setFilterText(($event.target as HTMLInputElement).value ?? '');
+  setFilterText(value: string): void {
+    this.displayService.setFilterText(value ?? '');
   }
+
+  getButtonTextList = (): string[] =>
+    this.configService.config?.buttonGroups?.map((g) => g.buttons.map((b) => b.text)).flat() ?? [];
 
   ngOnDestroy(): void {
     this.configSubscription?.unsubscribe();

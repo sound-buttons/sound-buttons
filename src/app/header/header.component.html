@@ -18,13 +18,25 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" *ngIf="name" [collapse]="isCollapsed">
-      <div class="navbar-nav ps-0 input-group">
-        <input
-          type="text"
-          placeholder="filter"
-          (change)="setFilterText($event)"
-          [value]="displayService.getFilterText()"
-        />
+      <div class="navbar-nav ps-0 input-group" *ngIf="!window.location.pathname.endsWith('upload')">
+        <div class="input-group">
+          <span class="input-group-text" id="filter-text-icon"><i class="bi bi-search"></i></span>
+          <input
+            id="filter-text"
+            onClick="this.select();"
+            [(ngModel)]="filterText"
+            type="text"
+            placeholder="Search..."
+            class="form-control"
+            (change)="setFilterText(filterText)"
+            [typeahead]="getButtonTextList()"
+            [typeaheadIsFirstItemActive]="false"
+            [adaptivePosition]="true"
+            (typeaheadOnSelect)="setFilterText($event.value)"
+            [value]="displayService.getFilterText()"
+            aria-describedby="filter-text"
+          />
+        </div>
       </div>
       <ul class="navbar-nav ps-0">
         <li class="nav-item">
