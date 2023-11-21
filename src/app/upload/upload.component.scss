@@ -5,9 +5,39 @@
   min-height: calc(100vh - 3rem - 30px - 215px);
 }
 
+.input-group.half {
+  @include media-breakpoint-up(lg) {
+    width: 50%;
+  }
+}
+
+.input-group.row2{
+  @include media-breakpoint-down(lg) {
+    &>*{
+      border-top: 0;
+    }
+  }
+}
+
+#videoId {
+  border-bottom-right-radius: 0;
+  @include media-breakpoint-up(lg) {
+    border-top-right-radius: 0;
+  }
+}
+
+.btn.border-change {
+  border-bottom-right-radius: 0;
+  @include media-breakpoint-down(lg) {
+    border-top-right-radius: 0;
+  }
+}
+
 .ng-invalid {
   border-left-width: 5px;
   border-left-color: $danger;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .youtubeContainer {

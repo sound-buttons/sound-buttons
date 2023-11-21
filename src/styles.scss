@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+$enable-rounded: true;
 @import 'variables';
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr';
@@ -194,16 +195,4 @@ a {
 
 .modal {
   --bs-modal-border-color: var(--bs-primary);
-
-  .modal-content {
-    border-radius: var(--bs-modal-border-radius);
-  }
 }
-
-.card {
-  border-radius: var(--bs-card-border-radius);
-  .card-header:first-child {
-    border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
-  }
-}
-
