@@ -1,4 +1,3 @@
 User-agent: *
 Disallow: /assets/
-
-Sitemap: https://sound-buttons.click/sitemap.txt
+Sitemap: https://sound-buttons.click/sitemap.xml

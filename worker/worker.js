@@ -4,19 +4,19 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    if (url.pathname.startsWith('/sitemap')) return GetSitemap(url.origin);
+    if (url.pathname.startsWith('/sitemap')) return GetSitemap(url);
 
     const parts = url.pathname.split('/');
 
     if (parts.length === 3 && parts[2] !== 'upload') {
-      return handleButtonRequest(request);
+      return HandleButtonRequest(request);
     } else {
-      return handlePageRequest(request);
+      return HandlePageRequest(request);
     }
   },
 };
 
-async function handlePageRequest(request) {
+async function HandlePageRequest(request) {
   const userAgent = request.headers.get('User-Agent') || '';
   const isBot = userAgent.includes('bot') || userAgent.includes('InspectionTool');
 
@@ -57,7 +57,10 @@ async function handlePageRequest(request) {
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
     const config = configs.find((c) => c.name === found[1]);
-    if (!config) return new Response('Not found.', { status: 404 });
+    if (!config)
+      return new Response('Not found.', {
+        status: 404,
+      });
 
     Title = `${config.fullName} | Sound Buttons`;
     Description = `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說...`;
@@ -137,7 +140,7 @@ async function handlePageRequest(request) {
   }
 }
 
-async function handleButtonRequest(request) {
+async function HandleButtonRequest(request) {
   const userAgent = request.headers.get('User-Agent') || '';
   const isBot = userAgent.includes('bot') || userAgent.includes('InspectionTool');
 
@@ -163,7 +166,9 @@ async function handleButtonRequest(request) {
     if (!config) {
       return new Response('Not found. Redirect to homepage.', {
         status: 302,
-        headers: { Location: `${url}` },
+        headers: {
+          Location: `${url}`,
+        },
       });
     }
     let id = decodeURI(found[2]);
@@ -182,7 +187,9 @@ async function handleButtonRequest(request) {
     if (!button) {
       return new Response('Not found. Redirect to homepage.', {
         status: 302,
-        headers: { Location: `${url}` },
+        headers: {
+          Location: `${url}`,
+        },
       });
     }
 
@@ -204,12 +211,20 @@ async function handleButtonRequest(request) {
       })
       .on('head', {
         element(e) {
-          e.append(`<meta property="og:video" content="${audioUrl}">`, { html: true });
-          e.append(`<meta property="og:video:url" content="${audioUrl}">`, { html: true });
-          e.append(`<meta property="og:video:secure_url" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:video" content="${audioUrl}">`, {
+            html: true,
+          });
+          e.append(`<meta property="og:video:url" content="${audioUrl}">`, {
+            html: true,
+          });
+          e.append(`<meta property="og:video:secure_url" content="${audioUrl}">`, {
+            html: true,
+          });
           e.append(
             '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="640"> <meta property="og:video:height" content="1024">',
-            { html: true }
+            {
+              html: true,
+            }
           );
 
           e.append(`<meta name="twitter:player" content="${url}">`, {
@@ -217,12 +232,20 @@ async function handleButtonRequest(request) {
           });
           e.append(
             '<meta name="twitter:player:width" content="640"> <meta name="twitter:player:height" content="1024">',
-            { html: true }
+            {
+              html: true,
+            }
           );
 
-          e.append(`<meta property="og:audio" content="${audioUrl}">`, { html: true });
-          e.append(`<meta property="og:audio:url" content="${audioUrl}">`, { html: true });
-          e.append(`<meta property="og:audio:secure_url" content="${audioUrl}">`, { html: true });
+          e.append(`<meta property="og:audio" content="${audioUrl}">`, {
+            html: true,
+          });
+          e.append(`<meta property="og:audio:url" content="${audioUrl}">`, {
+            html: true,
+          });
+          e.append(`<meta property="og:audio:secure_url" content="${audioUrl}">`, {
+            html: true,
+          });
           e.append('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
             html: true,
           });
@@ -311,47 +334,91 @@ async function handleButtonRequest(request) {
 
     return newResponse;
   } else {
-    return new Response('Bad Request', { status: 400 });
+    return new Response('Bad Request', {
+      status: 400,
+    });
   }
 }
 
-async function GetSitemap(origin) {
-  console.log('Start to generate sitemap');
+async function GetSitemap(url) {
+  var url = new URL(url);
+  const regex = new RegExp(origin + '/sitemap(?:-([a-zA-Z0-9_]+))?.xml', 'i');
+
+  const id = url.toString().match(regex)[1];
+
+  console.log('Get sitemap id:', id);
 
   try {
-    const configUrl = new URL(`${origin}/assets/configs/main.json`);
+    const configUrl = new URL(`${url.origin}/assets/configs/main.json`);
     const configResponse = await fetch(configUrl);
     const configs = await configResponse.json();
 
-    const buttonUrls = await Promise.all(
-      configs.map(async (config) => {
-        const configUrl = new URL(`${origin}/${config.fullConfigURL}`);
-        const configResponse = await fetch(configUrl);
-        const fullConfig = await configResponse.json();
-
-        const groupButtonUrls = fullConfig.buttonGroups.flatMap((group) =>
-          group.buttons.map(
-            (btn) =>
-              `${origin}/${fullConfig.name}/${encodeURI(btn.filename.replace(/\.[^/.]+$/, ''))}`
-          )
-        );
-
-        console.log('Get config', fullConfig.name, fullConfig.buttonGroups.length);
-        return groupButtonUrls;
-      })
-    );
-
-    const allButtonUrls = buttonUrls.flat();
-    const urls = configs.map((config) => `${origin}/${config.name}`).concat(allButtonUrls);
-    const staticRoutes = `${origin}\n${origin}/sitemap.txt\n`;
-
-    return new Response(staticRoutes + urls.join('\n'), {
-      headers: {
-        'content-type': 'text/plain;charset=UTF-8',
-      },
-    });
+    return id ? await BuildSitemap(configs, id) : BuildSitemapIndex(configs);
   } catch (e) {
     console.error('Error:', e);
     throw e;
   }
+}
+
+async function BuildSitemap(configs, id) {
+  console.log('Start to generate sitemap.');
+  const head = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+  const tail = `</urlset>`;
+
+  const configUrl = new URL(`${origin}/${configs.find((c) => c.name === id).fullConfigURL}`);
+  const configResponse = await fetch(configUrl);
+  const fullConfig = await configResponse.json();
+  console.log('Get config', fullConfig.name, fullConfig.buttonGroups.length);
+
+  const groupButtonUrls = fullConfig.buttonGroups
+    .map((group) =>
+      group.buttons.map(
+        (btn) => `${origin}/${fullConfig.name}/${encodeURI(btn.filename.replace(/\.[^/.]+$/, ''))}`
+      )
+    )
+    .flat();
+  var allUrls = [`${origin}/${fullConfig.name}`].concat(groupButtonUrls);
+  console.log('Get urls', allUrls, allUrls.length);
+
+  return new Response(
+    head +
+      allUrls
+        .map(
+          (url) => `  <url>
+    <loc>${url}</loc>
+  </url>`
+        )
+        .join('') +
+      tail,
+    {
+      headers: {
+        'content-type': 'application/xml;charset=UTF-8',
+      },
+    }
+  );
+}
+
+function BuildSitemapIndex(configs) {
+  console.log('Start to generate sitemap index.');
+  const head = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+  const tail = `</sitemapindex>`;
+
+  let sitemaps = configs
+    .map(
+      (config) => `  <sitemap>
+    <loc>${origin}/sitemap-${config.name}.xml</loc>
+  </sitemap>
+`
+    )
+    .join('');
+
+  return new Response(head + sitemaps + tail, {
+    headers: {
+      'content-type': 'application/xml;charset=UTF-8',
+    },
+  });
 }

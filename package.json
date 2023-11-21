@@ -6,7 +6,7 @@
     "start_ssl": "ng serve --ssl",
     "worker_deploy": "wrangler publish worker/worker.js --name sound-buttons --compatibility-date 2022-10-15",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/ja.json --clean --format json",
-    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./copy-sitemap.ts && ts-node -O '{\"module\": \"commonjs\"}' ./write-production-config.ts",
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./write-production-config.ts",
     "build": "npm run config && ng build --configuration production",
     "start": "ng serve",
     "test": "ng test",
