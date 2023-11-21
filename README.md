@@ -9,6 +9,10 @@
   This project is a implementation of the Vtuber voice button website.
 </p>
 
+<p align="center">
+  <a href="https://sound-buttons.click" target="_blank">https://sound-buttons.click</a>
+</p>
+
 專案特色在於線上的音檔投稿系統，提交表單後能自動剪輯 Youtube 音訊並生成按鈕。  
 採用了資料分離式架構設計，使增修內容只需撰寫 JSON 設定檔即可。
 
@@ -22,10 +26,6 @@ It adopts a data separation architecture design, allowing content updates to be 
 Angular is used for the front-end, while Azure Functions are used for the back-end. The audio files are stored and hosted on Azure Blob Storage.
 
 ![Youtube](https://img.shields.io/static/v1?style=for-the-badge&message=YouTube&color=FF0000&logo=YouTube&logoColor=FFFFFF&label=) ![Azure Blob Storage](https://img.shields.io/static/v1?style=for-the-badge&message=Azure+Blob+Storage&color=0089D6&logo=Microsoft+Azure&logoColor=FFFFFF&label=) ![Angular](https://img.shields.io/static/v1?style=for-the-badge&message=Angular&color=DD0031&logo=Angular&logoColor=FFFFFF&label=) ![Azure Functions](https://img.shields.io/static/v1?style=for-the-badge&message=Azure+Functions&color=0062AD&logo=Azure+Functions&logoColor=FFFFFF&label=)
-
-## Blog 專文介紹
-
-<https://blog.maki0419.com/2021/05/soundbuttons.html>
 
 ## Build
 
@@ -67,6 +67,10 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 ### i18n (Chinese, Japanese)
 
 ![upload2](https://github.com/sound-buttons/sound-buttons/assets/16995691/3bdb09a2-30a1-40bf-9a8d-e7f535ab2c16)
+
+## Blog post introduction
+
+<https://blog.maki0419.com/2021/05/soundbuttons.html>
 
 ## License
 
