@@ -64,7 +64,6 @@ app-chara-image {
 h1 {
   font-size: 1.75rem;
   margin: 0.5rem 0;
-  max-width: 200px;
 
   @include media-breakpoint-down(md) {
     font-size: 2rem;

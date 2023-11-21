@@ -1,15 +1,12 @@
 <div class="w-100" (mouseleave)="expanded = false" (mouseenter)="expanded = true">
-  <div
-    class="d-flex flex-wrap align-items-center justify-content-center"
-    (click)="expanded = !expanded"
-  >
-    <picture>
+  <div role="button" class="d-flex flex-wrap align-items-center justify-content-center">
+    <picture (click)="expanded = !expanded">
       <source [srcset]="icon() + '.avif'" type="image/avif" />
       <source [srcset]="icon() + '.webp'" type="image/webp" />
       <img [src]="icon() + '.png'" class="icon" alt="icon image" width="100px" />
     </picture>
     <div class="m-2 flex-grow-1">
-      <h1 class="text-center">{{ fullName() }}</h1>
+      <h1 class="text-center w-100" (click)="expanded = !expanded">{{ fullName() }}</h1>
       <div id="linkIcon-container" *ngIf="link">
         <a
           class="linkIcon"
