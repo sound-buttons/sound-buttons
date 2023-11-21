@@ -9,9 +9,10 @@ html{
   scroll-padding-top: 63px;
 }
 
+// Override by color.service.ts
 :root {
   --bs-primary: #000000;
-  --bs-secondary: #777777;
+  --bs-secondary: #a1a1a1;
 }
 
 a {

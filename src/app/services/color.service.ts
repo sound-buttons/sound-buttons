@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ColorService {
   public defaultColor: IColor = {
     primary: '#000000',
-    secondary: '#777777',
+    secondary: '#a1a1a1',
   };
 
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match

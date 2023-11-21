@@ -32,6 +32,7 @@ import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 import { ContextMenuModule } from '@ctrl/ngx-rightclick';
 import { ContextMenuComponent } from './sound-buttons/context-menu/context-menu.component';
 import { CharaImageComponent } from './chara-image/chara-image.component';
+import { ScrollToTopButtonComponent } from './scroll-to-top-button/scroll-to-top-button.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -57,6 +58,17 @@ declare let gtag: (...arg: unknown[]) => void;
     ContextMenuComponent,
     CharaImageComponent,
   ],
+  providers: [
+    { provide: EnvironmentToken, useValue: environment },
+    LanguageService,
+    ConfigService,
+    ColorService,
+    AudioService,
+    DialogService,
+    ButtonFilterPipe,
+  ],
+  bootstrap: [AppComponent],
+  exports: [ButtonFilterPipe],
   imports: [
     BrowserModule,
     ButtonsModule.forRoot(),
@@ -80,18 +92,8 @@ declare let gtag: (...arg: unknown[]) => void;
       },
       defaultLanguage: 'zh',
     }),
+    ScrollToTopButtonComponent,
   ],
-  providers: [
-    { provide: EnvironmentToken, useValue: environment },
-    LanguageService,
-    ConfigService,
-    ColorService,
-    AudioService,
-    DialogService,
-    ButtonFilterPipe,
-  ],
-  bootstrap: [AppComponent],
-  exports: [ButtonFilterPipe],
 })
 export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
