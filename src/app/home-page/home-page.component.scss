@@ -55,7 +55,7 @@ app-chara-image {
     padding-left: 6vw;
   }
 
-  @media (min-width:1600px) {
+  @media (min-width: 1600px) {
     grid-template-columns: repeat(5, 1fr);
     grid-column-gap: 2vw;
     padding-left: 0;
@@ -147,4 +147,8 @@ app-chara-image {
   width: calc(100vw - 18px);
   overflow: hidden;
   display: block;
+
+  @media (hover: none) {
+    width: 100vw;
+  }
 }
