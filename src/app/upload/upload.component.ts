@@ -79,7 +79,9 @@ export class UploadComponent implements OnInit, OnDestroy {
             +!!c.parent?.get('videoId')?.value +
             +!!c.parent?.get('file')?.value !==
             1 ||
-          !('' + c.value).match(/^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
+          !('' + c.value).match(
+            /^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/
+          )
             ? { clip: true }
             : null,
       ],
@@ -90,6 +92,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   youtubeEmbedLink: SafeResourceUrl = '';
   routerSubscription: Subscription | undefined;
+
+  private fakeFunction = () => {
+    return;
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -126,9 +132,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.http.get(this.apiWake).subscribe();
 
     // 使input type=number能使用滾輪
-    document.addEventListener('wheel', () => {
-      return;
-    });
+    document.addEventListener('wheel', this.fakeFunction, { passive: true });
   }
 
   OnFileUpload($event: Event): void {
@@ -389,6 +393,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routerSubscription?.unsubscribe();
+    document.removeEventListener('wheel', this.fakeFunction);
   }
 
   public getFormControl = (name: string): UntypedFormControl =>

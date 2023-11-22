@@ -37,15 +37,20 @@ export class AudioService {
       element: audio,
     };
     this.audioQueue.push(sound);
-    audio.addEventListener('ended', () => {
-      this.clickService.StepClicks();
-      this.remove(_button.index!);
-      if (!this.isEmpty()) {
-        this.audioQueue[0].element.play();
-      } else {
-        this._playing = false;
-      }
-    });
+
+    audio.addEventListener(
+      'ended',
+      () => {
+        this.clickService.StepClicks();
+        this.remove(_button.index!);
+        if (!this.isEmpty()) {
+          this.audioQueue[0].element.play();
+        } else {
+          this._playing = false;
+        }
+      },
+      { once: true }
+    );
   };
 
   public play = (): void => {
@@ -90,12 +95,13 @@ export class AudioService {
   };
 
   public remove = (index: number): void => {
-    const sound = this.audioQueue.find((sound) => sound.button.index === index);
-    if (!sound) return;
+    const soundIndex = this.audioQueue.findIndex((sound) => sound.button.index === index);
+    if (soundIndex === -1) return;
 
+    const sound = this.audioQueue[soundIndex];
     sound.element.pause();
     sound.element.remove();
-    this.audioQueue.splice(this.audioQueue.indexOf(sound), 1);
+    this.audioQueue.splice(soundIndex, 1);
     if (!this.isEmpty()) {
       if (!this._pause) this.audioQueue[0].element.play();
     } else {

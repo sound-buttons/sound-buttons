@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-scroll-to-top-button',
@@ -17,15 +17,17 @@ import { Component, Input, OnInit } from '@angular/core';
   </button>`,
   styleUrls: ['./scroll-to-top-button.component.scss'],
 })
-export class ScrollToTopButtonComponent implements OnInit {
+export class ScrollToTopButtonComponent implements AfterViewInit, OnDestroy {
   @Input() bottom: string = '20px';
 
   show = false;
 
-  ngOnInit(): void {
-    window.addEventListener('scroll', () => {
-      this.show = window.scrollY > 300;
-    });
+  private scroll = () => {
+    this.show = window.scrollY > 300;
+  };
+
+  ngAfterViewInit(): void {
+    window.addEventListener('scroll', this.scroll, { passive: true });
   }
 
   onClick = (): void => {
@@ -35,4 +37,8 @@ export class ScrollToTopButtonComponent implements OnInit {
       behavior: 'smooth',
     });
   };
+
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scroll);
+  }
 }
