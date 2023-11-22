@@ -4,6 +4,8 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
+    if (url.pathname.startsWith('/.well-known')) return fetch(request);
+
     if (url.pathname.startsWith('/sitemap')) return GetSitemap(url);
 
     const parts = url.pathname.split('/');
