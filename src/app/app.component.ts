@@ -2,9 +2,9 @@ import { LanguageService } from './services/language.service';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, Event, RouterEvent } from '@angular/router';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { catchError, distinctUntilChanged } from 'rxjs/operators';
 import { EnvironmentToken } from './app.module';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 
 declare let gtag: (...arg: unknown[]) => void;
 
@@ -24,8 +24,16 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(EnvironmentToken) env: any
   ) {
     translateService.setDefaultLang('zh');
-    translateService.use(LanguageService.BrowserLanguage);
-    // translateService.use('ja');
+    translateService
+      .use(LanguageService.BrowserLanguage)
+      .pipe(
+        catchError(() => {
+          console.warn('Browser language is not supported, fallback to zh.');
+          translateService.use('zh');
+          return of();
+        })
+      )
+      .subscribe();
 
     this.version = env.version ? `${env.version}` : '';
   }
