@@ -12,6 +12,7 @@ export class AudioService {
   private _pause = false;
   private _playing = false;
   private index = 0;
+  private soundPlayCounts = 0;
 
   constructor(private clickService: ClickService) {}
 
@@ -41,13 +42,23 @@ export class AudioService {
     audio.addEventListener(
       'ended',
       () => {
-        this.clickService.StepClicks();
         this.remove(_button.index!);
         if (!this.isEmpty()) {
           this.audioQueue[0].element.play();
         } else {
           this._playing = false;
         }
+
+        this.clickService.StepClicks();
+
+        gtag('event', 'sound_play', {
+          page: window.location.pathname,
+          button: _button.id,
+          name: _button.text,
+        });
+        gtag('event', 'sound_play_count', {
+          count: ++this.soundPlayCounts,
+        });
       },
       { once: true }
     );

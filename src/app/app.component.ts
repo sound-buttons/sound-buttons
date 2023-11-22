@@ -6,8 +6,6 @@ import { catchError, distinctUntilChanged } from 'rxjs/operators';
 import { EnvironmentToken } from './app.module';
 import { Subscription, of } from 'rxjs';
 
-declare let gtag: (...arg: unknown[]) => void;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

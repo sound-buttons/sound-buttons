@@ -116,6 +116,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
       title: button.text,
       message: audioElement.outerHTML,
     });
+
+    gtag('event', 'sound_play', {
+      page: window.location.pathname,
+      button: button.id,
+      name: button.text,
+    });
   }
 
   ngOnDestroy(): void {

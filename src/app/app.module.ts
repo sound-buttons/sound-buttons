@@ -41,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
-declare let gtag: (...arg: unknown[]) => void;
 
 @NgModule({
   declarations: [
@@ -100,19 +99,42 @@ declare let gtag: (...arg: unknown[]) => void;
 export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {
-    gtag('config', this.env.google.GA_TRACKING_ID);
+    if (this.env.production) {
+      // Setup GA
+      (function (id) {
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
 
-    (function (c: any, l: Document, a: string, r: string, i: string, t: any, y: any) {
-      c[a] =
-        c[a] ||
-        function (...args: any[]) {
-          (c[a].q = c[a].q || []).push(args);
-        };
-      t = l.createElement(r);
-      t.async = 1;
-      t.src = 'https://www.clarity.ms/tag/' + i;
-      y = l.getElementsByTagName(r)[0];
-      y.parentNode.insertBefore(t, y);
-    })(window, document, 'clarity', 'script', this.env.CLARITY_TRACKING_ID, undefined, undefined);
+        document.head.appendChild(gtagScript);
+
+        const dataLayerScript = document.createElement('script');
+        dataLayerScript.innerHTML = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${id}');`;
+        document.head.appendChild(dataLayerScript);
+      })(this.env.google.GA_TRACKING_ID);
+
+      // Setup Clarity
+      (function (c: any, l: Document, a: string, r: string, i: string, t: any, y: any) {
+        c[a] =
+          c[a] ||
+          function (...args: any[]) {
+            (c[a].q = c[a].q || []).push(args);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', this.env.CLARITY_TRACKING_ID, undefined, undefined);
+    } else {
+      // Add dummy gtag for dev
+      window.gtag = (...args: any[]) => {
+        console.debug('gtag', args);
+      };
+    }
   }
 }
