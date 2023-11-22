@@ -14,6 +14,10 @@ We partner with Microsoft Clarity to capture how you use and interact with our w
 
 We use Google Analytics to tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Website. This data is shared with other Google services. Google may use the collected data to contextualize and personalize the ads of its own advertising network. You can opt-out of Google Analytics tracking by installing the Google Analytics opt-out browser add-on. The add-on prevents the Google Analytics JavaScript (ga.js, analytics.js, and dc.js) from sharing information with Google Analytics about visits activity. For more information on the privacy practices of Google, please visit the [Google Privacy Terms](http://www.google.com/intl/en/policies/privacy/).
 
+## Your Rights and Choices
+
+You can choose to deactivate the tracking of Microsoft Clarity and Google Analytics by using the Global Privacy Control ("GPC") signal. GPC is a way for users to express a do-not-sell-or-share preference. This signal is managed at the browser level, either by the browser itself or with the help of a browser extension, and can be set by users or privacy-focused technologies. For more information about GPC, please visit <https://globalprivacycontrol.org>. Once the GPC signal is detected, we shall refrain from using any third-party tracking tools. However, please note that in-site tracking, such as button click counters, will still be active.
+
 ## Links to Third Party Websites
 
 We have included links on this Sound Buttons website for your use and reference. We are not responsible for the privacy policies on these websites. You should be aware that the privacy policies of these websites may differ from our own.

@@ -24,10 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/staticwebapp.config.json",
-              "src/sitemap.txt",
-              "src/robots.txt"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -49,6 +46,29 @@
           },
           "configurations": {
             "production": {
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/staticwebapp.config.json",
+                "src/sitemap.txt",
+                "src/robots.txt",
+                "src/.well-known",
+                {
+                  "glob": "README.md",
+                  "input": "",
+                  "output": ""
+                },
+                {
+                  "glob": "LICENSE",
+                  "input": "",
+                  "output": ""
+                },
+                {
+                  "glob": "privacy-policy.md",
+                  "input": "",
+                  "output": ""
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

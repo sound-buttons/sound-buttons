@@ -42,6 +42,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
 
+declare global {
+  interface Navigator {
+    globalPrivacyControl?: boolean;
+  }
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,42 +105,54 @@ export const EnvironmentToken = new InjectionToken('ENVIRONMENT');
 export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {
-    if (this.env.production) {
-      // Setup GA
-      (function (id) {
-        const gtagScript = document.createElement('script');
-        gtagScript.async = true;
-        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+    if (navigator.globalPrivacyControl) {
+      window.gtag = () => {};
+      console.log(
+        '%cWe can see that you have enabled the Global Privacy Control, indicating that you do not wish to have your information sold or shared.',
+        'font-weight:bold; color: lightgreen;',
+        '\nYour privacy is important to us, and we completely honor your choice.',
+        'As a result, we have deactivated Google Analytics and Microsoft Clarity. 😉'
+      );
+      return;
+    }
 
-        document.head.appendChild(gtagScript);
-
-        const dataLayerScript = document.createElement('script');
-        dataLayerScript.innerHTML = `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${id}');`;
-        document.head.appendChild(dataLayerScript);
-      })(this.env.google.GA_TRACKING_ID);
-
-      // Setup Clarity
-      (function (c: any, l: Document, a: string, r: string, i: string, t: any, y: any) {
-        c[a] =
-          c[a] ||
-          function (...args: any[]) {
-            (c[a].q = c[a].q || []).push(args);
-          };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = 'https://www.clarity.ms/tag/' + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
-      })(window, document, 'clarity', 'script', this.env.CLARITY_TRACKING_ID, undefined, undefined);
-    } else {
+    if (!this.env.production) {
       // Add dummy gtag for dev
       window.gtag = (...args: any[]) => {
         console.debug('gtag', args);
       };
+      return;
     }
+
+    // Setup GA
+    (function (id) {
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+
+      document.head.appendChild(gtagScript);
+
+      const dataLayerScript = document.createElement('script');
+      dataLayerScript.innerHTML = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${id}');`;
+      document.head.appendChild(dataLayerScript);
+    })(this.env.google.GA_TRACKING_ID);
+
+    // Setup Clarity
+    (function (c: any, l: Document, a: string, r: string, i: string, t: any, y: any) {
+      c[a] =
+        c[a] ||
+        function (...args: any[]) {
+          (c[a].q = c[a].q || []).push(args);
+        };
+      t = l.createElement(r);
+      t.async = 1;
+      t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0];
+      y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', this.env.CLARITY_TRACKING_ID, undefined, undefined);
   }
 }
