@@ -37,7 +37,9 @@
                 "src/assets/style"
               ]
             },
-            "scripts": [],
+            "scripts": [
+              "node_modules/default-passive-events/dist/index.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
