@@ -27,6 +27,11 @@ export class ScrollToTopButtonComponent implements AfterViewInit, OnDestroy {
   };
 
   ngAfterViewInit(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     window.addEventListener('scroll', this.scroll, { passive: true });
   }
 
