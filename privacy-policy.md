@@ -34,4 +34,4 @@ We reserve the right to update or change our Privacy Policy at any time and you 
 
 ## Contact Information
 
-For any questions or concerns regarding the privacy policy, please contact as on GitHub <https://github.com/sound-buttons>.
+For any questions or concerns regarding the privacy policy, please contact us on GitHub <https://github.com/sound-buttons>.
