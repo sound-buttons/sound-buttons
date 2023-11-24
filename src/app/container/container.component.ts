@@ -93,11 +93,11 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.SEOService.setImage(`${this.origin}/assets/img/preview/${this.config.name}.png`);
     if (button) {
       this.SEOService.setTitle(
-        `${button.text || button.filename} | ${this.config.fullName} | Sound Buttons`
+        `${button.text || button.filename} | ${this.config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`
       );
       this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
     } else {
-      this.SEOService.setTitle(this.config.fullName + ' | Sound Buttons');
+      this.SEOService.setTitle(this.config.fullName + ' | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.');
       this.SEOService.setUrl(`${this.origin}/${this.config.name}`);
     }
   }

@@ -43,8 +43,9 @@ async function HandlePageRequest(request) {
     return cacheResponse;
   }
 
-  let Title = 'Sound Buttons';
-  let Description = '在Vtuber聲音按鈕網站上聽她說...';
+  let Title =
+    'Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.';
+  let Description = '在 Vtuber 聲音按鈕網站上聽她說...';
   let Thumbnail = origin + '/assets/img/preview/open-graph.png';
 
   const found = new URL(request.url).pathname.match(/\/(\w+)\/?/);
@@ -64,9 +65,9 @@ async function HandlePageRequest(request) {
         status: 404,
       });
 
-    Title = `${config.fullName} | Sound Buttons`;
-    Description = `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說...`;
-    Thumbnail = `${origin}/assets/img/preview/${found[1]}.png`;
+    Title = `${config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`;
+    Description = `在 Vtuber 聲音按鈕網站上聽 ${config.fullName} 說...`;
+    Thumbnail = `${origin}/assets/img/preview/open-graph.png`;
     const rewriter = new HTMLRewriter()
       .on('title', {
         element(element) {
@@ -285,12 +286,17 @@ async function HandleButtonRequest(request) {
       })
       .on('meta[property="og:title"]', {
         element(e) {
-          e.setAttribute('content', `${buttonName} | ${config.fullName} | Sound Buttons`);
+          e.setAttribute(
+            'content',
+            `${buttonName} | ${config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`
+          );
         },
       })
       .on('title', {
         element(e) {
-          e.setInnerContent(`${buttonName} | ${config.fullName} | Sound Buttons`);
+          e.setInnerContent(
+            `${buttonName} | ${config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`
+          );
         },
       })
       .on(
@@ -299,7 +305,7 @@ async function HandleButtonRequest(request) {
           element(e) {
             e.setAttribute(
               'content',
-              `在Vtuber聲音按鈕網站上聽 ${config.fullName} 說 ${buttonName}`
+              `在 Vtuber 聲音按鈕網站上聽 ${config.fullName} 說: ${buttonName}`
             );
           },
         }

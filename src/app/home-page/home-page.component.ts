@@ -30,7 +30,9 @@ export class HomePageComponent implements OnInit {
     this.configs$ = this.configService.getBriefConfig();
     this.configService.resetConfig();
 
-    this.SEOService.setTitle('Sound Buttons');
+    this.SEOService.setTitle(
+      'Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.'
+    );
     this.SEOService.setUrl(this.origin);
     this.SEOService.setImage(`${this.origin}/assets/img/preview/open-graph.png`);
 
