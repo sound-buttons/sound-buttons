@@ -93,10 +93,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   youtubeEmbedLink: SafeResourceUrl = '';
   routerSubscription: Subscription | undefined;
 
-  private fakeFunction = () => {
-    return;
-  };
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -130,9 +126,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     // 因為cold start，在開啟上傳表單時直接送一個http get啟動azure function，而結果我不管它
     this.http.get(this.apiWake).subscribe();
-
-    // 使input type=number能使用滾輪
-    document.addEventListener('wheel', this.fakeFunction, { passive: true });
   }
 
   OnFileUpload($event: Event): void {
@@ -393,7 +386,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routerSubscription?.unsubscribe();
-    document.removeEventListener('wheel', this.fakeFunction);
   }
 
   public getFormControl = (name: string): UntypedFormControl =>
