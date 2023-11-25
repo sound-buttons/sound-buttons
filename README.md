@@ -46,7 +46,7 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 
 ### Home page
 
-![home](https://github.com/sound-buttons/sound-buttons/assets/16995691/63bf0235-a76f-40a4-b782-4d1231ec9c6a)
+![1](https://github.com/sound-buttons/.github/assets/16995691/55f30f0d-df58-4bd8-b3b1-bd073eb2c1be)
 
 ### Buttons page, Table of contents, Audio control
 
@@ -54,7 +54,7 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 
 ### Expandable introduction block
 
-![main2](https://github.com/sound-buttons/sound-buttons/assets/16995691/99fe3f97-d791-46a3-b7c9-9fc613bcab28)
+![2](https://github.com/sound-buttons/.github/assets/16995691/e180806b-799d-4e2e-ba21-a32ac69fe36a)
 
 ### Typeahead Search bar
 
@@ -62,7 +62,7 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 
 ### Upload form
 
-![upload](https://github.com/sound-buttons/sound-buttons/assets/16995691/283871f8-f713-4371-88b5-04f347b586a6)
+![3](https://github.com/sound-buttons/.github/assets/16995691/814760ca-efd4-4899-881a-e106674fe6c8)
 
 ### i18n (Chinese, Japanese)
 
