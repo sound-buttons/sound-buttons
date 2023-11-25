@@ -30,6 +30,7 @@
                 id="start"
                 formControlName="start"
                 (change)="OnYoutubeLinkChange($event, false)"
+                (wheel)="$event.stopPropagation()"
                 [class.is-invalid]="getFormControl('start').invalid"
               />
               <span class="input-group-text">{{ '結束秒數' | translate }}</span>
@@ -39,6 +40,7 @@
                 id="end"
                 formControlName="end"
                 (change)="OnYoutubeLinkChange($event, false)"
+                (wheel)="$event.stopPropagation()"
                 [class.is-invalid]="getFormControl('end').invalid"
               />
               <button
