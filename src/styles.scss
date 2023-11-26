@@ -196,3 +196,11 @@ a {
 .modal {
   --bs-modal-border-color: var(--bs-primary);
 }
+
+typeahead-container {
+  max-width: calc(60vw - 95px);
+
+  @media only screen and (max-width: 990px) {
+    max-width: calc(100vw - 78px);
+  }
+}
