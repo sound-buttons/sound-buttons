@@ -55,8 +55,9 @@ export class SoundButtonsComponent implements OnInit, AfterViewInit, OnDestroy {
       scrollSmooth: false,
       basePath: window.location.pathname + window.location.search,
       hasInnerContainers: true,
-      disableTocScrollSync: true,
       activeLinkClass: 'active',
+      headingsOffset: 63,
+      scrollSmoothOffset: -63,
     };
   };
 
