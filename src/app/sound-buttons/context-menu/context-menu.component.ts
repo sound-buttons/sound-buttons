@@ -1,13 +1,13 @@
 import { ConfigService } from './../../services/config.service';
 import { IButton } from './../Buttons';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostBinding, HostListener, Inject } from '@angular/core';
+import { Component, HostBinding, HostListener } from '@angular/core';
 import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 import { AnimationEvent } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'src/app/services/dialog.service';
-import { EnvironmentToken } from '../../app.module';
 import * as mime from 'mime';
+import { ShareService } from 'src/app/services/share.service';
 
 @Component({
   selector: 'app-context-menu',
@@ -27,8 +27,6 @@ export class ContextMenuComponent extends MenuComponent {
     super._onAnimationDone($event);
   }
   button: IButton;
-  origin: string;
-
   lazy = false;
 
   constructor(
@@ -37,12 +35,10 @@ export class ContextMenuComponent extends MenuComponent {
     public translate: TranslateService,
     public dialogService: DialogService,
     public configService: ConfigService,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-    @Inject(EnvironmentToken) private env: any
+    public shareService: ShareService
   ) {
     super(menuPackage, contextMenuService);
     this.button = menuPackage.context;
-    this.origin = this.env.origin;
   }
 
   /**
@@ -55,9 +51,7 @@ export class ContextMenuComponent extends MenuComponent {
   }
 
   copyLink(): void {
-    const url = `${this.origin}${location.pathname}/${this.button.id}`;
-    navigator.clipboard.writeText(url);
-    this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
+    this.shareService.copyLink(this.button);
     this.close();
   }
 
@@ -79,62 +73,30 @@ export class ContextMenuComponent extends MenuComponent {
     this.close();
   }
 
-  private get generateYoutubeLink(): string {
-    return !this.button.source
-      ? ''
-      : `https://youtu.be/${this.button.source.videoId}?t=${Math.floor(this.button.source.start)}`;
-  }
-
   copyYoutubeLink(): void {
-    if (this.button.source) {
-      navigator.clipboard.writeText(this.generateYoutubeLink);
-    }
-    this.dialogService.toastSuccess(this.translate.instant('已複製至剪貼簿'), '', 2000);
+    this.shareService.copyYoutubeLink(this.button);
     this.close();
   }
 
   openSource(): void {
     if (this.button.source) {
-      window.open(this.generateYoutubeLink);
+      window.open(this.shareService.generateYoutubeLink(this.button));
     }
     this.close();
   }
 
   shareToMastodon(): void {
-    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
-    window.open(
-      `https://toot.kytta.dev/?text=${
-        `${encodeURIComponent(
-          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
-        )}` +
-        '%0A' +
-        encodeURIComponent(url)
-      }`
-    );
+    this.shareService.shareToMastodon(this.button);
     this.close();
   }
 
   shareToTwitter(): void {
-    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
-    window.open(
-      `https://twitter.com/intent/tweet?text=${
-        `${encodeURIComponent(
-          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
-        )}` +
-        '%0A' +
-        encodeURIComponent(url)
-      }`
-    );
+    this.shareService.shareToTwitter(this.button);
     this.close();
   }
 
   shareToFacebook(): void {
-    const url = `${this.origin}${location.pathname}/${encodeURI(this.button.id)}`;
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        url
-      )}&hashtag=%23sound_buttons`
-    );
+    this.shareService.shareToFacebook(this.button);
     this.close();
   }
 }

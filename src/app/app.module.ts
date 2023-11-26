@@ -25,6 +25,7 @@ import { ConfigService } from './services/config.service';
 import { LanguageService } from './services/language.service';
 import { AudioService } from './services/audio.service';
 import { DialogService } from './services/dialog.service';
+import { ShareService } from './services/share.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -71,6 +72,7 @@ declare global {
     ColorService,
     AudioService,
     DialogService,
+    ShareService,
     ButtonFilterPipe,
   ],
   bootstrap: [AppComponent],
