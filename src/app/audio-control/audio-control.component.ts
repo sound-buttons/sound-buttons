@@ -2,6 +2,7 @@ import { from } from 'rxjs';
 import { filter, last, mergeMap, reduce, switchMap, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import random from 'random';
+import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
 import { ConfigService } from './../services/config.service';
 import { AudioService } from './../services/audio.service';
 import { IButton } from '../sound-buttons/Buttons';
@@ -12,9 +13,11 @@ import { IButton } from '../sound-buttons/Buttons';
   styleUrls: ['./audio-control.component.scss'],
 })
 export class AudioControlComponent implements OnInit {
+  menu = ContextMenuComponent;
+  volume = 0.5;
+
   constructor(public audioService: AudioService, private configService: ConfigService) {}
 
-  volume = 0.5;
   buttons = this.audioService.getQueuedButtons;
 
   ngOnInit(): void {

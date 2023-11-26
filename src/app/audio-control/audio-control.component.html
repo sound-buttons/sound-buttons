@@ -32,6 +32,8 @@
       class="btn btn-primary"
       *ngFor="let button of buttons().slice(); trackBy: trackById"
       (click)="buttonClick($event, button)"
+      [contextMenuTrigger]="menu"
+      [menuContext]="button"
     >
       {{ button.text }}
     </button>
