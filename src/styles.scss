@@ -195,6 +195,18 @@ a {
 
 .modal {
   --bs-modal-border-color: var(--bs-primary);
+
+  .modal-dialog {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+    transition: none !important;
+    width: var(--bs-modal-width);
+    max-width: 80vw;
+  }
 }
 
 typeahead-container {

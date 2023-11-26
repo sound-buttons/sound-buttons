@@ -1,12 +1,11 @@
-import { ConfigService } from './../../services/config.service';
-import { IButton } from './../Buttons';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, HostListener } from '@angular/core';
-import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 import { AnimationEvent } from '@angular/animations';
+import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 import { TranslateService } from '@ngx-translate/core';
-import { DialogService } from 'src/app/services/dialog.service';
 import * as mime from 'mime';
+import { IButton } from '../Buttons';
+import { DialogService } from 'src/app/services/dialog.service';
 import { ShareService } from 'src/app/services/share.service';
 
 @Component({
@@ -34,7 +33,6 @@ export class ContextMenuComponent extends MenuComponent {
     public contextMenuService: ContextMenuService,
     public translate: TranslateService,
     public dialogService: DialogService,
-    public configService: ConfigService,
     public shareService: ShareService
   ) {
     super(menuPackage, contextMenuService);

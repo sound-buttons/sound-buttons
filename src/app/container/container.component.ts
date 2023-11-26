@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import * as mime from 'mime';
-import { IButton } from './../sound-buttons/Buttons';
-import { IFullConfig, ConfigService } from '../services/config.service';
-import { SEOService } from './../services/seo.service';
-import { DialogService } from './../services/dialog.service';
 import { EnvironmentToken } from '../app.module';
+import { IButton, ISource } from '../sound-buttons/Buttons';
+import { IFullConfig, ConfigService } from '../services/config.service';
+import { SEOService } from '../services/seo.service';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-container',
@@ -93,28 +93,53 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.SEOService.setImage(`${this.origin}/assets/img/preview/${this.config.name}.png`);
     if (button) {
       this.SEOService.setTitle(
-        `${button.text || button.filename} | ${this.config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`
+        `${button.text || button.filename} | ${
+          this.config.fullName
+        } | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`
       );
       this.SEOService.setUrl(`${this.origin}/${this.config.name}/${button.id}`);
     } else {
-      this.SEOService.setTitle(this.config.fullName + ' | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.');
+      this.SEOService.setTitle(
+        this.config.fullName +
+          ' | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.'
+      );
       this.SEOService.setUrl(`${this.origin}/${this.config.name}`);
     }
   }
 
-  private showButton(button: IButton) {
+  private async showButton(button: IButton) {
+    const container = document.createElement('div');
+
     const audioElement = document.createElement('audio');
-    audioElement.controls = true;
     audioElement.classList.add('w-100');
+    audioElement.controls = true;
+    audioElement.preload = 'auto';
 
     const source = document.createElement('source');
     source.src = button.baseRoute + button.filename + button.SASToken;
     source.type = mime.getType(button.filename) ?? 'audio/webm';
     audioElement.appendChild(source);
+    container.appendChild(audioElement);
+
+    container.appendChild(document.createElement('hr'));
+
+    const youtubeEmbedLink = this.generateYoutubeLink(button.source);
+
+    const youtubeEmbed = document.createElement('iframe');
+    youtubeEmbed.src = youtubeEmbedLink;
+    youtubeEmbed.title = 'YouTube video player';
+    youtubeEmbed.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    youtubeEmbed.classList.add('youtubeContainer');
+    youtubeEmbed.classList.add('w-100');
+    youtubeEmbed.classList.add('m-0');
+    youtubeEmbed.style.border = 'none';
+
+    container.appendChild(youtubeEmbed);
 
     this.dialogService.showModal.emit({
       title: button.text,
-      message: audioElement.outerHTML,
+      message: container.innerHTML,
     });
 
     gtag('event', 'sound_play', {
@@ -122,6 +147,29 @@ export class ContainerComponent implements OnInit, OnDestroy {
       button: button.id,
       name: button.text,
     });
+  }
+
+  generateYoutubeLink(source: ISource | undefined): string {
+    if (source && source?.videoId && source?.videoId !== 'null') {
+      const url = new URL('https://www.youtube.com/embed/' + source.videoId);
+      url.searchParams.append('start', `${Math.floor(source.start)}`);
+      url.searchParams.append('end', `${Math.ceil(source.end)}`);
+      url.searchParams.append('playsinline', '1');
+      url.searchParams.append('enablejsapi', '1');
+      url.searchParams.append('origin', this.origin);
+      url.searchParams.append('widget_referrer', this.origin);
+      url.searchParams.append('widgetid', '1');
+      url.searchParams.append('iv_load_policy', '3');
+      url.searchParams.append('controls', '1');
+      url.searchParams.append('fs', '0');
+      url.searchParams.append('rel', '0');
+      url.searchParams.append('autoplay', '0');
+      // url.searchParams.append('modestbranding', '1');
+
+      return url.toString();
+    } else {
+      return '';
+    }
   }
 
   ngOnDestroy(): void {
