@@ -10,19 +10,19 @@
   />
   <i
     role="button"
-    class="bi bi-shuffle clickable"
+    class="bi bi-collection-play clickable jello-horizontal"
     (click)="OnShuffleClick()"
     *ngIf="audioService.isEmpty()"
   ></i>
   <i
     role="button"
-    class="bi bi-play-fill clickable"
+    class="bi bi-play-fill clickable blink-2"
     (click)="OnPlayClick()"
     *ngIf="audioService.canPlay()"
   ></i>
   <i
     role="button"
-    class="bi bi-pause-fill clickable"
+    class="bi bi-pause-fill clickable blink-2"
     (click)="OnPauseClick()"
     *ngIf="audioService.canPause()"
   ></i>
