@@ -352,7 +352,11 @@ async function GetSitemap(url) {
   var url = new URL(url);
   const regex = new RegExp(origin + '/sitemap(?:-([a-zA-Z0-9_]+))?.xml', 'i');
 
-  const id = url.toString().match(regex)[1];
+  const match = url.toString().match(regex);
+  if (!match) {
+    return Response.redirect(`${url.origin}/sitemap.xml`, 302);
+  }
+  const id = match[1];
 
   console.log('Get sitemap id:', id);
 
