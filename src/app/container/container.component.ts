@@ -128,8 +128,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     const youtubeEmbed = document.createElement('iframe');
     youtubeEmbed.src = youtubeEmbedLink;
     youtubeEmbed.title = 'YouTube video player';
+    youtubeEmbed.setAttribute('credentialless', 'true');
     youtubeEmbed.allow =
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    youtubeEmbed.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
     youtubeEmbed.classList.add('youtubeContainer');
     youtubeEmbed.classList.add('w-100');
     youtubeEmbed.classList.add('m-0');
