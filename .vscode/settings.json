@@ -25,6 +25,7 @@
     "Animista",
     "azureedge",
     "chara",
+    "credentialless",
     "cssanimista",
     "devkit",
     "enablejsapi",
@@ -46,5 +47,10 @@
     "webp",
     "widgetid",
     "youtu"
-  ]
+  ],
+  "[javascript][typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
 }
