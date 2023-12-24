@@ -121,23 +121,25 @@ export class ContainerComponent implements OnInit, OnDestroy {
     audioElement.appendChild(source);
     container.appendChild(audioElement);
 
-    container.appendChild(document.createElement('hr'));
+    if (button.source && button.source.videoId) {
+      container.appendChild(document.createElement('hr'));
 
-    const youtubeEmbedLink = this.generateYoutubeLink(button.source);
+      const youtubeEmbedLink = this.generateYoutubeLink(button.source);
 
-    const youtubeEmbed = document.createElement('iframe');
-    youtubeEmbed.src = youtubeEmbedLink;
-    youtubeEmbed.title = 'YouTube video player';
-    youtubeEmbed.setAttribute('credentialless', 'true');
-    youtubeEmbed.allow =
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    youtubeEmbed.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-    youtubeEmbed.classList.add('youtubeContainer');
-    youtubeEmbed.classList.add('w-100');
-    youtubeEmbed.classList.add('m-0');
-    youtubeEmbed.style.border = 'none';
+      const youtubeEmbed = document.createElement('iframe');
+      youtubeEmbed.src = youtubeEmbedLink;
+      youtubeEmbed.title = 'YouTube video player';
+      youtubeEmbed.setAttribute('credentialless', 'true');
+      youtubeEmbed.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      youtubeEmbed.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+      youtubeEmbed.classList.add('youtubeContainer');
+      youtubeEmbed.classList.add('w-100');
+      youtubeEmbed.classList.add('m-0');
+      youtubeEmbed.style.border = 'none';
 
-    container.appendChild(youtubeEmbed);
+      container.appendChild(youtubeEmbed);
+    }
 
     this.dialogService.showModal.emit({
       title: button.text,
