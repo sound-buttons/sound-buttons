@@ -7,22 +7,22 @@ const cacheAssets = [
   },
   {
     asset: 'image',
-    regex: /^.*\.(jpg|jpeg|png|webp|gif|avif|svg)/,
+    regex: /^.*\.(jpg|jpeg|png|webp|gif|avif|svg|ico)$/,
     ttl: 2592000,
   },
   {
     asset: 'frontEnd',
-    regex: /^.*\.(css|js|map)/,
+    regex: /^.*\.(css|js|map)$/,
     ttl: 86400,
   },
   {
     asset: 'main.json',
-    regex: /assets\/configs\/main\.json/,
+    regex: /^\/assets\/configs\/main\.json$/,
     ttl: 86400,
   },
   {
     asset: 'json',
-    regex: /^.*\.json/,
+    regex: /^.*\.json$/,
     ttl: 3600,
   },
 ];
