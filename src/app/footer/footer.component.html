@@ -1,12 +1,16 @@
 <footer>
   <div class="logo" title="Project Github">
     <a href="https://github.com/sound-buttons" target="_blank" rel="noopener" class="support">
-      <img src="assets/img/favicon/icon-trim.png" alt="icon" width="100" />
+      <picture>
+        <source srcset="assets/img/favicon/icon-trim.avif" type="image/avif" />
+        <source srcset="assets/img/favicon/icon-trim.webp" type="image/webp" />
+        <img src="assets/img/favicon/icon-trim.png" alt="icon" width="100" />
+      </picture>
       <p>Sound Buttons</p>
     </a>
   </div>
   <div class="license" title="Project License" (click)="agplOnClick()">
-      <img src="assets/img/AGPLv3_Logo.svg" alt="agpl" />
+    <img src="assets/img/AGPLv3_Logo.svg" alt="agpl" />
   </div>
   <div class="badge" title="Total Clicks" (click)="badgeOnClick()">
     <div class="circle"><i class="bi bi-hand-index-thumb"></i></div>
