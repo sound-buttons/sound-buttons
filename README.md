@@ -25,7 +25,7 @@ It adopts a data separation architecture design, allowing content updates to be 
 
 Angular is used for the front-end, while Azure Functions are used for the back-end. The audio files are stored and hosted on Azure Blob Storage.
 
-[![CodeFactor](https://www.codefactor.io/repository/github/sound-buttons/sound-buttons/badge)](https://www.codefactor.io/repository/github/sound-buttons/sound-buttons)  
+[![CodeFactor](https://www.codefactor.io/repository/github/sound-buttons/sound-buttons/badge?style=for-the-badge)](https://www.codefactor.io/repository/github/sound-buttons/sound-buttons)  
 ![Youtube](https://img.shields.io/static/v1?style=for-the-badge&message=YouTube&color=FF0000&logo=YouTube&logoColor=FFFFFF&label=) ![Azure Blob Storage](https://img.shields.io/static/v1?style=for-the-badge&message=Azure+Blob+Storage&color=0089D6&logo=Microsoft+Azure&logoColor=FFFFFF&label=) ![Angular](https://img.shields.io/static/v1?style=for-the-badge&message=Angular&color=DD0031&logo=Angular&logoColor=FFFFFF&label=) ![Azure Functions](https://img.shields.io/static/v1?style=for-the-badge&message=Azure+Functions&color=0062AD&logo=Azure+Functions&logoColor=FFFFFF&label=)
 
 ## Build
