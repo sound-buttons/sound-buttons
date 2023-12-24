@@ -1,10 +1,44 @@
 const origin = 'https://sound-buttons.click';
+const cacheAssets = [
+  {
+    asset: '.well-known',
+    regex: /^\.(well-known)/,
+    ttl: 2592000,
+  },
+  {
+    asset: 'image',
+    regex: /^.*\.(jpg|jpeg|png|webp|gif|avif|svg)/,
+    ttl: 2592000,
+  },
+  {
+    asset: 'frontEnd',
+    regex: /^.*\.(css|js|map)/,
+    ttl: 86400,
+  },
+  {
+    asset: 'main.json',
+    regex: /assets\/configs\/main\.json/,
+    ttl: 86400,
+  },
+  {
+    asset: 'json',
+    regex: /^.*\.json/,
+    ttl: 3600,
+  },
+];
 
 export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    if (url.pathname.startsWith('/.well-known')) return fetch(request);
+    if (
+      url.pathname.startsWith('/.well-known') ||
+      url.pathname.endsWith('.css') ||
+      url.pathname.endsWith('.js') ||
+      url.pathname.endsWith('.map') ||
+      url.pathname.startsWith('/assets')
+    )
+      return HandleStaticRequest(request);
 
     if (url.pathname.startsWith('/sitemap')) return GetSitemap(url);
 
@@ -17,6 +51,29 @@ export default {
     }
   },
 };
+
+async function HandleStaticRequest(request) {
+  const url = new URL(request.url);
+  const { asset, regex, ...cache } = cacheAssets.find(({ regex }) => url.pathname.match(regex)) ?? {
+    ttl: 0,
+  };
+
+  const init = {
+    cf: {
+      cacheKey: `${url.hostname}${url.pathname}`,
+      cacheTtlByStatus: {
+        '100-199': 0,
+        '200-299': cache.ttl,
+        '300-399': 30,
+        '400-499': 10,
+        '500-599': 0,
+      },
+    },
+  };
+
+  console.log('Handle static request: ', request.url, cache.ttl);
+  return fetch(request, init);
+}
 
 async function HandlePageRequest(request) {
   const userAgent = request.headers.get('User-Agent') || '';
