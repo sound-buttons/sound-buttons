@@ -29,6 +29,7 @@
             placeholder="Search..."
             class="form-control"
             (change)="setFilterText(filterText)"
+            (keydown.enter)="setFilterText(filterText)"
             [typeahead]="getButtonTextList()"
             [typeaheadIsFirstItemActive]="false"
             [typeaheadScrollable]="true"
@@ -37,6 +38,12 @@
             [value]="displayService.getFilterText()"
             aria-describedby="filter-text"
           />
+          <button type="button" class="btn bg-transparent" style="margin-left: -40px; z-index: 100" (click)="filterText = ''; setFilterText('')">
+            <i class="bi bi-x"></i>
+          </button>
+          <button class="btn btn-outline-light" type="submit" id="filter-text-submit">
+            <i class="bi bi-funnel-fill"></i>
+          </button>
         </div>
       </div>
       <ul class="navbar-nav">
