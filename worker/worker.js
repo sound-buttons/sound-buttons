@@ -266,47 +266,43 @@ async function HandleButtonRequest(request) {
       .on('meta[property="og:type"]', {
         element(e) {
           e.setAttribute('content', 'video.other');
-          // e.setAttribute('content','music.song');
-        },
-      })
-      .on('head', {
-        element(e) {
-          e.append(`<meta property="og:video" content="${audioUrl}">`, {
+          // e.setAttribute('content', 'music.song');
+          e.after(`<meta property="og:video" content="${audioUrl}">`, {
             html: true,
           });
-          e.append(`<meta property="og:video:url" content="${audioUrl}">`, {
+          e.after(`<meta property="og:video:url" content="${audioUrl}">`, {
             html: true,
           });
-          e.append(`<meta property="og:video:secure_url" content="${audioUrl}">`, {
+          e.after(`<meta property="og:video:secure_url" content="${audioUrl}">`, {
             html: true,
           });
-          e.append(
+          e.after(
             '<meta property="og:video:type" content="video/other" /> <meta property="og:video:width" content="640"> <meta property="og:video:height" content="1024">',
             {
               html: true,
             }
           );
 
-          e.append(`<meta name="twitter:player" content="${url}">`, {
+          e.after(`<meta name="twitter:player" content="${url}">`, {
             html: true,
           });
-          e.append(
+          e.after(
             '<meta name="twitter:player:width" content="640"> <meta name="twitter:player:height" content="1024">',
             {
               html: true,
             }
           );
 
-          e.append(`<meta property="og:audio" content="${audioUrl}">`, {
+          e.after(`<meta property="og:audio" content="${audioUrl}">`, {
             html: true,
           });
-          e.append(`<meta property="og:audio:url" content="${audioUrl}">`, {
+          e.after(`<meta property="og:audio:url" content="${audioUrl}">`, {
             html: true,
           });
-          e.append(`<meta property="og:audio:secure_url" content="${audioUrl}">`, {
+          e.after(`<meta property="og:audio:secure_url" content="${audioUrl}">`, {
             html: true,
           });
-          e.append('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
+          e.after('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
             html: true,
           });
         },
