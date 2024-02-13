@@ -125,6 +125,7 @@ async function HandlePageRequest(request) {
     Title = `${config.fullName} | Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.`;
     Description = `在 Vtuber 聲音按鈕網站上聽 ${config.fullName} 說...`;
     Thumbnail = `${origin}/assets/img/preview/open-graph.png`;
+    const color = config.color.primary;
     const rewriter = new HTMLRewriter()
       .on('title', {
         element(element) {
@@ -147,6 +148,9 @@ async function HandlePageRequest(request) {
       .on('meta[property="og:type"]', {
         element(element) {
           element.setAttribute('content', 'website');
+          element.after(`<meta content="${color}" name="theme-color">`, {
+            html: true,
+          });
         },
       })
       .on('link[rel="canonical"]', {
@@ -260,6 +264,7 @@ async function HandleButtonRequest(request) {
     const imageUrl = config.imgSrc[0];
     const audioUrl = `https://blob.sound-buttons.click/sound-buttons/${found[1]}/${filename}`;
     const creator = '@' + config.link.twitter.match(/[^/]+$/)[0];
+    const color = config.color.primary;
 
     // https://developers.cloudflare.com/workers/runtime-apis/html-rewriter
     const rewriter = new HTMLRewriter()
@@ -303,6 +308,9 @@ async function HandleButtonRequest(request) {
             html: true,
           });
           e.after('<meta property="og:audio:type" content="audio/vnd.facebook.bridge" />', {
+            html: true,
+          });
+          e.after(`<meta content="${color}" name="theme-color">`, {
             html: true,
           });
         },
