@@ -74,16 +74,22 @@ export class UploadComponent implements OnInit, OnDestroy {
     }),
     clip: this.fb.control('', {
       validators: [
-        (c) =>
-          +!Validators.required(c) +
-            +!!c.parent?.get('videoId')?.value +
-            +!!c.parent?.get('file')?.value !==
-            1 ||
-          !('' + c.value).match(
-            /^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/
-          )
-            ? { clip: true }
-            : null,
+        (c) => {
+          const isRequiredValid = !Validators.required(c);
+          const hasVideoId = Boolean(c.parent?.get('videoId')?.value);
+          const hasFile = Boolean(c.parent?.get('file')?.value);
+          const isValidRequiredCount =
+            [isRequiredValid, hasVideoId, hasFile].filter(Boolean).length === 1;
+
+          const youtubeClipRegex =
+            /^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/;
+          const twitchClipRegex =
+            /^(?:https?:\/\/(?:clips\.twitch\.tv\/|www\.twitch\.tv\/[a-z0-9_-]+\/clip\/))([a-zA-Z0-9_-]+)$/;
+          const isClipUrlValid =
+            youtubeClipRegex.test('' + c.value) || twitchClipRegex.test('' + c.value);
+
+          return isValidRequiredCount && isClipUrlValid ? null : { clip: true };
+        },
       ],
     }),
   });
@@ -241,7 +247,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (
       clip !== '' &&
-      !clip.match(/^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/)
+      !clip.match(/^(?:https?:\/\/(?:www\.)?youtube.com\/clip\/)?[\w-]*(?:\?[\w=]*)?$/) &&
+      !clip.match(
+        /^(?:https?:\/\/(?:clips\.twitch\.tv\/|www\.twitch\.tv\/[a-z0-9_-]+\/clip\/))([a-zA-Z0-9_-]+)$/
+      )
     ) {
       this.dialogService.toastError('Invalid Clip Link: ' + clip);
     }
