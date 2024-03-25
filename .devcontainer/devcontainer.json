@@ -1,0 +1,23 @@
+{
+  "name": "Angular dev container",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
+    "ghcr.io/devcontainers-community/npm-features/typescript:1": {}
+  },
+  "appPort": [
+    4200
+  ],
+  "postCreateCommand": "npm install",
+  "postAttachCommand": "ng serve --host 0.0.0.0",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}
