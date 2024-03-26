@@ -30,9 +30,17 @@ Angular is used for the front-end, while Azure Functions are used for the back-e
 
 ## Build
 
-- `git clone --recurse-submodules https://github.com/sound-buttons/sound-buttons.git`
-- `npm install`
-- `npm start`
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/sound-buttons/sound-buttons)
+
+or
+
+```bash
+npm install -g @angular/cli
+
+git clone --recurse-submodules https://github.com/sound-buttons/sound-buttons.git
+npm install
+npm run-script start
+```
 
 ## Related Repos
 
