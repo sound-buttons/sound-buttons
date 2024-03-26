@@ -2,8 +2,9 @@
   "name": "Angular dev container",
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
-    "ghcr.io/devcontainers-community/npm-features/typescript:1": {}
+    "ghcr.io/devcontainers-contrib/features/angular-cli:2":{
+      "version": "14.2.13"
+    }
   },
   "appPort": [
     4200
