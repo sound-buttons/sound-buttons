@@ -8,8 +8,8 @@
   "appPort": [
     4200
   ],
-  "postCreateCommand": "npm install",
-  "postAttachCommand": "ng serve --host 0.0.0.0",
+  "updateContentCommand": "npm install",
+  "postAttachCommand": "ng serve --host 0.0.0.0 --disable-host-check",
   "customizations": {
     "vscode": {
       "extensions": [
