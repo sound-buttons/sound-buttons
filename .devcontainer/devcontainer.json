@@ -21,5 +21,10 @@
         "streetsidesoftware.code-spell-checker"
       ]
     }
+  },
+  "hostRequirements":{
+    "cpus": 4,
+    "memory": "4gb",
+    "storage": "20gb"
   }
 }
