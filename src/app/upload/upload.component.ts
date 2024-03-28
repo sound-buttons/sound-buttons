@@ -23,7 +23,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   apiWake = '';
   origin = '';
   public form = this.fb.group({
-    nameZH: '',
+    nameZH: this.fb.control('', {
+      validators: Validators.required,
+      updateOn: 'blur',
+    }),
     nameJP: this.fb.control({ value: '', disabled: false }),
     useSTT: this.fb.control(false),
     group: this.fb.control('', {
