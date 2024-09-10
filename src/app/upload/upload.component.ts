@@ -117,7 +117,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   ) {
     this.apiBase = this.env.api;
     this.api = this.apiBase + '/sound-buttons';
-    this.apiWake = this.apiBase + '/wake';
+    this.apiWake = this.apiBase + '/healthz';
     this.origin = this.env.origin;
   }
 
