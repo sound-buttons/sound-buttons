@@ -101,7 +101,8 @@
           "options": {
             "browserTarget": "sound-buttons:build",
             "sslKey": "../localhost.key",
-            "sslCert": "../localhost.crt"
+            "sslCert": "../localhost.crt",
+            "proxyConfig": "proxy.conf.mjs"
           },
           "configurations": {
             "production": {

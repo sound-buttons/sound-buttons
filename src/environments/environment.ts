@@ -7,7 +7,7 @@ export const environment = {
   google: {
     GA_TRACKING_ID: 'UA-XXXXXXXX-X',
   },
-  api: 'http://localhost:7071/api',
+  api: 'https://localhost:4200/api',
   origin: 'https://localhost:4200',
   version: 'DEVELOP',
   CLARITY_TRACKING_ID: '',
