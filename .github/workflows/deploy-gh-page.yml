@@ -1,0 +1,59 @@
+name: Build and Deploy to Github Page
+
+on:
+  repository_dispatch:
+    types: [update_config]
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize and checkout submodule to minify branch
+        run: |
+          git submodule update --init
+          cd src/assets/configs
+          git checkout minify
+          git pull origin minify
+
+      - name: npm build
+        run: npm ci && npm run build
+        env:
+          GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+          ORIGIN: ${{ secrets.ORIGIN }}
+          API: ${{ secrets.API }}
+          VERSION: ${{ github.sha }}
+          CLARITY_TRACKING_ID: ${{ secrets.CLARITY_TRACKING_ID }}
+
+      - name: copy index.html to 404.html
+        run: cp dist/index.html dist/404.html
+
+      - name: Add .nojekyll file
+        run: touch dist/.nojekyll
+
+      - name: Add CNAME file
+        run: echo 'sound-buttons.click' > dist/CNAME
+
+      - name: Commit dist to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: dist
+          single-commit: true
+          clean: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: |
+            dist/sound-buttons
+          retention-days: 10
