@@ -85,11 +85,10 @@ async function HandlePageRequest(request) {
 
   if (
     request.method !== 'GET' ||
-    !response.ok ||
     !headers.get('content-type')?.includes('text/html') ||
     new URL(request.url).pathname === '/'
   ) {
-    console.log('Not HTML, or not ok, or root path. Return original response.');
+    console.log('Not HTML, or root path. Return original response.');
     return response;
   }
 
@@ -192,12 +191,20 @@ async function HandlePageRequest(request) {
       });
     }
 
-    const newResponse = rewriter.transform(response);
+    let newResponse = rewriter.transform(response);
     console.log('Title: ', Title);
     console.log('Description: ', Description);
     console.log('Thumbnail: ', Thumbnail);
 
-    if (response.status === 200) await cache.put(request, newResponse.clone());
+    if (response.status === 404) {
+      newResponse = new Response(newResponse.body, {
+        status: 200,
+        statusText: 'OK',
+        headers: newResponse.headers,
+      });
+    }
+
+    await cache.put(request, newResponse.clone());
     console.log('Cache updated.');
 
     return newResponse;
@@ -390,7 +397,7 @@ async function HandleButtonRequest(request) {
       });
     }
 
-    const newResponse = rewriter.transform(response);
+    let newResponse = rewriter.transform(response);
     console.log('UserAgent:', userAgent);
     console.log('ButtonName:', buttonName);
     console.log('Filename:', filename);
@@ -398,7 +405,15 @@ async function HandleButtonRequest(request) {
     console.log('URL:', url);
     console.log('Audio:', audioUrl);
 
-    if (response.status === 200) await cache.put(request, newResponse.clone());
+    if (response.status === 404) {
+      newResponse = new Response(newResponse.body, {
+        status: 200,
+        statusText: 'OK',
+        headers: newResponse.headers,
+      });
+    }
+
+    await cache.put(request, newResponse.clone());
     console.log('Cache updated.');
 
     return newResponse;
