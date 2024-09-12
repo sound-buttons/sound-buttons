@@ -296,7 +296,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       .post<IAcceptedResponse>(this.api, formData)
       .pipe(
         concatMap((acceptResponse) => {
-          const uri = acceptResponse.statusQueryGetUri;
+          let uri = acceptResponse.statusQueryGetUri;
+
           if (!uri) {
             this.dialogService.clearPending();
             this.translate.get('上傳失敗，伺服器未回應輪詢 URI').subscribe((res: string) => {
@@ -304,6 +305,8 @@ export class UploadComponent implements OnInit, OnDestroy {
             });
             throw Error('No recall location.');
           }
+
+          uri = this.alignProtocol(uri);
 
           return timer(10000, 20000).pipe(
             take(30),
@@ -376,6 +379,16 @@ export class UploadComponent implements OnInit, OnDestroy {
       queryParams: { liveUpdate: '1' },
       queryParamsHandling: 'merge',
     });
+  }
+
+  private alignProtocol(uri: string) {
+    const protocolMatch = this.api.match(/^(https?):\/\//);
+    const protocol = protocolMatch ? protocolMatch[1] : 'http';
+
+    if (!uri.startsWith(`${protocol}://`)) {
+      uri = `${protocol}://${uri.replace(/^(https?):\/\//, '')}`;
+    }
+    return uri;
   }
 
   patchEnd(): void {
