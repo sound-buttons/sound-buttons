@@ -33,20 +33,20 @@ jobs:
           CLARITY_TRACKING_ID: ${{ secrets.CLARITY_TRACKING_ID }}
 
       - name: copy index.html to 404.html
-        run: cp dist/index.html dist/404.html
+        run: cp dist/sound-buttons/index.html dist/sound-buttons/404.html
 
       - name: Add .nojekyll file
-        run: touch dist/.nojekyll
+        run: touch dist/sound-buttons/.nojekyll
 
       - name: Add CNAME file
-        run: echo 'sound-buttons.click' > dist/CNAME
+        run: echo 'sound-buttons.click' > dist/sound-buttons/CNAME
 
       - name: Commit dist to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: dist
+          folder: dist/sound-buttons
           single-commit: true
           clean: true
 
