@@ -100,3 +100,12 @@ You should have received a copy of the GNU Affero General Public License along w
 The original artists hold the copyrights to all the sounds and character pictures. We have utilized them in accordance with their Derivative Works Guidelines (Secondary Creation Guidelines).
 
 In case you wish to remove your data through a DMCA Takedown, kindly report it [here](https://github.com/sound-buttons/sound-buttons_configs/discussions/3).
+
+---
+
+### Special Closed Source Authorization
+
+I, 陳鈞, authorize the following organizations/projects to use this project in a closed-source manner in any projects I have participated in/cooperated on.
+
+- [Suda Yoruka](https://github.com/Suda-Yoruka)
+- [jim60105/UnfairSpinWheel](https://github.com/jim60105/UnfairSpinWheel)
