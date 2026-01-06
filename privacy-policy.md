@@ -14,9 +14,13 @@ We partner with Microsoft Clarity to capture how you use and interact with our w
 
 We use Google Analytics to tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Website. This data is shared with other Google services. Google may use the collected data to contextualize and personalize the ads of its own advertising network. You can opt-out of Google Analytics tracking by installing the Google Analytics opt-out browser add-on. The add-on prevents the Google Analytics JavaScript (ga.js, analytics.js, and dc.js) from sharing information with Google Analytics about visits activity. For more information on the privacy practices of Google, please visit the [Google Privacy Terms](http://www.google.com/intl/en/policies/privacy/).
 
+## Cloudflare Real User Measurements (RUM)
+
+We use Cloudflare RUM to collect website performance data, including page load times, Core Web Vitals, and other performance-related metrics. The RUM script collects data from browser performance APIs and sends it to Cloudflare for processing. Importantly, RUM does not store any cookies, localStorage, sessionStorage, or other persistent data in your browser, nor does it collect or store your IP address. All collected data is ephemeral performance metrics that only relate to the current webpage you are viewing. For more information about Cloudflare RUM, please visit the [Cloudflare RUM documentation](https://developers.cloudflare.com/speed/observatory/rum-beacon/).
+
 ## Your Rights and Choices
 
-You can choose to deactivate the tracking of Microsoft Clarity and Google Analytics by using the Global Privacy Control ("GPC") signal. GPC is a way for users to express a do-not-sell-or-share preference. This signal is managed at the browser level, either by the browser itself or with the help of a browser extension, and can be set by users or privacy-focused technologies. For more information about GPC, please visit <https://globalprivacycontrol.org>. Once the GPC signal is detected, we shall refrain from using any third-party tracking tools. However, please note that in-site tracking, such as button click counters, will still be active.
+You can choose to deactivate the tracking of Microsoft Clarity, Google Analytics, and Cloudflare RUM by using the Global Privacy Control ("GPC") signal. GPC is a way for users to express a do-not-sell-or-share preference. This signal is managed at the browser level, either by the browser itself or with the help of a browser extension, and can be set by users or privacy-focused technologies. For more information about GPC, please visit <https://globalprivacycontrol.org>. Once the GPC signal is detected, we shall refrain from using any third-party tracking tools. However, please note that in-site tracking, such as button click counters, will still be active.
 
 ## Links to Third Party Websites
 

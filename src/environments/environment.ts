@@ -11,6 +11,7 @@ export const environment = {
   origin: 'https://localhost:4200',
   version: 'DEVELOP',
   CLARITY_TRACKING_ID: '',
+  CLOUDFLARE_RUM_TOKEN: '',
 };
 
 /*

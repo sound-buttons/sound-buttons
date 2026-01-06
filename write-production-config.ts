@@ -11,7 +11,8 @@ export const environment = {
    api: '${process.env.API ?? 'https://soundbuttons.azure-api.net'}',
    origin: '${process.env.ORIGIN ?? 'https://sound-buttons.click'}',
    version: '${process.env.VERSION ?? ''}',
-   CLARITY_TRACKING_ID: '${process.env.CLARITY_TRACKING_ID ?? ''}'
+   CLARITY_TRACKING_ID: '${process.env.CLARITY_TRACKING_ID ?? ''}',
+   CLOUDFLARE_RUM_TOKEN: '${process.env.CLOUDFLARE_RUM_TOKEN ?? ''}'
 };
 `;
 
