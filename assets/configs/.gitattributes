@@ -1,0 +1,10 @@
+# Enforce LF line endings for all text files
+* text=auto eol=lf
+
+# Explicitly set LF for specific file types
+*.json text eol=lf
+*.zsh text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
