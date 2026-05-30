@@ -2,7 +2,11 @@ import { IButton, defaultBaseRoute } from './Buttons';
 import { LanguageService } from '../services/language.service';
 
 export class ButtonGroup implements IButtonGroup {
-  constructor(public name: string, public baseRoute: string, public buttons: IButton[]) {
+  constructor(
+    public name: string,
+    public baseRoute: string,
+    public buttons: IButton[]
+  ) {
     if (!this.baseRoute) {
       this.baseRoute = defaultBaseRoute;
     }

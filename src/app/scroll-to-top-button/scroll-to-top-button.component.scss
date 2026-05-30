@@ -13,10 +13,12 @@ button {
   justify-content: center;
   align-items: center;
 
-  background: color-mix(in srgb, currentColor 30%, rgba(255,255,255, 0.25));
+  background: color-mix(in srgb, currentColor 30%, rgba(255, 255, 255, 0.25));
   color: var(--bs-primary);
 
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.25s, visibility 0.25s;
+  transition:
+    opacity 0.25s,
+    visibility 0.25s;
 }

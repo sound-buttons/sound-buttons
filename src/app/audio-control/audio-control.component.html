@@ -9,27 +9,29 @@
     (change)="OnVolumeChange($event)"
   />
   @if (audioService.isEmpty()) {
-  <i
-    role="button"
-    class="bi bi-collection-play clickable jello-horizontal"
-    (click)="OnShuffleClick()"
-  ></i>
-  } @if (audioService.canPlay()) {
-  <i role="button" class="bi bi-play-fill clickable blink-2" (click)="OnPlayClick()"></i>
-  } @if (audioService.canPause()) {
-  <i role="button" class="bi bi-pause-fill clickable blink-2" (click)="OnPauseClick()"></i>
+    <i
+      role="button"
+      class="bi bi-collection-play clickable jello-horizontal"
+      (click)="OnShuffleClick()"
+    ></i>
+  }
+  @if (audioService.canPlay()) {
+    <i role="button" class="bi bi-play-fill clickable blink-2" (click)="OnPlayClick()"></i>
+  }
+  @if (audioService.canPause()) {
+    <i role="button" class="bi bi-pause-fill clickable blink-2" (click)="OnPauseClick()"></i>
   }
   <div class="buttonContainer">
     @for (button of buttons().slice(); track trackById($index, button)) {
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="buttonClick($event, button)"
-      [contextMenuTrigger]="menu"
-      [menuContext]="button"
-    >
-      {{ button.text }}
-    </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="buttonClick($event, button)"
+        [contextMenuTrigger]="menu"
+        [menuContext]="button"
+      >
+        {{ button.text }}
+      </button>
     }
   </div>
   <i role="button" class="bi bi-trash3 clickable" (click)="OnStopClick()"></i>

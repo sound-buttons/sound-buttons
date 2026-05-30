@@ -1,20 +1,20 @@
 <div class="container">
   @if (config) {
-  <div class="d-flex flex-wrap">
-    <div class="side">
-      <app-introduction
-        [imgs]="config.imgSrc"
-        [intro]="config.intro"
-        [link]="config.link"
-        [button]="config.introButton"
-      ></app-introduction>
+    <div class="d-flex flex-wrap">
+      <div class="side">
+        <app-introduction
+          [imgs]="config.imgSrc"
+          [intro]="config.intro"
+          [link]="config.link"
+          [button]="config.introButton"
+        ></app-introduction>
+      </div>
+      <div class="main flex-grow-1">
+        @if (config.buttonGroups) {
+          <app-sound-buttons [buttonGroups]="config.buttonGroups"></app-sound-buttons>
+        }
+      </div>
     </div>
-    <div class="main flex-grow-1">
-      @if (config.buttonGroups) {
-      <app-sound-buttons [buttonGroups]="config.buttonGroups"></app-sound-buttons>
-      }
-    </div>
-  </div>
   }
 </div>
 <app-audio-control></app-audio-control>

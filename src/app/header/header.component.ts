@@ -5,10 +5,10 @@ import { DisplayService } from './../services/display.service';
 import { ConfigService } from './../services/config.service';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    standalone: false
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  standalone: false,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   title = 'Sound Buttons';

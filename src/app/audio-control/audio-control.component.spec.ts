@@ -14,9 +14,9 @@ import { makeButton, makeFullConfig, makeIButtonGroup } from '../../testing/fixt
 // Stub for the right-click directive so we can assert the menu context wiring
 // without pulling in the real CDK-overlay context-menu trigger.
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[contextMenuTrigger]',
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[contextMenuTrigger]',
+  standalone: false,
 })
 class StubContextMenuTriggerDirective {
   @Input() contextMenuTrigger: unknown;
@@ -137,8 +137,7 @@ describe('AudioControlComponent', () => {
       audioService.add(makeButton());
       fixture.detectChanges();
 
-      const trash = fixture.debugElement.query(By.css('.bi-trash3'))
-        .nativeElement as HTMLElement;
+      const trash = fixture.debugElement.query(By.css('.bi-trash3')).nativeElement as HTMLElement;
       trash.click();
 
       expect(audioService.isEmpty()).toBeTrue();
@@ -160,13 +159,11 @@ describe('AudioControlComponent', () => {
       ]);
 
       // Each chip carries the right-click menu context.
-      const triggers = fixture.debugElement.queryAll(
-        By.directive(StubContextMenuTriggerDirective)
-      );
+      const triggers = fixture.debugElement.queryAll(By.directive(StubContextMenuTriggerDirective));
       expect(triggers.length).toBe(2);
-      expect((triggers[0].injector.get(StubContextMenuTriggerDirective).menuContext as IButton).id).toBe(
-        'b1'
-      );
+      expect(
+        (triggers[0].injector.get(StubContextMenuTriggerDirective).menuContext as IButton).id
+      ).toBe('b1');
 
       // Clicking a chip removes that queued button.
       (chips[0].nativeElement as HTMLElement).click();

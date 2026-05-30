@@ -55,8 +55,16 @@ describe('AudioService', () => {
 
     expect(service.isEmpty()).toBeTrue();
     expect(clickSpy.StepClicks).toHaveBeenCalled();
-    expect(gtag).toHaveBeenCalledWith('event', 'sound_play', jasmine.objectContaining({ button: 'btn' }));
-    expect(gtag).toHaveBeenCalledWith('event', 'sound_play_count', jasmine.objectContaining({ count: 1 }));
+    expect(gtag).toHaveBeenCalledWith(
+      'event',
+      'sound_play',
+      jasmine.objectContaining({ button: 'btn' })
+    );
+    expect(gtag).toHaveBeenCalledWith(
+      'event',
+      'sound_play_count',
+      jasmine.objectContaining({ count: 1 })
+    );
   });
 
   it('on ended with a queued next item: plays the next one', () => {

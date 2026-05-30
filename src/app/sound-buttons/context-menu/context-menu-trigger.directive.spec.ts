@@ -16,17 +16,17 @@ interface TestContext {
 }
 
 @Component({
-    selector: 'app-test-menu',
-    template: `<div class="test-menu">{{ data.id }}</div>`,
-    standalone: false
+  selector: 'app-test-menu',
+  template: `<div class="test-menu">{{ data.id }}</div>`,
+  standalone: false,
 })
 class TestMenuComponent {
   constructor(@Inject(CONTEXT_MENU_DATA) public data: TestContext) {}
 }
 
 @Component({
-    template: `<button type="button" [contextMenuTrigger]="menu" [menuContext]="ctx"></button>`,
-    standalone: false
+  template: `<button type="button" [contextMenuTrigger]="menu" [menuContext]="ctx"></button>`,
+  standalone: false,
 })
 class HostComponent {
   menu = TestMenuComponent;

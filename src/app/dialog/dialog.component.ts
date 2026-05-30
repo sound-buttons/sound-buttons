@@ -5,10 +5,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DialogService } from '../services/dialog.service';
 
 @Component({
-    selector: 'app-dialog',
-    templateUrl: './dialog.component.html',
-    styleUrls: ['./dialog.component.scss'],
-    standalone: false
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss'],
+  standalone: false,
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {
   @ViewChild('tModel', { static: true }) modal!: TemplateRef<unknown>;

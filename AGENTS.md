@@ -57,7 +57,7 @@ write-production-config.ts        # Generates environment.prod.ts from env vars 
 openspec/                         # OpenSpec specs + change proposals (see below)
 .github/workflows/                # test.yml, deploy-gh-page.yml,
                                   #   deploy-cloudflare-worker.yml, codeql.yml
-karma.conf.js  angular.json  .eslintrc.json  TESTING.md  README.md
+karma.conf.js  angular.json  eslint.config.js  TESTING.md  README.md
 ```
 
 ## Build / Dev / Test / Lint Commands
@@ -97,9 +97,9 @@ callback URLs — relevant when working on `UploadComponent` or backend integrat
   forward-looking convention: existing Traditional Chinese comments in some files
   are legacy and do not need translation unless you are already editing them for
   clarity.
-- **ESLint + Prettier**: extends `eslint:recommended`,
-  `@angular-eslint/recommended`, `@typescript-eslint/recommended`, and
-  `prettier`. Run `npm run lint` before finishing.
+- **ESLint + Prettier**: ESLint flat config (`eslint.config.js`) applying ESLint
+  recommended plus the `angular-eslint` and `typescript-eslint` recommended
+  presets, with `eslint-config-prettier` last. Run `npm run lint` before finishing.
 - **Selectors**: component selector prefix `app` (kebab-case element), directive
   prefix `app` (camelCase attribute).
 - **Styles**: SCSS per component.
@@ -211,7 +211,7 @@ can be unit-tested in isolation. A static GPC signal is also served at
 - **`.github/workflows/test.yml`** — headless suite with coverage. Runs on
   `pull_request` to `master` and is exposed as a reusable workflow
   (`workflow_call`). Initializes the configs submodule to `minify`, uses Node
-  `20.19.0`, `npm ci`, then `npm run test:ci`.
+  `24.16.0`, `npm ci`, then `npm run test:ci`.
 - **`.github/workflows/deploy-gh-page.yml`** — triggered by `push: master` and
   `repository_dispatch: update_config`. Calls `test.yml` as a `test` job and
   gates the build with `needs: test`. Builds with secrets injected as env vars,

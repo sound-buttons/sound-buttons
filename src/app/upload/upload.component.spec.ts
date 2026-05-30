@@ -42,24 +42,22 @@ describe('UploadComponent (audio-submission)', () => {
     routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-    declarations: [UploadComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [ReactiveFormsModule,
-        FormsModule,
-        ...translateTestingImports()],
-    providers: [
+      declarations: [UploadComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [ReactiveFormsModule, FormsModule, ...translateTestingImports()],
+      providers: [
         { provide: ConfigService, useValue: configSpy },
         { provide: DialogService, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
         {
-            provide: ActivatedRoute,
-            useValue: { snapshot: { paramMap: convertToParamMap({ name: 'template' }) } },
+          provide: ActivatedRoute,
+          useValue: { snapshot: { paramMap: convertToParamMap({ name: 'template' }) } },
         },
         { provide: EnvironmentToken, useValue: ENV },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UploadComponent);
     component = fixture.componentInstance;
@@ -336,9 +334,7 @@ describe('UploadComponent (audio-submission)', () => {
   }));
 
   it('Scenario: status 0 (browser timeout) -> toastError "上傳回應超時"', fakeAsync(() => {
-    submitThenFail((req) =>
-      req.error(new ProgressEvent('error'), { status: 0, statusText: '' })
-    );
+    submitThenFail((req) => req.error(new ProgressEvent('error'), { status: 0, statusText: '' }));
     tick();
     expect(dialogSpy.toastError).toHaveBeenCalledWith(jasmine.stringMatching('上傳回應超時'));
   }));
@@ -352,7 +348,9 @@ describe('UploadComponent (audio-submission)', () => {
   it('Scenario: 500 error -> toastError "上傳失敗，伺服器錯誤"', fakeAsync(() => {
     submitThenFail((req) => req.flush('boom', { status: 500, statusText: 'Server Error' }));
     tick();
-    expect(dialogSpy.toastError).toHaveBeenCalledWith(jasmine.stringMatching('上傳失敗，伺服器錯誤'));
+    expect(dialogSpy.toastError).toHaveBeenCalledWith(
+      jasmine.stringMatching('上傳失敗，伺服器錯誤')
+    );
   }));
 
   it('Scenario: other status -> toastWarning "上傳回應異常"', fakeAsync(() => {

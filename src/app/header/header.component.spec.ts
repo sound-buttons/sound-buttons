@@ -120,7 +120,8 @@ describe('HeaderComponent', () => {
       onConfigChanged.emit(makeFullConfig({ name: 'kuro' }));
 
       // Non-upload path: filter input present.
-      component.window = { location: { pathname: '/kuro' } } as unknown as Window & typeof globalThis;
+      component.window = { location: { pathname: '/kuro' } } as unknown as Window &
+        typeof globalThis;
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#filter-text'))).not.toBeNull();
 

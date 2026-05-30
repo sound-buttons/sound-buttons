@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { EventEmitter } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { OverlayModule } from '@angular/cdk/overlay';
-import * as tocbot from 'tocbot';
+import tocbot from 'tocbot';
 
 import { SoundButtonsComponent } from './sound-buttons.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
@@ -43,11 +43,9 @@ describe('SoundButtonsComponent', () => {
     );
     displaySpy.getFilterText.and.returnValue(filterText);
 
-    configSpy = jasmine.createSpyObj<ConfigService>(
-      'ConfigService',
-      [],
-      { OnConfigChanged: configChanged }
-    );
+    configSpy = jasmine.createSpyObj<ConfigService>('ConfigService', [], {
+      OnConfigChanged: configChanged,
+    });
 
     audioSpy = jasmine.createSpyObj<AudioService>('AudioService', [
       'add',
@@ -270,7 +268,9 @@ describe('SoundButtonsComponent', () => {
       comp.buttonGroups = [makeIButtonGroup({ name: 'G', buttons: [btn] })];
       fixture.detectChanges();
 
-      (fixture.debugElement.query(By.css('button.btn-primary')).nativeElement as HTMLButtonElement).click();
+      (
+        fixture.debugElement.query(By.css('button.btn-primary')).nativeElement as HTMLButtonElement
+      ).click();
 
       expect(audioSpy.add).toHaveBeenCalledOnceWith(btn);
       expect(audioSpy.play).toHaveBeenCalledTimes(1);

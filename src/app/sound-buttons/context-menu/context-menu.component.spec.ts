@@ -3,17 +3,12 @@
 // Assertions mirror the scenarios in openspec/specs/right-click-context-menu/spec.md
 // (and the share delegations described in openspec/specs/sharing/spec.md).
 
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  flushMicrotasks,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
-import * as mime from 'mime';
+import mime from 'mime';
 
 import { ContextMenuComponent } from './context-menu.component';
 import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
@@ -215,8 +210,7 @@ describe('ContextMenuComponent', () => {
       clickSpy = spyOn(anchor, 'click');
       const realCreate = document.createElement.bind(document);
       createElementSpy = spyOn(document, 'createElement').and.callFake(
-        (tag: string): HTMLElement =>
-          tag === 'a' ? anchor : (realCreate(tag) as HTMLElement)
+        (tag: string): HTMLElement => (tag === 'a' ? anchor : (realCreate(tag) as HTMLElement))
       );
       createObjectUrlSpy = spyOn(URL, 'createObjectURL').and.returnValue('blob:fake-url');
     }
@@ -227,9 +221,9 @@ describe('ContextMenuComponent', () => {
       setup(button);
       installDownloadSpies();
       const blob = new Blob(['audio-bytes'], { type: 'video/webm' });
-      const fetchSpy = spyOn(window, 'fetch').and.resolveTo(
-        { blob: () => Promise.resolve(blob) } as unknown as Response
-      );
+      const fetchSpy = spyOn(window, 'fetch').and.resolveTo({
+        blob: () => Promise.resolve(blob),
+      } as unknown as Response);
 
       comp.download();
 
@@ -253,9 +247,9 @@ describe('ContextMenuComponent', () => {
     it('builds the Blob with mime.getType(filename) when known', fakeAsync(() => {
       setup(makeButton({ filename: 'hello.webm' }));
       installDownloadSpies();
-      spyOn(window, 'fetch').and.resolveTo(
-        { blob: () => Promise.resolve(new Blob(['x'], { type: 'application/octet-stream' })) } as unknown as Response
-      );
+      spyOn(window, 'fetch').and.resolveTo({
+        blob: () => Promise.resolve(new Blob(['x'], { type: 'application/octet-stream' })),
+      } as unknown as Response);
 
       comp.download();
       flushMicrotasks();
@@ -268,9 +262,9 @@ describe('ContextMenuComponent', () => {
     it('falls back to response.type when mime.getType(filename) is null', fakeAsync(() => {
       setup(makeButton({ filename: 'clip.zzz' }));
       installDownloadSpies();
-      spyOn(window, 'fetch').and.resolveTo(
-        { blob: () => Promise.resolve(new Blob(['x'], { type: 'application/x-custom' })) } as unknown as Response
-      );
+      spyOn(window, 'fetch').and.resolveTo({
+        blob: () => Promise.resolve(new Blob(['x'], { type: 'application/x-custom' })),
+      } as unknown as Response);
 
       comp.download();
       flushMicrotasks();

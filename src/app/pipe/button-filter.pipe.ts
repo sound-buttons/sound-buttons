@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ButtonGroup, IButtonGroup } from './../sound-buttons/ButtonGroup';
 
 @Pipe({
-    name: 'buttonFilter',
-    standalone: false
+  name: 'buttonFilter',
+  standalone: false,
 })
 export class ButtonFilterPipe implements PipeTransform {
   transform(items: IButtonGroup[], term: string): IButtonGroup[] {

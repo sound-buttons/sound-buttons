@@ -134,7 +134,9 @@ describe('ContainerComponent (content-routing-and-seo, privacy-and-analytics)', 
     const config = makeFullConfig({
       name: 'template',
       buttonGroups: [
-        makeIButtonGroup({ buttons: [makeButton({ id: 'btn-1', text: 'Hello', source: makeSource() })] }),
+        makeIButtonGroup({
+          buttons: [makeButton({ id: 'btn-1', text: 'Hello', source: makeSource() })],
+        }),
       ],
     });
 
@@ -143,7 +145,9 @@ describe('ContainerComponent (content-routing-and-seo, privacy-and-analytics)', 
     onConfigChanged.emit(config);
 
     expect(showModalSpy).toHaveBeenCalled();
-    expect(seoSpy.setTitle).toHaveBeenCalledWith(jasmine.stringMatching(/^Hello \| Template Chara \|/));
+    expect(seoSpy.setTitle).toHaveBeenCalledWith(
+      jasmine.stringMatching(/^Hello \| Template Chara \|/)
+    );
     expect(seoSpy.setUrl).toHaveBeenCalledWith('https://x/template/btn-1');
     expect(seoSpy.setImage).toHaveBeenCalledWith('https://x/assets/img/preview/template.png');
     expect(gtag).toHaveBeenCalledWith(
@@ -245,7 +249,9 @@ describe('ContainerComponent (content-routing-and-seo, privacy-and-analytics)', 
 
     expect(payload!.message).toContain('<iframe');
     expect(payload!.message).toContain('youtube.com/embed/dQw4w9WgXcQ');
-    expect(payload!.message).toContain('sandbox="allow-scripts allow-same-origin allow-presentation"');
+    expect(payload!.message).toContain(
+      'sandbox="allow-scripts allow-same-origin allow-presentation"'
+    );
     expect(payload!.message).toContain('credentialless');
   });
 
@@ -276,7 +282,9 @@ describe('ContainerComponent (content-routing-and-seo, privacy-and-analytics)', 
     fixture.detectChanges();
     onConfigChanged.emit(makeFullConfig({ name: 'template', fullName: 'Template Chara' }));
 
-    expect(seoSpy.setTitle).toHaveBeenCalledWith(jasmine.stringMatching(/^Template Chara \| Sound Buttons -/));
+    expect(seoSpy.setTitle).toHaveBeenCalledWith(
+      jasmine.stringMatching(/^Template Chara \| Sound Buttons -/)
+    );
     expect(seoSpy.setUrl).toHaveBeenCalledWith('https://x/template');
     expect(seoSpy.setImage).toHaveBeenCalledWith('https://x/assets/img/preview/template.png');
   });

@@ -12,9 +12,9 @@ import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
  * Only one context menu is open at a time; opening a new one disposes the previous overlay.
  */
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[contextMenuTrigger]',
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[contextMenuTrigger]',
+  standalone: false,
 })
 export class ContextMenuTriggerDirective {
   @Input() contextMenuTrigger!: ComponentType<unknown>;

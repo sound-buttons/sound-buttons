@@ -34,13 +34,18 @@ describe('CharaImageComponent', () => {
       expect((sources[0].nativeElement as HTMLSourceElement).getAttribute('srcset')).toBe(
         'assets/img/chara.avif'
       );
-      expect((sources[0].nativeElement as HTMLSourceElement).getAttribute('type')).toBe('image/avif');
+      expect((sources[0].nativeElement as HTMLSourceElement).getAttribute('type')).toBe(
+        'image/avif'
+      );
       expect((sources[1].nativeElement as HTMLSourceElement).getAttribute('srcset')).toBe(
         'assets/img/chara.webp'
       );
-      expect((sources[1].nativeElement as HTMLSourceElement).getAttribute('type')).toBe('image/webp');
+      expect((sources[1].nativeElement as HTMLSourceElement).getAttribute('type')).toBe(
+        'image/webp'
+      );
 
-      const img = fixture.debugElement.query(By.css('picture img')).nativeElement as HTMLImageElement;
+      const img = fixture.debugElement.query(By.css('picture img'))
+        .nativeElement as HTMLImageElement;
       expect(img.getAttribute('src')).toBe('assets/img/chara.png');
     });
 

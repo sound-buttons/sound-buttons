@@ -1,19 +1,19 @@
 <div class="container">
   @for (config of configs$ | async; track config) {
-  <div
-    class="chara-card"
-    [routerLink]="['/', config.name]"
-    (mouseenter)="OnMouseEnter($event, config)"
-    (mouseleave)="OnMouseLeave()"
-  >
-    <div class="details">
-      <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
-      <h2>{{ config.fullName }}</h2>
-      @if (config.color) {
-      <div class="background" [style.backgroundColor]="config.color['secondary']"></div>
-      }
+    <div
+      class="chara-card"
+      [routerLink]="['/', config.name]"
+      (mouseenter)="OnMouseEnter($event, config)"
+      (mouseleave)="OnMouseLeave()"
+    >
+      <div class="details">
+        <app-chara-image [imgs]="config.imgSrc"></app-chara-image>
+        <h2>{{ config.fullName }}</h2>
+        @if (config.color) {
+          <div class="background" [style.backgroundColor]="config.color['secondary']"></div>
+        }
+      </div>
     </div>
-  </div>
   }
 
   <a

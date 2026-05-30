@@ -48,11 +48,7 @@ describe('HomePageComponent', () => {
     configService.getBriefConfig.and.returnValue(of(configs));
 
     displayService = jasmine.createSpyObj<DisplayService>('DisplayService', ['setFilterText']);
-    seoService = jasmine.createSpyObj<SEOService>('SEOService', [
-      'setTitle',
-      'setUrl',
-      'setImage',
-    ]);
+    seoService = jasmine.createSpyObj<SEOService>('SEOService', ['setTitle', 'setUrl', 'setImage']);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -88,7 +84,9 @@ describe('HomePageComponent', () => {
       // directly from the RouterLink directive instance instead. In Angular 21 the
       // bound commands are exposed through the `routerLinkInput` signal.
       const routerLinkOf = (card: (typeof linkedCards)[number]): unknown[] =>
-        (card.injector.get(RouterLink) as unknown as { routerLinkInput: () => unknown[] }).routerLinkInput();
+        (
+          card.injector.get(RouterLink) as unknown as { routerLinkInput: () => unknown[] }
+        ).routerLinkInput();
       expect(routerLinkOf(linkedCards[0])).toContain('alpha');
       expect(routerLinkOf(linkedCards[1])).toContain('beta');
 
@@ -116,9 +114,7 @@ describe('HomePageComponent', () => {
       const secondBg = cards[1].query(By.css('.background'));
 
       expect(firstBg).not.toBeNull();
-      expect((firstBg.nativeElement as HTMLElement).style.backgroundColor).toBe(
-        'rgb(68, 85, 102)'
-      );
+      expect((firstBg.nativeElement as HTMLElement).style.backgroundColor).toBe('rgb(68, 85, 102)');
       expect(secondBg).toBeNull();
     });
   });
@@ -167,9 +163,9 @@ describe('HomePageComponent', () => {
       expect((card.query(By.css('h2')).nativeElement as HTMLElement).textContent?.trim()).toBe(
         '？？？'
       );
-      expect((card.query(By.css('.background')).nativeElement as HTMLElement).style.backgroundColor).toBe(
-        'rgb(119, 119, 119)'
-      );
+      expect(
+        (card.query(By.css('.background')).nativeElement as HTMLElement).style.backgroundColor
+      ).toBe('rgb(119, 119, 119)');
     });
   });
 
@@ -185,7 +181,9 @@ describe('HomePageComponent', () => {
         'Sound Buttons - Vtuber voice button website with online YouTube audio clip submission.'
       );
       expect(seoService.setUrl).toHaveBeenCalledWith(origin);
-      expect(seoService.setImage).toHaveBeenCalledWith(`${origin}/assets/img/preview/open-graph.png`);
+      expect(seoService.setImage).toHaveBeenCalledWith(
+        `${origin}/assets/img/preview/open-graph.png`
+      );
 
       expect(displayService.setFilterText).toHaveBeenCalledWith('');
     });

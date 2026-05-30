@@ -6,19 +6,19 @@
   max-width: 87vw;
 }
 
-.side{
+.side {
   width: 100%;
   margin: 5px;
   padding: 12px;
   padding-right: 0;
 }
 
-.main{
+.main {
   width: 250px;
 }
 
-@include media-breakpoint-up(md){
-  .side{
+@include media-breakpoint-up(md) {
+  .side {
     width: unset;
     margin: unset;
     padding: unset;

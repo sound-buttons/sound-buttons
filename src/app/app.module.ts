@@ -2,7 +2,7 @@
 import { Inject, NgModule } from '@angular/core';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,19 +28,14 @@ import { DialogService } from './services/dialog.service';
 import { ShareService } from './services/share.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ContextMenuComponent } from './sound-buttons/context-menu/context-menu.component';
 import { ContextMenuTriggerDirective } from './sound-buttons/context-menu/context-menu-trigger.directive';
 import { CharaImageComponent } from './chara-image/chara-image.component';
 import { ScrollToTopButtonComponent } from './scroll-to-top-button/scroll-to-top-button.component';
-
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}
 
 import { EnvironmentToken } from './environment.token';
 import { bootstrapAnalytics } from './analytics.bootstrap';
@@ -57,53 +52,55 @@ declare global {
   }
 }
 
-@NgModule({ declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        IntroductionComponent,
-        SoundButtonsComponent,
-        ContainerComponent,
-        HomePageComponent,
-        UploadComponent,
-        DialogComponent,
-        AudioControlComponent,
-        ButtonFilterPipe,
-        ContextMenuComponent,
-        ContextMenuTriggerDirective,
-        CharaImageComponent,
-    ],
-    bootstrap: [AppComponent],
-    exports: [ButtonFilterPipe], imports: [BrowserModule,
-        ButtonsModule,
-        ModalModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
-        OverlayModule,
-        BrowserAnimationsModule,
-        CollapseModule,
-        ToastrModule.forRoot(TOASTR_CONFIG),
-        TypeaheadModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-            defaultLanguage: 'zh',
-        }),
-        ScrollToTopButtonComponent], providers: [
-        { provide: EnvironmentToken, useValue: environment },
-        LanguageService,
-        ConfigService,
-        ColorService,
-        AudioService,
-        DialogService,
-        ShareService,
-        ButtonFilterPipe,
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    IntroductionComponent,
+    SoundButtonsComponent,
+    ContainerComponent,
+    HomePageComponent,
+    UploadComponent,
+    DialogComponent,
+    AudioControlComponent,
+    ButtonFilterPipe,
+    ContextMenuComponent,
+    ContextMenuTriggerDirective,
+    CharaImageComponent,
+  ],
+  bootstrap: [AppComponent],
+  exports: [ButtonFilterPipe],
+  imports: [
+    BrowserModule,
+    ButtonsModule,
+    ModalModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    OverlayModule,
+    BrowserAnimationsModule,
+    CollapseModule,
+    ToastrModule.forRoot(TOASTR_CONFIG),
+    TypeaheadModule,
+    TranslateModule.forRoot({
+      fallbackLang: 'zh',
+    }),
+    ScrollToTopButtonComponent,
+  ],
+  providers: [
+    { provide: EnvironmentToken, useValue: environment },
+    LanguageService,
+    ConfigService,
+    ColorService,
+    AudioService,
+    DialogService,
+    ShareService,
+    ButtonFilterPipe,
+    provideHttpClient(withInterceptorsFromDi()),
+    provideTranslateHttpLoader(),
+  ],
+})
 export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {

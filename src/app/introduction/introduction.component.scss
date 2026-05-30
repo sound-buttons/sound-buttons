@@ -88,7 +88,8 @@ app-chara-image {
   border: 3px solid transparent;
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
-  background-image: linear-gradient(to right, #2e333b, #2e333b),
+  background-image:
+    linear-gradient(to right, #2e333b, #2e333b),
     linear-gradient(135deg, var(--bs-primary), var(--bs-secondary));
 }
 

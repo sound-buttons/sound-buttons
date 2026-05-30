@@ -22,11 +22,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '20.19.0'
+          # Node 24 LTS (24.16.0), matching the Angular 21 `>=24` engine range used in CI tests.
+          node-version: '24.16.0'
 
       - name: Initialize and checkout submodule to minify branch
         run: |
@@ -63,7 +64,7 @@ jobs:
           clean: true
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: web
           path: |

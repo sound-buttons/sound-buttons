@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import * as mime from 'mime';
+import mime from 'mime';
 import { EnvironmentToken } from '../environment.token';
 import { IButton, ISource } from '../sound-buttons/Buttons';
 import { IFullConfig, ConfigService } from '../services/config.service';
@@ -12,10 +12,10 @@ import { SEOService } from '../services/seo.service';
 import { DialogService } from '../services/dialog.service';
 
 @Component({
-    selector: 'app-container',
-    templateUrl: './container.component.html',
-    styleUrls: ['./container.component.scss'],
-    standalone: false
+  selector: 'app-container',
+  templateUrl: './container.component.html',
+  styleUrls: ['./container.component.scss'],
+  standalone: false,
 })
 export class ContainerComponent implements OnInit, OnDestroy {
   configSubscription: Subscription | undefined;

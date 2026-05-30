@@ -34,7 +34,7 @@ CHROME_BIN=$(which chromium-browser) npm run test:ci
   `test` job and gates the build/deploy job with `needs: test`, so deployment is
   blocked unless the suite passes. This covers **both** deploy triggers
   (`push: master` and `repository_dispatch: update_config`).
-- Both workflows pin Node `20.19.0` (an Angular-21-verified version).
+- Both workflows pin Node `24.16.0` (the current Node 24 LTS, Angular-21-verified).
 
 ## Coverage snapshot
 

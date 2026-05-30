@@ -19,15 +19,15 @@ describe('ConfigService', () => {
   beforeEach(() => {
     const audioSpy = jasmine.createSpyObj<AudioService>('AudioService', ['add', 'play']);
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         ConfigService,
         ColorService,
         { provide: AudioService, useValue: audioSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-});
+      ],
+    });
     service = TestBed.inject(ConfigService);
     httpMock = TestBed.inject(HttpTestingController);
     colorService = TestBed.inject(ColorService);
@@ -77,7 +77,11 @@ describe('ConfigService', () => {
       intro: { zh: '介紹', ja: '紹介' },
       introButton: { id: 'ib', filename: 'ib.webm', text: 'IB', baseRoute: '', volume: 1 },
       buttonGroups: [
-        { name: 'G', baseRoute: 'assets/sound/', buttons: [{ id: 'b', filename: 'b.webm', text: 'B', baseRoute: '', volume: 1 }] },
+        {
+          name: 'G',
+          baseRoute: 'assets/sound/',
+          buttons: [{ id: 'b', filename: 'b.webm', text: 'B', baseRoute: '', volume: 1 }],
+        },
       ],
     } as unknown as IFullConfig);
 
@@ -133,7 +137,9 @@ describe('ConfigService', () => {
 
     service.reloadConfig();
 
-    httpMock.expectOne(MAIN_URL).flush([makeBriefConfig({ name: 'chara', fullConfigURL: 'full.json' })]);
+    httpMock
+      .expectOne(MAIN_URL)
+      .flush([makeBriefConfig({ name: 'chara', fullConfigURL: 'full.json' })]);
     httpMock.expectOne('full.json').flush({ name: 'chara', intro: 'hi' } as unknown as IFullConfig);
 
     expect(service.config).toBeDefined();

@@ -36,9 +36,7 @@
             },
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "seedrandom",
-              "mime",
-              "tocbot"
+              "seedrandom"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

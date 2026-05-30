@@ -8,7 +8,10 @@ export class DisplayService {
   public OnConfigChanged: EventEmitter<string> = new EventEmitter();
   private filterText = '';
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.route.queryParams.subscribe((params) => {
       if (params.filter && params.filter !== this.filterText) {
         this.setFilterText(params.filter ?? '');

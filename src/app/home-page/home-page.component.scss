@@ -16,7 +16,12 @@ h2 {
   transition-property: font-size;
   transition-duration: 0.3s;
   z-index: 5;
-  text-shadow: 1px 1px 1px $white, 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 40px $white,
+  text-shadow:
+    1px 1px 1px $white,
+    0 0 5px $white,
+    0 0 10px $white,
+    0 0 15px $white,
+    0 0 40px $white,
     0 0 70px $white;
 }
 

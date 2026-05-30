@@ -12,10 +12,10 @@ import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
 import { EnvironmentToken } from '../environment.token';
 @Component({
-    selector: 'app-upload',
-    templateUrl: './upload.component.html',
-    styleUrls: ['./upload.component.scss'],
-    standalone: false
+  selector: 'app-upload',
+  templateUrl: './upload.component.html',
+  styleUrls: ['./upload.component.scss'],
+  standalone: false,
 })
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;

@@ -10,8 +10,8 @@ Angular-compatible versions and framework upgrades behaviour-preserving.
 
 The application SHALL target the latest stable Angular major version (Angular 21) and SHALL build and
 run on a toolchain compatible with it: Node.js ≥ 20.19 (or ≥ 22.12, or ≥ 24), TypeScript ≥ 5.9 and
-< 6.0, and zone.js ~0.15. Dependency versions in `package.json` SHALL satisfy the chosen Angular
-major's declared peer requirements.
+< 6.0, and zone.js ~0.15 or ~0.16. Dependency versions in `package.json` SHALL satisfy the chosen
+Angular major's declared peer requirements.
 
 #### Scenario: Toolchain satisfies the Angular major
 - **WHEN** dependencies are installed and the app is built

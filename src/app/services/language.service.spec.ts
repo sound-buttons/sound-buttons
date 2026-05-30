@@ -24,8 +24,7 @@ describe('LanguageService', () => {
 
   it('maps the browser language to its first subtag (e.g. zh-TW -> zh)', () => {
     // BrowserLanguage is derived once from navigator.language at load time.
-    const firstSubtag = (navigator.language || navigator.languages[0])
-      .match(/^([^-_]*)/)?.[0];
+    const firstSubtag = (navigator.language || navigator.languages[0]).match(/^([^-_]*)/)?.[0];
     expect(LanguageService.BrowserLanguage).toBe(firstSubtag ?? 'zh');
   });
 

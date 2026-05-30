@@ -7,10 +7,10 @@ import { SEOService } from './../services/seo.service';
 import { EnvironmentToken } from '../environment.token';
 
 @Component({
-    selector: 'app-home-page',
-    templateUrl: './home-page.component.html',
-    styleUrls: ['./home-page.component.scss'],
-    standalone: false
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.scss'],
+  standalone: false,
 })
 export class HomePageComponent implements OnInit {
   public configs$!: Observable<IConfig[]>;

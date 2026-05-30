@@ -14,7 +14,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       # Match the deploy workflow's config state: the app is built/tested against
       # the minify branch of the configs submodule, so the gate exercises exactly
@@ -26,10 +26,10 @@ jobs:
           git checkout minify
           git pull origin minify
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          # Angular 21-compatible pinned Node version; 20.19.0 satisfies the Node 20 engine range.
-          node-version: '20.19.0'
+          # Angular 21-compatible pinned Node version; 24.16.0 is the current Node 24 LTS and satisfies the `>=24` engine range.
+          node-version: '24.16.0'
 
       - name: Install dependencies
         run: npm ci

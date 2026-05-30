@@ -1,32 +1,33 @@
 <div class="container" role="main">
-  @for (buttonGroup of buttonGroups | buttonFilter : filterText; track buttonGroup) {
-  <div>
-    @if (buttonGroup.buttons.length !== 0) {
-    <div class="card border-primary mb-3" [attr.count]="buttonGroup.buttons.length">
-      <h2 class="card-header" [id]="buttonGroup.name">{{ buttonGroup.name }}</h2>
-      <div class="card-body">
-        @for (btn of buttonGroup.buttons.slice().reverse(); track trackById($index, btn)) {
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="buttonClick($event, btn)"
-          [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)"
-          [contextMenuTrigger]="menu"
-          [menuContext]="btn"
-        >
-          {{ btn.text }}
-        </button>
-        }
+  @for (buttonGroup of buttonGroups | buttonFilter: filterText; track buttonGroup) {
+    <div>
+      @if (buttonGroup.buttons.length !== 0) {
+        <div class="card border-primary mb-3" [attr.count]="buttonGroup.buttons.length">
+          <h2 class="card-header" [id]="buttonGroup.name">{{ buttonGroup.name }}</h2>
+          <div class="card-body">
+            @for (btn of buttonGroup.buttons.slice().reverse(); track trackById($index, btn)) {
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="buttonClick($event, btn)"
+                [style.gridColumn]="'auto/span ' + gridColumnLen(btn.text)"
+                [contextMenuTrigger]="menu"
+                [menuContext]="btn"
+              >
+                {{ btn.text }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+  @if (isFilteredEmpty()) {
+    <div>
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div translate>沒有符合條件的按鈕</div>
       </div>
     </div>
-    }
-  </div>
-  } @if (isFilteredEmpty()) {
-  <div>
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-      <i class="bi bi-exclamation-triangle-fill"></i>
-      <div translate>沒有符合條件的按鈕</div>
-    </div>
-  </div>
   }
 </div>

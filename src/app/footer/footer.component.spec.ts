@@ -5,7 +5,11 @@ import { By } from '@angular/platform-browser';
 import { FooterComponent } from './footer.component';
 import { ClickService } from '../services/click.service';
 import { DialogService } from '../services/dialog.service';
-import { makeDialogServiceSpy, DialogServiceSpy, translateTestingImports } from '../../testing/angular';
+import {
+  makeDialogServiceSpy,
+  DialogServiceSpy,
+  translateTestingImports,
+} from '../../testing/angular';
 
 // Capability: click-counter (footer display + AGPL modal + version link).
 describe('FooterComponent', () => {

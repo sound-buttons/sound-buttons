@@ -1,24 +1,24 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, HostListener, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import * as mime from 'mime';
+import mime from 'mime';
 import { IButton } from '../Buttons';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ShareService } from 'src/app/services/share.service';
 import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
 
 @Component({
-    selector: 'app-context-menu',
-    templateUrl: './context-menu.component.html',
-    styleUrls: ['./context-menu.component.scss'],
-    animations: [
-        trigger('menu', [
-            state('enter', style({ opacity: 1 })),
-            state('exit, void', style({ opacity: 0 })),
-            transition('* => *', animate(250)),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-context-menu',
+  templateUrl: './context-menu.component.html',
+  styleUrls: ['./context-menu.component.scss'],
+  animations: [
+    trigger('menu', [
+      state('enter', style({ opacity: 1 })),
+      state('exit, void', style({ opacity: 0 })),
+      transition('* => *', animate(250)),
+    ]),
+  ],
+  standalone: false,
 })
 export class ContextMenuComponent {
   /** Drives the fade-in (`enter`) / fade-out (`exit`) host animation. */

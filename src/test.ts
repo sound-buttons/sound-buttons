@@ -9,7 +9,7 @@ import {
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
-    teardown: { destroyAfterEach: false }
+  teardown: { destroyAfterEach: false },
 });
 
 // Angular 21 changed ComponentFixture.detectChanges() to only refresh views that
@@ -19,7 +19,10 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
 // the pre-v21 force-refresh semantics by marking the fixture's view for check
 // before every detection pass.
 const originalDetectChanges = ComponentFixture.prototype.detectChanges;
-ComponentFixture.prototype.detectChanges = function (this: ComponentFixture<unknown>, checkNoChanges?: boolean) {
+ComponentFixture.prototype.detectChanges = function (
+  this: ComponentFixture<unknown>,
+  checkNoChanges?: boolean
+) {
   this.componentRef.changeDetectorRef.markForCheck();
   return originalDetectChanges.call(this, checkNoChanges);
 };

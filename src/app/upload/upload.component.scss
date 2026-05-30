@@ -11,9 +11,9 @@
   }
 }
 
-.input-group.row2{
+.input-group.row2 {
   @include media-breakpoint-down(lg) {
-    &>*{
+    & > * {
       border-top: 0;
     }
   }

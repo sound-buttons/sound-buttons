@@ -7,10 +7,10 @@ import { EnvironmentToken } from './environment.token';
 import { Subscription, of } from 'rxjs';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
   configSubscription: Subscription | undefined;
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     @Inject(EnvironmentToken) env: any
   ) {
-    translateService.setDefaultLang('zh');
+    translateService.setFallbackLang('zh');
     translateService
       .use(LanguageService.BrowserLanguage)
       .pipe(

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import * as tocbot from 'tocbot';
+import tocbot from 'tocbot';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton } from './Buttons';
 import { EnvironmentToken } from '../environment.token';
@@ -12,10 +12,10 @@ import { ConfigService } from './../services/config.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
-    selector: 'app-sound-buttons',
-    templateUrl: './sound-buttons.component.html',
-    styleUrls: ['./sound-buttons.component.scss'],
-    standalone: false
+  selector: 'app-sound-buttons',
+  templateUrl: './sound-buttons.component.html',
+  styleUrls: ['./sound-buttons.component.scss'],
+  standalone: false,
 })
 export class SoundButtonsComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();

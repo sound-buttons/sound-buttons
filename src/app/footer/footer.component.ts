@@ -4,10 +4,10 @@ import { ClickService } from './../services/click.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-footer',
-    templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.scss'],
-    standalone: false
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss'],
+  standalone: false,
 })
 export class FooterComponent implements OnInit {
   @Input() version = 'DEVELOP';
