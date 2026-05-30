@@ -1,177 +1,135 @@
-# Sound Buttons - AI Agent Instructions
+# Sound Buttons — AI Agent Instructions
 
 ## Project Overview
 
-Sound Buttons is a web application that provides sound button functionality for VTuber fans. The project features an online audio submission system that automatically clips YouTube audio and generates buttons. It uses a data separation architecture where content updates can be made by simply modifying JSON configuration files.
+Sound Buttons is a VTuber soundboard web application. It lets fans play short
+audio clips ("sound buttons") for their favorite streamers and submit new clips
+through an online upload flow that accepts YouTube videos, YouTube/Twitch clip
+URLs, or direct audio/video file uploads, generating buttons automatically.
 
-**Live Site**: <https://sound-buttons.click>
+- **Live site**: <https://sound-buttons.click>
+- **License**: AGPL-3.0-or-later (see `LICENSE`)
+- **Architecture highlight — data separation**: All button content lives in JSON
+  configuration files under `src/assets/configs` (a git submodule). Adding or
+  updating characters and buttons usually requires only JSON edits, no code
+  changes.
 
-## Technology Stack
+## Tech Stack
 
-- **Frontend**: Angular 14 with TypeScript
-- **UI Framework**: Bootstrap 5, ngx-bootstrap
-- **Styling**: SCSS
-- **Backend**: Azure Functions (separate repository)
-- **Storage**: Azure Blob Storage
-- **Hosting**: GitHub Pages, Cloudflare Workers
-- **License**: AGPLv3
+- **Framework**: Angular 14 (`@angular/*` `^14.0.0`) with TypeScript `^4.8.0`
+- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `^9`,
+  `bootstrap-icons`, `ngx-toastr` for toasts, `@ctrl/ngx-rightclick` for the
+  right-click context menu, `tocbot` for table-of-contents
+- **i18n**: `@ngx-translate/core` + `@ngx-translate/http-loader`
+- **Styling**: SCSS (component styles and global `src/styles.scss`); a Bootswatch
+  theme lives in `src/assets/style/`
+- **Reactive**: RxJS `~6.6`
+- **Build/test tooling**: Angular CLI 14, ESLint + Prettier, Karma + Jasmine,
+  `ts-node` (for the env config script), `wrangler` (Cloudflare Worker)
+- **Backend (separate repos)**: Azure Functions API; audio stored in Azure Blob
+  Storage. Hosting: GitHub Pages + Cloudflare Workers.
 
-## Project Structure
+## Repository Structure
 
 ```text
-sound-buttons/
-├── src/
-│   ├── app/                          # Angular application
-│   │   ├── services/                 # Angular services
-│   │   │   ├── audio.service.ts      # Audio playback queue management
-│   │   │   ├── config.service.ts     # Configuration loading and management
-│   │   │   ├── color.service.ts      # Theme color management
-│   │   │   ├── language.service.ts   # i18n language handling
-│   │   │   ├── dialog.service.ts     # Modal and toast notifications
-│   │   │   ├── share.service.ts      # URL sharing functionality
-│   │   │   └── click.service.ts      # Click counter integration
-│   │   ├── sound-buttons/            # Sound button components
-│   │   │   ├── Buttons.ts            # Button interface and class
-│   │   │   ├── ButtonGroup.ts        # Button group interface
-│   │   │   └── context-menu/         # Right-click context menu
-│   │   ├── upload/                   # Audio upload component
-│   │   ├── container/                # Main container component
-│   │   ├── header/                   # Header component
-│   │   ├── footer/                   # Footer component
-│   │   ├── introduction/             # Introduction section
-│   │   ├── audio-control/            # Audio playback controls
-│   │   ├── pipe/                     # Angular pipes
-│   │   ├── app.module.ts             # Root module
-│   │   ├── app-routing.module.ts     # Routing configuration
-│   │   └── app.component.ts          # Root component
-│   ├── assets/
-│   │   ├── configs/                  # JSON configuration files (git submodule)
-│   │   ├── i18n/                     # Translation files (zh.json, ja.json)
-│   │   ├── img/                      # Images and icons
-│   │   └── style/                    # Global SCSS styles
-│   ├── environments/                 # Environment configurations
-│   └── index.html                    # Main HTML entry point
-├── worker/                           # Cloudflare Worker scripts
-├── e2e/                              # End-to-end tests (Protractor)
-├── .github/
-│   └── workflows/                    # GitHub Actions CI/CD
-├── angular.json                      # Angular CLI configuration
-├── package.json                      # npm dependencies
-├── tsconfig.json                     # TypeScript configuration
-└── .eslintrc.json                    # ESLint configuration
+src/
+  app/
+    analytics.bootstrap.ts        # Third-party analytics bootstrap (GPC-gated)
+    app.module.ts                 # Root module; calls bootstrapAnalytics in ctor
+    app-routing.module.ts         # Routes: '', ':name', ':name/upload', ':name/:id'
+    environment.token.ts          # EnvironmentToken InjectionToken (avoids import cycle)
+    services/                     # audio, click, color, config, dialog,
+                                  #   display, language, seo, share
+    sound-buttons/                # Buttons.ts, ButtonGroup.ts, component,
+                                  #   context-menu/
+    header/ footer/ container/ home-page/ upload/ dialog/
+    introduction/ audio-control/ chara-image/ scroll-to-top-button/
+    pipe/                         # button-filter.pipe.ts
+  testing/                        # Shared spec helpers: angular.ts, fakes.ts, fixtures.ts
+  assets/
+    configs/                      # git SUBMODULE: per-character JSON configs (+ main.json)
+    i18n/                         # zh.json, ja.json
+    img/ style/ sound/
+  environments/                   # environment.ts (dev), environment.prod.ts (generated)
+  index.html  main.ts  styles.scss  staticwebapp.config.json
+worker/worker.js                  # Cloudflare Worker (caching/edge logic)
+write-production-config.ts        # Generates environment.prod.ts from env vars at build
+openspec/                         # OpenSpec specs + change proposals (see below)
+.github/workflows/                # test.yml, deploy-gh-page.yml,
+                                  #   deploy-cloudflare-worker.yml, codeql.yml
+karma.conf.js  angular.json  .eslintrc.json  TESTING.md  README.md
 ```
 
-## Build and Development Commands
+## Build / Dev / Test / Lint Commands
 
-### Prerequisites
+| Command | Purpose |
+| ------- | ------- |
+| `npm start` | Dev server (`ng serve`, http://localhost:4200) |
+| `npm run start_ssl` | Dev server over SSL |
+| `npm run build` | Runs `npm run config` then `ng build --configuration production` |
+| `npm run config` | Generates `src/environments/environment.prod.ts` via `write-production-config.ts` (ts-node) |
+| `npm test` | Interactive unit tests (`ng test`, Chrome) |
+| `npm run test:ci` | Headless single run with coverage + thresholds (`ChromeHeadlessNoSandbox`) |
+| `npm run lint` | ESLint (`ng lint`) |
+| `npm run e2e` | End-to-end tests |
+| `npm run i18n:extract` | Extract translation strings into `src/assets/i18n/ja.json` |
+| `npm run worker_deploy` | Deploy the Cloudflare Worker via wrangler |
 
-- Node.js (compatible with Angular 14)
-- npm
-- Git (for submodules)
-
-### Initial Setup
+### First-time setup
 
 ```bash
-# Clone with submodules
-git clone --recurse-submodules <repo-url>
-
-# Or initialize submodules after clone
-git submodule update --init --recursive
-
-# Install dependencies
+git submodule update --init --recursive   # REQUIRED: src/assets/configs is a submodule
 npm install
 ```
 
-### Development
+The configs submodule (`https://github.com/sound-buttons/sound-buttons_configs.git`)
+tracks the `minify` branch; CI checks it out to `minify` before building/testing.
+When editing character/button content under `src/assets/configs`, also read that
+submodule's own `src/assets/configs/AGENTS.md` — it has config-specific JSON
+schema and content conventions.
 
-```bash
-# Start development server (http://localhost:4200)
-npm start
-
-# Start with SSL
-npm run start_ssl
-```
-
-### Build
-
-```bash
-# Production build (includes environment config generation)
-npm run build
-```
-
-### Testing
-
-```bash
-# Run unit tests
-npm test
-
-# Run e2e tests
-npm run e2e
-```
-
-### Linting
-
-```bash
-# Run ESLint
-npm run lint
-```
-
-### i18n
-
-```bash
-# Extract translation strings
-npm run i18n:extract
-```
+`ng serve` uses `proxy.conf.mjs` (wired via `angular.json`) to proxy `/api` and
+`/runtime` to a local Azure Functions host at `http://localhost:7071` and rewrite
+callback URLs — relevant when working on `UploadComponent` or backend integration.
 
 ## Coding Conventions
 
-### TypeScript/Angular
+- **In-code comments and documentation should be written in English.** This is a
+  forward-looking convention: existing Traditional Chinese comments in some files
+  are legacy and do not need translation unless you are already editing them for
+  clarity.
+- **ESLint + Prettier**: extends `eslint:recommended`,
+  `@angular-eslint/recommended`, `@typescript-eslint/recommended`, and
+  `prettier`. Run `npm run lint` before finishing.
+- **Selectors**: component selector prefix `app` (kebab-case element), directive
+  prefix `app` (camelCase attribute).
+- **Styles**: SCSS per component.
+- **Interfaces** are prefixed with `I` (e.g. `IButton`, `IButtonGroup`,
+  `IConfig`, `IFullConfig`, `ISource`, `ILink`, `IColor`). **Classes** use
+  PascalCase (e.g. `Button`, `ButtonGroup`).
+- Prefer Angular CLI schematics for generating components/services.
+- Use dependency injection and RxJS observables for async work.
 
-- Use Angular CLI schematics for generating components, services, etc.
-- Component selector prefix: `app-` (kebab-case for elements)
-- Directive selector prefix: `app` (camelCase for attributes)
-- Use SCSS for component styles
-- Follow Angular style guide and ESLint rules defined in `.eslintrc.json`
+## Key Domain Interfaces
 
-### File Naming
-
-- Components: `*.component.ts`, `*.component.html`, `*.component.scss`
-- Services: `*.service.ts`
-- Pipes: `*.pipe.ts`
-- Interfaces: Use `I` prefix (e.g., `IButton`, `IConfig`, `IButtonGroup`)
-- Classes: PascalCase (e.g., `Button`, `ButtonGroup`)
-
-### Code Style
-
-- ESLint with Prettier integration
-- TypeScript strict mode enabled
-- Use `readonly` for immutable properties
-- Prefer observables and RxJS operators for async operations
-- Use dependency injection for services
-
-### Comments and Documentation
-
-- Write all code comments in **English**
-- Use JSDoc style for public APIs
-
-## Key Interfaces
-
-### IButton (src/app/sound-buttons/Buttons.ts)
+`src/app/sound-buttons/Buttons.ts`:
 
 ```typescript
 interface IButton {
   id: string;
   filename: string;
-  text: string | never;
+  text: string | never;     // may be a multi-language object, resolved via LanguageService
   baseRoute: string;
   volume: number;
-  source?: ISource;
+  source?: ISource;         // { videoId, start, end }
   SASToken?: string;
   index?: number;
 }
 ```
 
-### IConfig (src/app/services/config.service.ts)
+`src/app/sound-buttons/ButtonGroup.ts`: `IButtonGroup { name, baseRoute, buttons }`.
+
+`src/app/services/config.service.ts`:
 
 ```typescript
 interface IConfig {
@@ -182,63 +140,122 @@ interface IConfig {
   liveUpdateURL: string;
   color?: IColor;
 }
+interface IFullConfig extends IConfig {
+  buttonGroups?: IButtonGroup[];
+  link?: ILink;             // youtube/twitch/twitter/facebook/instagram/discord/other
+  intro: string | never;
+  introButton?: IButton;
+}
 ```
 
-## Configuration Files
+`ConfigService` loads `assets/configs/main.json` (brief list), then the selected
+character's full config. It supports a **live-update** mode (`liveUpdateURL`)
+toggled via the `isLiveUpdate` flag (e.g. `?liveUpdate=1`) without a page reload.
 
-### JSON Configuration Structure
+## Internationalization
 
-Button configurations are stored in `src/assets/configs/` as a git submodule. Each character has a JSON file containing:
+- Languages: `zh` (Traditional Chinese, default) and `ja` (Japanese).
+- Translation files: `src/assets/i18n/zh.json`, `ja.json`.
+- `defaultLanguage: 'zh'` configured in `AppModule`.
+- Multi-language text in configs is resolved via
+  `LanguageService.GetTextFromObject`.
 
-- Character metadata (name, image, links)
-- Button groups with categorized buttons
-- Each button includes: id, filename, text (multi-language), volume, source (YouTube reference)
+## Environment Configuration (generated file)
 
-### Environment Variables
+- `src/environments/environment.prod.ts` is **gitignored** and **generated at
+  build time** by `write-production-config.ts` from environment variables:
+  `GA_TRACKING_ID`, `ORIGIN`, `API`, `VERSION`, `CLARITY_TRACKING_ID`,
+  `CLOUDFLARE_RUM_TOKEN`.
+- The environment object is provided through DI via `EnvironmentToken`
+  (`src/app/environment.token.ts`), which lives in its own module to avoid an
+  import cycle with `app.module`.
 
-Production environment variables are set during build via `write-production-config.ts`:
+## Analytics & Privacy (important gotcha)
 
-- `GA_TRACKING_ID`: Google Analytics ID
-- `ORIGIN`: Site origin URL
-- `API`: Backend API endpoint
-- `VERSION`: Git commit SHA
-- `CLARITY_TRACKING_ID`: Microsoft Clarity ID
+`src/app/analytics.bootstrap.ts` exports `bootstrapAnalytics(env, win, doc, nav)`,
+invoked from the `AppModule` constructor. Behavior:
 
-## CI/CD Workflows
+- **Global Privacy Control (GPC) enabled** (`navigator.globalPrivacyControl`):
+  installs a no-op `gtag` and injects **nothing**.
+- **Non-production**: installs a debug `gtag` and injects nothing.
+- **Production only**: injects Cloudflare RUM (when `CLOUDFLARE_RUM_TOKEN` is
+  set), then Google Analytics and Microsoft Clarity using the configured IDs.
 
-### GitHub Actions
+The function takes injectable `window`/`document`/`navigator`/`env` doubles so it
+can be unit-tested in isolation. A static GPC signal is also served at
+`src/.well-known/gpc.json`.
 
-- **deploy-gh-page.yml**: Builds and deploys to GitHub Pages on push to master
-- **deploy-cloudflare-worker.yml**: Deploys Cloudflare Worker on push to master
-- **codeql.yml**: Security scanning
+## Testing
 
-### Deployment Process
+- **Stack**: Karma + Jasmine. Specs are colocated as `*.spec.ts`.
+- **Shared helpers** in `src/testing/`:
+  - `angular.ts` — `translateTestingImports()`, `makeDialogServiceSpy()`, etc.
+  - `fakes.ts` — hermetic doubles for browser globals/media (e.g. `FakeAudio`).
+  - `fixtures.ts` — pure factory builders for domain models
+    (`makeButton`, `makeButtonGroupInstance`, `makeBriefConfig`,
+    `makeFullConfig`, `makeColor`, …).
+- **Headless / CI**: `npm run test:ci` runs once with coverage using the
+  `ChromeHeadlessNoSandbox` launcher (base `ChromeHeadless` + `--no-sandbox
+  --disable-gpu`). Karma resolves the browser binary from `CHROME_BIN`, so a
+  Chromium-only host works:
+  `CHROME_BIN=$(which chromium-browser) npm run test:ci`.
+- **Coverage gate** (`karma.conf.js`): **70%** global floor for
+  statements/branches/functions/lines, plus stricter per-file overrides for
+  migration-critical units (`context-menu.component`, `share.service`,
+  `audio.service`, `config.service`, `upload.component`). The run fails if a
+  threshold is unmet.
+- `TESTING.md` documents the behaviour-preservation harness (built for an
+  upcoming Angular 14 → 21 migration) and spec → test traceability.
 
-1. Push to `master` branch triggers build
-2. Submodule `src/assets/configs` is checked out to `minify` branch
-3. Angular production build runs
-4. Built artifacts deployed to `gh-pages` branch
-5. GitHub Pages serves from `gh-pages`
+## CI/CD
+
+- **`.github/workflows/test.yml`** — headless suite with coverage. Runs on
+  `pull_request` to `master` and is exposed as a reusable workflow
+  (`workflow_call`). Initializes the configs submodule to `minify`, uses Node
+  `16.20.2`, `npm ci`, then `npm run test:ci`.
+- **`.github/workflows/deploy-gh-page.yml`** — triggered by `push: master` and
+  `repository_dispatch: update_config`. Calls `test.yml` as a `test` job and
+  gates the build with `needs: test`. Builds with secrets injected as env vars,
+  then deploys `dist/sound-buttons` to the `gh-pages` branch (adds `.nojekyll`,
+  `CNAME`, copies `index.html` → `404.html`).
+- **`.github/workflows/deploy-cloudflare-worker.yml`** — deploys `worker/worker.js`.
+- **`.github/workflows/codeql.yml`** — security scanning.
+
+## OpenSpec Workflow (project convention)
+
+This project uses **OpenSpec** (`openspec/`, schema `spec-driven`) for
+spec-driven development:
+
+- `openspec/specs/` holds the current capability specifications (e.g.
+  `audio-playback`, `audio-submission`, `character-board`, `click-counter`,
+  `configuration-loading`, `content-routing-and-seo`, `homepage-overview`,
+  `internationalization`, `notifications-and-dialogs`, `privacy-and-analytics`,
+  `right-click-context-menu`, `sharing`, `sound-button-grid`, `theming`,
+  `automated-test-harness`).
+- `openspec/changes/` holds active proposals; applied changes are moved to
+  `openspec/changes/archive/`.
+- When making non-trivial behavioral changes, prefer creating/updating an
+  OpenSpec change proposal (proposal/design/tasks/spec deltas) and keep the
+  specs in `openspec/specs/` in sync with the implementation.
 
 ## Related Repositories
 
 | Repository | Purpose |
 | ---------- | ------- |
-| [sound-buttons](https://github.com/sound-buttons/sound-buttons) | Frontend (this repo) |
-| [sound-buttons_configs](https://github.com/sound-buttons/sound-buttons_configs) | JSON configuration data |
-| [sound-buttons_upload-backend](https://github.com/sound-buttons/sound-buttons_upload-backend) | Azure Functions backend |
-| [worker-click-counter](https://github.com/sound-buttons/worker-click-counter) | Cloudflare Worker for click counting |
+| `sound-buttons/sound-buttons` | Frontend (this repo) |
+| `sound-buttons/sound-buttons_configs` | JSON configuration data (submodule, `minify` branch) |
+| `sound-buttons/sound-buttons_upload-backend` | Azure Functions backend |
+| `sound-buttons/worker-click-counter` | Cloudflare Worker for click counting |
 
-## Important Notes
+## Gotchas Checklist
 
-1. **Submodule Management**: The `src/assets/configs` directory is a git submodule. Always run `git submodule update --init` after cloning.
-
-2. **Environment File**: `src/environments/environment.prod.ts` is gitignored and generated during build.
-
-3. **Multi-language Support**: The app supports zh-tw (Traditional Chinese) and ja (Japanese). Translation files are in `src/assets/i18n/`.
-
-4. **Audio Queue**: The `AudioService` manages a queue of audio files for sequential playback.
-
-5. **Live Update Feature**: Configurations can be dynamically reloaded without page refresh via `?liveUpdate=1` query parameter.
-
-6. **Privacy**: The app respects Global Privacy Control (GPC) and disables analytics when detected.
+- Initialize submodules (`git submodule update --init --recursive`) or
+  `src/assets/configs` (and `main.json`) will be missing. That submodule has its
+  own `AGENTS.md` with config-specific rules.
+- Never commit `src/environments/environment.prod.ts`; it is generated.
+- Analytics is disabled under GPC and in non-production — verify the right code
+  path when touching `analytics.bootstrap.ts`.
+- For headless tests on Chromium-only hosts, set `CHROME_BIN`.
+- Keep all in-code comments and documentation in **English**.
+- Run `npm run lint` and `npm run test:ci` before considering a change complete;
+  do not lower the coverage thresholds.
