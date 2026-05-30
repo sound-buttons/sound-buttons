@@ -18,6 +18,16 @@ describe('bootstrapAnalytics', () => {
     return { globalPrivacyControl: gpc } as unknown as Navigator;
   }
 
+  // Match a script by its exact URL host rather than a substring of the src,
+  // so the assertion can't be fooled by a host that merely contains the name.
+  function hasHost(s: { src: string }, host: string): boolean {
+    try {
+      return new URL(s.src).hostname === host;
+    } catch {
+      return false;
+    }
+  }
+
   beforeEach(() => {
     win = {};
     createdScripts = [];
@@ -79,20 +89,20 @@ describe('bootstrapAnalytics', () => {
     );
 
     // GA: a gtag/js script + an inline dataLayer script appended to <head>.
-    const gaScript = createdScripts.find((s) => s.src.includes('googletagmanager.com'));
+    const gaScript = createdScripts.find((s) => hasHost(s, 'www.googletagmanager.com'));
     expect(gaScript?.src).toBe('https://www.googletagmanager.com/gtag/js?id=GA-123');
     const inline = createdScripts.find((s) => s.innerHTML.includes("gtag('config', 'GA-123')"));
     expect(inline).toBeDefined();
     expect(head.appendChild).toHaveBeenCalledTimes(2);
 
     // Clarity: a script pointing at the Clarity tag id, inserted before the first script.
-    const clarityScript = createdScripts.find((s) => s.src.includes('clarity.ms'));
+    const clarityScript = createdScripts.find((s) => hasHost(s, 'www.clarity.ms'));
     expect(clarityScript?.src).toBe('https://www.clarity.ms/tag/CL-456');
     expect(firstScriptParent.insertBefore).toHaveBeenCalled();
     expect(typeof (win as { clarity?: unknown }).clarity).toBe('function');
 
     // No Cloudflare RUM token configured -> the beacon is not injected.
-    expect(createdScripts.some((s) => s.src.includes('cloudflareinsights.com'))).toBeFalse();
+    expect(createdScripts.some((s) => hasHost(s, 'static.cloudflareinsights.com'))).toBeFalse();
   });
 
   it('in production with a Cloudflare RUM token: injects the deferred beacon before GA', () => {
@@ -108,7 +118,7 @@ describe('bootstrapAnalytics', () => {
       makeNavigator(false)
     );
 
-    const rumScript = createdScripts.find((s) => s.src.includes('cloudflareinsights.com'));
+    const rumScript = createdScripts.find((s) => hasHost(s, 'static.cloudflareinsights.com'));
     expect(rumScript?.src).toBe('https://static.cloudflareinsights.com/beacon.min.js');
     expect(rumScript?.defer).toBeTrue();
     expect(rumScript?.attrs['data-cf-beacon']).toBe(JSON.stringify({ token: 'cf-token-789' }));
@@ -129,7 +139,7 @@ describe('bootstrapAnalytics', () => {
       makeNavigator(false)
     );
 
-    expect(createdScripts.some((s) => s.src.includes('cloudflareinsights.com'))).toBeFalse();
+    expect(createdScripts.some((s) => hasHost(s, 'static.cloudflareinsights.com'))).toBeFalse();
     expect(head.appendChild).toHaveBeenCalledTimes(2);
   });
 });
