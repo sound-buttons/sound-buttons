@@ -27,14 +27,73 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/sound-buttons'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' },
+        { type: 'json-summary' },
+      ],
+      // Behaviour-preservation gate: the suite must keep meaningful coverage so a
+      // regression introduced during the Angular 14 -> 21 migration is caught.
+      // The global floor is the 70% target from the change design; migration-critical
+      // units carry stricter per-file floors via `each.overrides`.
+      check: {
+        global: {
+          statements: 70,
+          branches: 70,
+          functions: 70,
+          lines: 70,
+        },
+        each: {
+          overrides: {
+            'src/app/sound-buttons/context-menu/context-menu.component.ts': {
+              statements: 90,
+              branches: 75,
+              functions: 90,
+              lines: 90,
+            },
+            'src/app/services/share.service.ts': {
+              statements: 90,
+              branches: 60,
+              functions: 90,
+              lines: 90,
+            },
+            'src/app/services/audio.service.ts': {
+              statements: 85,
+              branches: 70,
+              functions: 85,
+              lines: 85,
+            },
+            'src/app/services/config.service.ts': {
+              statements: 80,
+              branches: 60,
+              functions: 80,
+              lines: 80,
+            },
+            'src/app/upload/upload.component.ts': {
+              statements: 80,
+              branches: 60,
+              functions: 80,
+              lines: 80,
+            },
+          },
+        },
+      },
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    customLaunchers: {
+      // Headless launcher for CI and sandboxed/immutable environments
+      // (e.g. Fedora Kinoite). Resolves the browser binary from process.env.CHROME_BIN,
+      // so a Chromium-only host can run the suite without Google Chrome installed.
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu', '--headless'],
+      },
+    },
     singleRun: false,
     restartOnFileChange: true,
   });

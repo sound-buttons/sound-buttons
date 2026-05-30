@@ -4,7 +4,7 @@ import { UploadComponent } from './upload/upload.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ContainerComponent } from './container/container.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: ':name',

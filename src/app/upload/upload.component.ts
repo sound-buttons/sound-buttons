@@ -10,7 +10,7 @@ import { ConfigService, IFullConfig } from '../services/config.service';
 import { Subscription, timer } from 'rxjs';
 import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
-import { EnvironmentToken } from '../app.module';
+import { EnvironmentToken } from '../environment.token';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',

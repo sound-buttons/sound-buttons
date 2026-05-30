@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import * as mime from 'mime';
-import { EnvironmentToken } from '../app.module';
+import { EnvironmentToken } from '../environment.token';
 import { IButton, ISource } from '../sound-buttons/Buttons';
 import { IFullConfig, ConfigService } from '../services/config.service';
 import { SEOService } from '../services/seo.service';

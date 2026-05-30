@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import * as tocbot from 'tocbot';
 import { IButtonGroup } from './ButtonGroup';
 import { IButton } from './Buttons';
-import { EnvironmentToken } from '../app.module';
+import { EnvironmentToken } from '../environment.token';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { ButtonFilterPipe } from './../pipe/button-filter.pipe';
 import { DisplayService } from './../services/display.service';

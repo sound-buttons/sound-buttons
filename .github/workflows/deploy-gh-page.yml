@@ -11,10 +11,22 @@ permissions:
   contents: write
 
 jobs:
+  # Gate: the headless test suite must pass before anything is built/deployed.
+  # A reusable-workflow call keeps the dependency mechanically real for BOTH
+  # the push:master and repository_dispatch:update_config deploy triggers
+  # (cross-workflow `needs:` does not exist in GitHub Actions).
+  test:
+    uses: ./.github/workflows/test.yml
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.20.2'
 
       - name: Initialize and checkout submodule to minify branch
         run: |

@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, Event, RouterEvent } from '@angular/router';
 import { catchError, distinctUntilChanged } from 'rxjs/operators';
-import { EnvironmentToken } from './app.module';
+import { EnvironmentToken } from './environment.token';
 import { Subscription, of } from 'rxjs';
 
 @Component({

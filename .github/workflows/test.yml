@@ -1,0 +1,39 @@
+name: Test
+
+# Runs the headless unit/integration suite with coverage enforcement.
+# Exposed as a reusable workflow (workflow_call) so the deploy workflow can
+# gate on it for BOTH the push and repository_dispatch deploy triggers, and
+# runs directly on pull requests to gate merges.
+on:
+  workflow_call:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Match the deploy workflow's config state: the app is built/tested against
+      # the minify branch of the configs submodule, so the gate exercises exactly
+      # what gets deployed (relevant for the repository_dispatch:update_config path).
+      - name: Initialize and checkout submodule to minify branch
+        run: |
+          git submodule update --init
+          cd src/assets/configs
+          git checkout minify
+          git pull origin minify
+
+      - uses: actions/setup-node@v4
+        with:
+          # Conservative Angular-14-verified Node version.
+          node-version: '16.20.2'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run headless tests with coverage
+        # Chrome is preinstalled on ubuntu-latest; the launcher adds --no-sandbox.
+        run: npm run test:ci

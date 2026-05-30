@@ -4,7 +4,7 @@ import { ColorService } from '../services/color.service';
 import { ConfigService, IConfig } from '../services/config.service';
 import { DisplayService } from '../services/display.service';
 import { SEOService } from './../services/seo.service';
-import { EnvironmentToken } from '../app.module';
+import { EnvironmentToken } from '../environment.token';
 
 @Component({
   selector: 'app-home-page',

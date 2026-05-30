@@ -10,6 +10,7 @@
     "build": "npm run config && ng build --configuration production",
     "start": "ng serve",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --code-coverage --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { EnvironmentToken } from '../app.module';
+import { EnvironmentToken } from '../environment.token';
 import { IButton } from '../sound-buttons/Buttons';
 import { ConfigService } from './config.service';
 import { DialogService } from './dialog.service';

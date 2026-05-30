@@ -49,6 +49,10 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
   // }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // `subscription` is never assigned (the showModal/onHidden subscriptions above
+    // are not stored), so this guard avoids an NPE on teardown. In production the
+    // dialog lives for the whole app lifetime and is never destroyed, so this is
+    // behaviour-neutral there; the guard only matters under test teardown.
+    this.subscription?.unsubscribe();
   }
 }
