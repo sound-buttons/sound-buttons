@@ -1,51 +1,68 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostBinding, HostListener } from '@angular/core';
-import { AnimationEvent } from '@angular/animations';
-import { MenuComponent, ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
+import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
+import { Component, HostBinding, HostListener, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as mime from 'mime';
 import { IButton } from '../Buttons';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ShareService } from 'src/app/services/share.service';
+import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
 
 @Component({
-  selector: 'app-context-menu',
-  templateUrl: './context-menu.component.html',
-  styleUrls: ['./context-menu.component.scss'],
-  animations: [
-    trigger('menu', [
-      state('enter', style({ opacity: 1 })),
-      state('exit, void', style({ opacity: 0 })),
-      transition('* => *', animate(250)),
-    ]),
-  ],
+    selector: 'app-context-menu',
+    templateUrl: './context-menu.component.html',
+    styleUrls: ['./context-menu.component.scss'],
+    animations: [
+        trigger('menu', [
+            state('enter', style({ opacity: 1 })),
+            state('exit, void', style({ opacity: 0 })),
+            transition('* => *', animate(250)),
+        ]),
+    ],
+    standalone: false
 })
-export class ContextMenuComponent extends MenuComponent {
-  @HostBinding('[@menu]') _state = super._state;
-  @HostListener('(@menu.done)') _onAnimationDone($event: AnimationEvent): void {
-    super._onAnimationDone($event);
-  }
+export class ContextMenuComponent {
+  /** Drives the fade-in (`enter`) / fade-out (`exit`) host animation. */
+  @HostBinding('@menu') animationState: 'enter' | 'exit' = 'enter';
+
   button: IButton;
-  lazy = false;
 
   constructor(
-    public menuPackage: MenuPackage,
-    public contextMenuService: ContextMenuService,
+    @Inject(CONTEXT_MENU_DATA) button: IButton,
+    private menuRef: ContextMenuRef,
     public translate: TranslateService,
     public dialogService: DialogService,
     public shareService: ShareService
   ) {
-    super(menuPackage, contextMenuService);
-    this.button = menuPackage.context;
+    this.button = button;
+  }
+
+  /** Dispose the hosting overlay once the fade-out animation has finished. */
+  @HostListener('@menu.done', ['$event'])
+  onAnimationDone(event: AnimationEvent): void {
+    if (event.toState === 'exit') {
+      this.menuRef.dispose();
+    }
+  }
+
+  /** Close on an outside click. */
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.close();
+  }
+
+  /** Close on Escape. */
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.close();
   }
 
   /**
-   * IMPORTANT! tell the menu to close, anything passed in here is given to (menuAction)
+   * Trigger the fade-out animation; teardown happens in {@link onAnimationDone}.
    *
    * @memberof ContextMenuComponent
    */
   close(): void {
-    this.contextMenuService.closeAll();
+    this.animationState = 'exit';
   }
 
   copyLink(): void {

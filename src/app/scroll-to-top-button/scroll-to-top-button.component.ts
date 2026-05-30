@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-scroll-to-top-button',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `<button
     type="button"
     class="btn btn-primary"

@@ -89,8 +89,8 @@ test job within the deploy workflow referenced by `needs:`, a shared reusable wo
 `workflow_run`-gated deploy) — a separate workflow alone does not gate deployment. The gate SHALL apply to
 every trigger that can cause a GitHub Pages deployment, including both `push: master` and
 `repository_dispatch: update_config`. The CI test job SHALL check out the `src/assets/configs` submodule,
-install dependencies with a pinned, Angular-14-verified Node version, and run the suite on a headless
-browser with `--no-sandbox`.
+install dependencies with a pinned Node version compatible with the project's current Angular major
+(Node ≥ 20.19 for Angular 21), and run the suite on a headless browser with `--no-sandbox`.
 
 #### Scenario: Pull request runs the gate
 - **WHEN** a pull request targeting `master` is opened or updated
@@ -107,4 +107,8 @@ browser with `--no-sandbox`.
 #### Scenario: Passing tests allow deployment
 - **WHEN** the test suite passes and coverage meets the threshold on a push to `master`
 - **THEN** the deployment workflow SHALL be permitted to proceed
+
+#### Scenario: CI Node version matches the current Angular major
+- **WHEN** the CI test job installs dependencies and runs the suite
+- **THEN** it SHALL use a pinned Node version that satisfies the current Angular major's engine requirement (Node ≥ 20.19 for Angular 21), not the previously pinned Angular-14-era Node 16.20.2
 

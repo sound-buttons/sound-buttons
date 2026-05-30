@@ -7,9 +7,10 @@ import { EnvironmentToken } from './environment.token';
 import { Subscription, of } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   configSubscription: Subscription | undefined;

@@ -6,9 +6,10 @@ import { ILink, ConfigService } from './../services/config.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
-  selector: 'app-introduction',
-  templateUrl: './introduction.component.html',
-  styleUrls: ['./introduction.component.scss'],
+    selector: 'app-introduction',
+    templateUrl: './introduction.component.html',
+    styleUrls: ['./introduction.component.scss'],
+    standalone: false
 })
 export class IntroductionComponent implements OnInit {
   initTime = Date.now();

@@ -11,8 +11,7 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "tsconfig.json"
         ],
         "createDefaultProgram": true
       },
@@ -41,6 +40,12 @@
           }
         ],
         "@angular-eslint/no-empty-lifecycle-method": [
+          "off"
+        ],
+        "@angular-eslint/prefer-standalone": [
+          "off"
+        ],
+        "@angular-eslint/prefer-inject": [
           "off"
         ]
       }

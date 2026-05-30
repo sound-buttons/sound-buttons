@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-chara-image',
-  templateUrl: './chara-image.component.html',
-  styleUrls: ['./chara-image.component.scss'],
+    selector: 'app-chara-image',
+    templateUrl: './chara-image.component.html',
+    styleUrls: ['./chara-image.component.scss'],
+    standalone: false
 })
 export class CharaImageComponent {
   private _imgs: string[] = [];

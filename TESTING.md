@@ -1,7 +1,7 @@
 # Testing & Behaviour-Preservation Harness
 
 This project carries an automated test harness whose purpose is **behaviour
-preservation** for the upcoming Angular 14 → 21 migration. Each test pins the
+preservation** for the Angular 14 → 21 migration. Each test pins the
 *current* observable behaviour of the application (including a few known latent
 quirks, which are called out in comments) so that any change in behaviour
 introduced during the migration is caught by a failing test.
@@ -34,8 +34,7 @@ CHROME_BIN=$(which chromium-browser) npm run test:ci
   `test` job and gates the build/deploy job with `needs: test`, so deployment is
   blocked unless the suite passes. This covers **both** deploy triggers
   (`push: master` and `repository_dispatch: update_config`).
-- Both workflows pin Node `16.20.2` (a conservative, Angular-14-verified
-  version).
+- Both workflows pin Node `20.19.0` (an Angular-21-verified version).
 
 ## Coverage snapshot
 
@@ -46,7 +45,7 @@ CHROME_BIN=$(which chromium-browser) npm run test:ci
 | Functions | ~95% |
 | Lines | ~95% |
 
-(201 specs.) See `coverage/sound-buttons/` after a run for the full report.
+(209 specs.) See `coverage/sound-buttons/` after a run for the full report.
 
 ## Spec → test traceability
 

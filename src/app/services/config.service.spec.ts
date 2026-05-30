@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConfigService, IConfig, IFullConfig } from './config.service';
 import { ColorService } from './color.service';
 import { AudioService } from './audio.service';
 import { Button } from '../sound-buttons/Buttons';
 import { ButtonGroup } from '../sound-buttons/ButtonGroup';
 import { makeBriefConfig } from '../../testing/fixtures';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const MAIN_URL = 'assets/configs/main.json';
 
@@ -21,13 +19,15 @@ describe('ConfigService', () => {
   beforeEach(() => {
     const audioSpy = jasmine.createSpyObj<AudioService>('AudioService', ['add', 'play']);
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         ConfigService,
         ColorService,
         { provide: AudioService, useValue: audioSpy },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
     service = TestBed.inject(ConfigService);
     httpMock = TestBed.inject(HttpTestingController);
     colorService = TestBed.inject(ColorService);

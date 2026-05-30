@@ -45,7 +45,9 @@ export class ShareService {
     window.open(
       `https://toot.kytta.dev/?text=${
         `${encodeURIComponent(
-          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
+          // `+` binds tighter than `??`, so the left operand is never nullish and the
+          // `?? name` fallback was always dead; preserve the original "#undefined" output.
+          '#sound_buttons #' + this.configService.config?.fullName
         )}` +
         '%0A' +
         encodeURIComponent(url)
@@ -58,7 +60,8 @@ export class ShareService {
     window.open(
       `https://twitter.com/intent/tweet?text=${
         `${encodeURIComponent(
-          '#sound_buttons #' + this.configService.config?.fullName ?? this.configService.name
+          // Same dead `?? name` precedence quirk as shareToMastodon; behaviour preserved.
+          '#sound_buttons #' + this.configService.config?.fullName
         )}` +
         '%0A' +
         encodeURIComponent(url)

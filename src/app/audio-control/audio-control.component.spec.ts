@@ -12,11 +12,13 @@ import { FakeAudio, installFakeAudio, installGtagSpy } from '../../testing/fakes
 import { makeButton, makeFullConfig, makeIButtonGroup } from '../../testing/fixtures';
 
 // Stub for the right-click directive so we can assert the menu context wiring
-// without pulling in the real @ctrl/ngx-rightclick module.
-// eslint-disable-next-line @angular-eslint/directive-selector
-@Directive({ selector: '[contextMenuTrigger]' })
+// without pulling in the real CDK-overlay context-menu trigger.
+@Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
+    selector: '[contextMenuTrigger]',
+    standalone: false
+})
 class StubContextMenuTriggerDirective {
-  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input() contextMenuTrigger: unknown;
   @Input() menuContext: IButton | undefined;
 }

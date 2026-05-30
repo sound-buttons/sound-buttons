@@ -12,9 +12,10 @@ import { ConfigService } from './../services/config.service';
 import { AudioService } from '../services/audio.service';
 
 @Component({
-  selector: 'app-sound-buttons',
-  templateUrl: './sound-buttons.component.html',
-  styleUrls: ['./sound-buttons.component.scss'],
+    selector: 'app-sound-buttons',
+    templateUrl: './sound-buttons.component.html',
+    styleUrls: ['./sound-buttons.component.scss'],
+    standalone: false
 })
 export class SoundButtonsComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();

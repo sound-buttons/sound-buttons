@@ -6,11 +6,12 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ContextMenuModule, ContextMenuTriggerDirective } from '@ctrl/ngx-rightclick';
+import { OverlayModule } from '@angular/cdk/overlay';
 import * as tocbot from 'tocbot';
 
 import { SoundButtonsComponent } from './sound-buttons.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { ContextMenuTriggerDirective } from './context-menu/context-menu-trigger.directive';
 import { ButtonFilterPipe } from '../pipe/button-filter.pipe';
 import { DisplayService } from '../services/display.service';
 import { ConfigService } from '../services/config.service';
@@ -61,8 +62,8 @@ describe('SoundButtonsComponent', () => {
     tocRefresh = spyOn(tocbot, 'refresh').and.stub();
 
     TestBed.configureTestingModule({
-      imports: [ContextMenuModule, ...translateTestingImports()],
-      declarations: [SoundButtonsComponent, ButtonFilterPipe],
+      imports: [OverlayModule, ...translateTestingImports()],
+      declarations: [SoundButtonsComponent, ButtonFilterPipe, ContextMenuTriggerDirective],
       providers: [
         ButtonFilterPipe,
         { provide: DisplayService, useValue: displaySpy },
@@ -295,7 +296,10 @@ describe('SoundButtonsComponent', () => {
   // Scenario: Refreshing the TOC on changes (display service filter change)
   it('refreshes the TOC (deferred) when the display OnConfigChanged fires', fakeAsync(() => {
     setup();
-    comp.ngOnInit();
+    // Initialise through the framework so ngOnInit runs exactly once; a manual
+    // ngOnInit() call would be re-invoked by the Angular 21 scheduler on the next
+    // change-detection pass, re-seeding filterText from getFilterText().
+    fixture.detectChanges();
     tocRefresh.calls.reset();
 
     displayChanged.emit('new-filter');
@@ -309,7 +313,7 @@ describe('SoundButtonsComponent', () => {
   // Scenario: Refreshing the TOC on changes (config change)
   it('refreshes the TOC (deferred) when the config OnConfigChanged fires', fakeAsync(() => {
     setup();
-    comp.ngOnInit();
+    fixture.detectChanges();
     tocRefresh.calls.reset();
 
     configChanged.emit(undefined);

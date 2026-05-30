@@ -2,7 +2,7 @@
 import { Inject, NgModule } from '@angular/core';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,8 +31,9 @@ import { AudioControlComponent } from './audio-control/audio-control.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
-import { ContextMenuModule } from '@ctrl/ngx-rightclick';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { ContextMenuComponent } from './sound-buttons/context-menu/context-menu.component';
+import { ContextMenuTriggerDirective } from './sound-buttons/context-menu/context-menu-trigger.directive';
 import { CharaImageComponent } from './chara-image/chara-image.component';
 import { ScrollToTopButtonComponent } from './scroll-to-top-button/scroll-to-top-button.component';
 
@@ -56,58 +57,53 @@ declare global {
   }
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    IntroductionComponent,
-    SoundButtonsComponent,
-    ContainerComponent,
-    HomePageComponent,
-    UploadComponent,
-    DialogComponent,
-    AudioControlComponent,
-    ButtonFilterPipe,
-    ContextMenuComponent,
-    CharaImageComponent,
-  ],
-  providers: [
-    { provide: EnvironmentToken, useValue: environment },
-    LanguageService,
-    ConfigService,
-    ColorService,
-    AudioService,
-    DialogService,
-    ShareService,
-    ButtonFilterPipe,
-  ],
-  bootstrap: [AppComponent],
-  exports: [ButtonFilterPipe],
-  imports: [
-    BrowserModule,
-    ButtonsModule.forRoot(),
-    ModalModule.forRoot(),
-    HttpClientModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ContextMenuModule,
-    BrowserAnimationsModule,
-    CollapseModule.forRoot(),
-    ToastrModule.forRoot(TOASTR_CONFIG),
-    TypeaheadModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'zh',
-    }),
-    ScrollToTopButtonComponent,
-  ],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        IntroductionComponent,
+        SoundButtonsComponent,
+        ContainerComponent,
+        HomePageComponent,
+        UploadComponent,
+        DialogComponent,
+        AudioControlComponent,
+        ButtonFilterPipe,
+        ContextMenuComponent,
+        ContextMenuTriggerDirective,
+        CharaImageComponent,
+    ],
+    bootstrap: [AppComponent],
+    exports: [ButtonFilterPipe], imports: [BrowserModule,
+        ButtonsModule,
+        ModalModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        OverlayModule,
+        BrowserAnimationsModule,
+        CollapseModule,
+        ToastrModule.forRoot(TOASTR_CONFIG),
+        TypeaheadModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+            defaultLanguage: 'zh',
+        }),
+        ScrollToTopButtonComponent], providers: [
+        { provide: EnvironmentToken, useValue: environment },
+        LanguageService,
+        ConfigService,
+        ColorService,
+        AudioService,
+        DialogService,
+        ShareService,
+        ButtonFilterPipe,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(@Inject(EnvironmentToken) private env: any) {

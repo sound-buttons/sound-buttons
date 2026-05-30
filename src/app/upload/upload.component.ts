@@ -12,9 +12,10 @@ import { concatMap, skipWhile, switchMap, take } from 'rxjs/operators';
 import { ISource } from '../sound-buttons/Buttons';
 import { EnvironmentToken } from '../environment.token';
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss'],
+    selector: 'app-upload',
+    templateUrl: './upload.component.html',
+    styleUrls: ['./upload.component.scss'],
+    standalone: false
 })
 export class UploadComponent implements OnInit, OnDestroy {
   config!: IFullConfig;
@@ -343,7 +344,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             this.dialogService.disablePending(+toastId);
 
             name = response.body?.input.nameZH;
-          } catch (e) {
+          } catch {
             /* 錯誤時不一定會正確回傳設定的結果，直接抓掉 */
             this.dialogService.clearPending();
           }

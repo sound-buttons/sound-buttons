@@ -16,15 +16,15 @@ URLs, or direct audio/video file uploads, generating buttons automatically.
 
 ## Tech Stack
 
-- **Framework**: Angular 14 (`@angular/*` `^14.0.0`) with TypeScript `^4.8.0`
-- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `^9`,
-  `bootstrap-icons`, `ngx-toastr` for toasts, `@ctrl/ngx-rightclick` for the
+- **Framework**: Angular 21 (`@angular/*` `^21.2.0`) with TypeScript `^5.9.0`
+- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `^21.2`,
+  `bootstrap-icons`, `ngx-toastr` for toasts, a CDK Overlay based directive for the
   right-click context menu, `tocbot` for table-of-contents
 - **i18n**: `@ngx-translate/core` + `@ngx-translate/http-loader`
 - **Styling**: SCSS (component styles and global `src/styles.scss`); a Bootswatch
   theme lives in `src/assets/style/`
-- **Reactive**: RxJS `~6.6`
-- **Build/test tooling**: Angular CLI 14, ESLint + Prettier, Karma + Jasmine,
+- **Reactive**: RxJS `~7.8`
+- **Build/test tooling**: Angular CLI 21, ESLint + Prettier, Karma + Jasmine,
   `ts-node` (for the env config script), `wrangler` (Cloudflare Worker)
 - **Backend (separate repos)**: Azure Functions API; audio stored in Azure Blob
   Storage. Hosting: GitHub Pages + Cloudflare Workers.
@@ -71,7 +71,6 @@ karma.conf.js  angular.json  .eslintrc.json  TESTING.md  README.md
 | `npm test` | Interactive unit tests (`ng test`, Chrome) |
 | `npm run test:ci` | Headless single run with coverage + thresholds (`ChromeHeadlessNoSandbox`) |
 | `npm run lint` | ESLint (`ng lint`) |
-| `npm run e2e` | End-to-end tests |
 | `npm run i18n:extract` | Extract translation strings into `src/assets/i18n/ja.json` |
 | `npm run worker_deploy` | Deploy the Cloudflare Worker via wrangler |
 
@@ -204,15 +203,15 @@ can be unit-tested in isolation. A static GPC signal is also served at
   migration-critical units (`context-menu.component`, `share.service`,
   `audio.service`, `config.service`, `upload.component`). The run fails if a
   threshold is unmet.
-- `TESTING.md` documents the behaviour-preservation harness (built for an
-  upcoming Angular 14 → 21 migration) and spec → test traceability.
+- `TESTING.md` documents the behaviour-preservation harness (built for the
+  Angular 14 → 21 migration) and spec → test traceability.
 
 ## CI/CD
 
 - **`.github/workflows/test.yml`** — headless suite with coverage. Runs on
   `pull_request` to `master` and is exposed as a reusable workflow
   (`workflow_call`). Initializes the configs submodule to `minify`, uses Node
-  `16.20.2`, `npm ci`, then `npm run test:ci`.
+  `20.19.0`, `npm ci`, then `npm run test:ci`.
 - **`.github/workflows/deploy-gh-page.yml`** — triggered by `push: master` and
   `repository_dispatch: update_config`. Calls `test.yml` as a `test` job and
   gates the build with `needs: test`. Builds with secrets injected as env vars,

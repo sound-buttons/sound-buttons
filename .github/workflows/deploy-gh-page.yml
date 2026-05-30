@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16.20.2'
+          node-version: '20.19.0'
 
       - name: Initialize and checkout submodule to minify branch
         run: |

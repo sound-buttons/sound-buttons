@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-$enable-rounded: true;
-@import 'variables';
-@import 'bootstrap/scss/bootstrap';
-@import 'ngx-toastr/toastr';
+@use 'bootstrap-theme' as *;
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+@import '@angular/cdk/overlay-prebuilt.css';
 // @import 'tocbot/src/scss/tocbot';
 
 html {

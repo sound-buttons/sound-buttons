@@ -1,4 +1,5 @@
-<picture *ngFor="let img of imgs; index as i">
+@for (img of imgs; track img; let i = $index) {
+<picture>
   <source [srcset]="img + '.avif'" type="image/avif" />
   <source [srcset]="img + '.webp'" type="image/webp" />
   <img
@@ -8,3 +9,4 @@
     alt="intro image"
   />
 </picture>
+}

@@ -1,9 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ClickService } from './click.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const ENDPOINT = 'https://view-counter.sound-buttons.click';
 
@@ -14,9 +12,9 @@ describe('ClickService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ClickService],
-    });
+    imports: [],
+    providers: [ClickService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(ClickService);
     httpMock = TestBed.inject(HttpTestingController);
   });

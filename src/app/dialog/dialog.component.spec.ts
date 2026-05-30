@@ -80,7 +80,7 @@ describe('DialogComponent', () => {
       setup();
       const emitSpy = spyOn(dialogService.onHideModal, 'emit');
 
-      onHidden.next();
+      onHidden.next(undefined);
 
       expect(emitSpy).toHaveBeenCalled();
     });

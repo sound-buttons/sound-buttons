@@ -7,92 +7,55 @@
     </picture>
     <div class="m-2 flex-grow-1">
       <h1 class="text-center w-100" [id]="fullName()" (click)="iconClick()">{{ fullName() }}</h1>
-      <div id="linkIcon-container" *ngIf="link">
-        <a
-          class="linkIcon"
-          [href]="link!.youtube"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.youtube"
-        >
+      @if (link) {
+      <div id="linkIcon-container">
+        @if (link!.youtube) {
+        <a class="linkIcon" [href]="link!.youtube" target="_blank" rel="noopener">
           <img src="assets/img/youtube.svg" alt="youtube" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.twitch"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.twitch"
-        >
+        } @if (link!.twitch) {
+        <a class="linkIcon" [href]="link!.twitch" target="_blank" rel="noopener">
           <img src="assets/img/twitch.svg" alt="twitch" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.twitter"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.twitter"
-        >
+        } @if (link!.twitter) {
+        <a class="linkIcon" [href]="link!.twitter" target="_blank" rel="noopener">
           <img src="assets/img/twitter.svg" alt="twitter" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.facebook"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.facebook"
-        >
+        } @if (link!.facebook) {
+        <a class="linkIcon" [href]="link!.facebook" target="_blank" rel="noopener">
           <img src="assets/img/facebook.svg" alt="facebook" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.discord"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.discord"
-        >
+        } @if (link!.discord) {
+        <a class="linkIcon" [href]="link!.discord" target="_blank" rel="noopener">
           <img src="assets/img/discord.svg" alt="discord" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.instagram"
-          target="_blank"
-          rel="noopener"
-          *ngIf="link!.instagram"
-        >
+        } @if (link!.instagram) {
+        <a class="linkIcon" [href]="link!.instagram" target="_blank" rel="noopener">
           <img src="assets/img/instagram.svg" alt="instagram" />
         </a>
-
-        <a
-          class="linkIcon"
-          [href]="link!.other"
-          target="_blank"
-          rel="noopener nofollow"
-          *ngIf="link!.other"
-        >
+        } @if (link!.other) {
+        <a class="linkIcon" [href]="link!.other" target="_blank" rel="noopener nofollow">
           <img src="assets/img/other.svg" alt="other" />
         </a>
+        }
       </div>
+      }
     </div>
   </div>
   <div class="detail position-relative">
     <app-chara-image [imgs]="imgs"></app-chara-image>
     <div class="position-relative info">
+      @if (button && !isLiveUpdate) {
       <button
         type="button"
         class="btn btn-secondary font-weight-bold"
-        *ngIf="button && !isLiveUpdate"
         (click)="buttonClick($event, button)"
         [contextMenuTrigger]="menu"
         [menuContext]="button"
       >
         {{ button.text }}
       </button>
+      }
       <p [innerHTML]="intro"></p>
     </div>
   </div>

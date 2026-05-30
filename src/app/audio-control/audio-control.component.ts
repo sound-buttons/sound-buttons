@@ -8,9 +8,10 @@ import { AudioService } from './../services/audio.service';
 import { IButton } from '../sound-buttons/Buttons';
 
 @Component({
-  selector: 'app-audio-control',
-  templateUrl: './audio-control.component.html',
-  styleUrls: ['./audio-control.component.scss'],
+    selector: 'app-audio-control',
+    templateUrl: './audio-control.component.html',
+    styleUrls: ['./audio-control.component.scss'],
+    standalone: false
 })
 export class AudioControlComponent implements OnInit {
   menu = ContextMenuComponent;

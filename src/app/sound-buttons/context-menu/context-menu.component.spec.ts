@@ -1,5 +1,5 @@
 // Capabilities: right-click-context-menu, sharing.
-// Behaviour-preservation harness for the @ctrl/ngx-rightclick based context menu.
+// Behaviour-preservation harness for the Angular CDK Overlay based context menu.
 // Assertions mirror the scenarios in openspec/specs/right-click-context-menu/spec.md
 // (and the share delegations described in openspec/specs/sharing/spec.md).
 
@@ -12,11 +12,11 @@ import {
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { ContextMenuService, MenuPackage } from '@ctrl/ngx-rightclick';
 
 import * as mime from 'mime';
 
 import { ContextMenuComponent } from './context-menu.component';
+import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
 import { DialogService } from '../../services/dialog.service';
 import { ShareService } from '../../services/share.service';
 import { IButton } from '../Buttons';
@@ -31,22 +31,16 @@ import { spyWindowOpen } from '../../../testing/fakes';
 describe('ContextMenuComponent', () => {
   let fixture: ComponentFixture<ContextMenuComponent>;
   let comp: ContextMenuComponent;
-  let ctxSpy: jasmine.SpyObj<ContextMenuService>;
+  let menuRef: jasmine.SpyObj<ContextMenuRef>;
   let share: jasmine.SpyObj<ShareService>;
   let dialog: DialogServiceSpy;
 
-  // The base ngx-rightclick MenuComponent registers a document:click host listener
-  // that calls contextMenuService.checkOutsideClick. Destroy the fixture after each
-  // test so that listener does not leak into later specs.
   afterEach(() => {
     fixture?.destroy();
   });
 
   function setup(button: IButton = makeButton()): ComponentFixture<ContextMenuComponent> {
-    ctxSpy = jasmine.createSpyObj<ContextMenuService>('ContextMenuService', [
-      'closeAll',
-      'checkOutsideClick',
-    ]);
+    menuRef = jasmine.createSpyObj<ContextMenuRef>('ContextMenuRef', ['dispose']);
     share = jasmine.createSpyObj<ShareService>('ShareService', [
       'copyLink',
       'generateYoutubeLink',
@@ -61,8 +55,8 @@ describe('ContextMenuComponent', () => {
       imports: [NoopAnimationsModule, ...translateTestingImports()],
       declarations: [ContextMenuComponent],
       providers: [
-        { provide: MenuPackage, useValue: new MenuPackage({} as never, button) },
-        { provide: ContextMenuService, useValue: ctxSpy },
+        { provide: CONTEXT_MENU_DATA, useValue: button },
+        { provide: ContextMenuRef, useValue: menuRef },
         { provide: DialogService, useValue: dialog },
         { provide: ShareService, useValue: share },
       ],
@@ -76,8 +70,8 @@ describe('ContextMenuComponent', () => {
 
   // --- Requirement: Context menu trigger and context binding ---
 
-  // Scenario: Right-clicking a sound button
-  it('reads its target button from menuPackage.context', () => {
+  // Scenario: Right-clicking a sound button (the clicked button is the menu context)
+  it('reads its target button from the CONTEXT_MENU_DATA token', () => {
     const button = makeButton({ id: 'ctx-id', text: 'Ctx' });
     setup(button);
     expect(comp.button).toBe(button);
@@ -85,26 +79,51 @@ describe('ContextMenuComponent', () => {
 
   // --- Requirement: Menu open/close animation ---
 
-  // Scenario: Menu fade-in / fade-out completion (animation trigger wired through MenuComponent)
-  it('delegates the @menu.done host handler to the base animation completion subject', () => {
+  // Scenario: Menu fades in on open
+  it('starts in the "enter" animation state so the menu fades in on open', () => {
     setup();
-    // lazy=false tells the base MenuComponent not to defer teardown on animation;
-    // the meaningful, observable wiring is that the @menu.done handler forwards the
-    // animation event to the base _animationDone subject that drives close/teardown.
-    expect(comp.lazy).toBeFalse();
-    const next = spyOn((comp as unknown as { _animationDone: { next: () => void } })._animationDone, 'next');
-    const event = { fromState: 'void', toState: 'enter' } as unknown as never;
-    expect(() => comp._onAnimationDone(event)).not.toThrow();
-    expect(next).toHaveBeenCalled();
+    expect(comp.animationState).toBe('enter');
+  });
+
+  // Scenario: Menu fades out on close, then the overlay is disposed when the animation completes
+  it('close() switches to the "exit" state and disposal happens only after the exit animation done', () => {
+    setup();
+    comp.close();
+    expect(comp.animationState).toBe('exit');
+    // Disposal is deferred to the animation-done handler.
+    expect(menuRef.dispose).not.toHaveBeenCalled();
+
+    // The enter-animation completion must NOT dispose the overlay.
+    comp.onAnimationDone({ toState: 'enter' } as unknown as never);
+    expect(menuRef.dispose).not.toHaveBeenCalled();
+
+    // The exit-animation completion disposes the hosting overlay.
+    comp.onAnimationDone({ toState: 'exit' } as unknown as never);
+    expect(menuRef.dispose).toHaveBeenCalledTimes(1);
   });
 
   // --- Requirement: Closing behaviour after actions ---
 
-  // Scenario: Action closes the menu (close() -> contextMenuService.closeAll())
-  it('close() invokes contextMenuService.closeAll()', () => {
+  // Scenario: An outside click closes the menu
+  it('closes on an outside document click', () => {
+    setup();
+    comp.onDocumentClick();
+    expect(comp.animationState).toBe('exit');
+  });
+
+  // Scenario: Escape closes the menu
+  it('closes on Escape', () => {
+    setup();
+    comp.onEscape();
+    expect(comp.animationState).toBe('exit');
+  });
+
+  // Scenario: Action closes the menu (close() -> fade-out -> overlay disposed)
+  it('close() requests the fade-out that ends in overlay disposal', () => {
     setup();
     comp.close();
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    comp.onAnimationDone({ toState: 'exit' } as unknown as never);
+    expect(menuRef.dispose).toHaveBeenCalledTimes(1);
   });
 
   // --- Requirement: Always-available menu items ---
@@ -115,7 +134,7 @@ describe('ContextMenuComponent', () => {
     setup(button);
     comp.copyLink();
     expect(share.copyLink).toHaveBeenCalledOnceWith(button);
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // --- Requirement: YouTube source items (conditional visibility) ---
@@ -126,7 +145,7 @@ describe('ContextMenuComponent', () => {
     setup(button);
     comp.copyYoutubeLink();
     expect(share.copyYoutubeLink).toHaveBeenCalledOnceWith(button);
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // Scenario: Watch on YouTube (button with source)
@@ -140,7 +159,7 @@ describe('ContextMenuComponent', () => {
 
     expect(share.generateYoutubeLink).toHaveBeenCalledOnceWith(button);
     expect(openSpy).toHaveBeenCalledOnceWith('https://youtu.be/abc?t=9');
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // Scenario: Button without a YouTube source (openSource still closes, never opens)
@@ -151,7 +170,7 @@ describe('ContextMenuComponent', () => {
     comp.openSource();
 
     expect(openSpy).not.toHaveBeenCalled();
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // --- Requirement: Social share items ---
@@ -162,7 +181,7 @@ describe('ContextMenuComponent', () => {
     setup(button);
     comp.shareToTwitter();
     expect(share.shareToTwitter).toHaveBeenCalledOnceWith(button);
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // Scenario: Share to Mastodon
@@ -171,7 +190,7 @@ describe('ContextMenuComponent', () => {
     setup(button);
     comp.shareToMastodon();
     expect(share.shareToMastodon).toHaveBeenCalledOnceWith(button);
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // Scenario: Share to Facebook
@@ -180,7 +199,7 @@ describe('ContextMenuComponent', () => {
     setup(button);
     comp.shareToFacebook();
     expect(share.shareToFacebook).toHaveBeenCalledOnceWith(button);
-    expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+    expect(comp.animationState).toBe('exit');
   });
 
   // --- Requirement: Audio file download ---
@@ -217,7 +236,7 @@ describe('ContextMenuComponent', () => {
       // Immediately (before the fetch resolves) the success toast shows and the menu closes.
       expect(fetchSpy).toHaveBeenCalledOnceWith('route/hello.webm?sas');
       expect(dialog.toastSuccess).toHaveBeenCalledOnceWith('已開始下載', '', 2000);
-      expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+      expect(comp.animationState).toBe('exit');
       // The anchor has not been clicked yet (fetch pending).
       expect(clickSpy).not.toHaveBeenCalled();
 
@@ -274,7 +293,7 @@ describe('ContextMenuComponent', () => {
 
       expect(() => comp.download()).not.toThrow();
       expect(dialog.toastSuccess).toHaveBeenCalledOnceWith('已開始下載', '', 2000);
-      expect(ctxSpy.closeAll).toHaveBeenCalledTimes(1);
+      expect(comp.animationState).toBe('exit');
 
       flushMicrotasks();
       expect(clickSpy).not.toHaveBeenCalled();
@@ -343,7 +362,7 @@ describe('ContextMenuComponent', () => {
       fixture.detectChanges();
       clickItem(0);
       expect(share.copyLink).toHaveBeenCalledOnceWith(button);
-      expect(ctxSpy.closeAll).toHaveBeenCalled();
+      expect(comp.animationState).toBe('exit');
     });
 
     // Scenario: Copy YouTube link (clicking the rendered item)
@@ -353,7 +372,7 @@ describe('ContextMenuComponent', () => {
       fixture.detectChanges();
       clickItem(2);
       expect(share.copyYoutubeLink).toHaveBeenCalledOnceWith(button);
-      expect(ctxSpy.closeAll).toHaveBeenCalled();
+      expect(comp.animationState).toBe('exit');
     });
 
     // Scenario: Share to 𝕏 (Twitter) (clicking the rendered item)
@@ -363,7 +382,7 @@ describe('ContextMenuComponent', () => {
       fixture.detectChanges();
       clickItem(4);
       expect(share.shareToTwitter).toHaveBeenCalledOnceWith(button);
-      expect(ctxSpy.closeAll).toHaveBeenCalled();
+      expect(comp.animationState).toBe('exit');
     });
 
     // Scenario: Share to Mastodon (clicking the rendered item)
@@ -373,7 +392,7 @@ describe('ContextMenuComponent', () => {
       fixture.detectChanges();
       clickItem(5);
       expect(share.shareToMastodon).toHaveBeenCalledOnceWith(button);
-      expect(ctxSpy.closeAll).toHaveBeenCalled();
+      expect(comp.animationState).toBe('exit');
     });
 
     // Scenario: Share to Facebook (clicking the rendered item)
@@ -383,7 +402,7 @@ describe('ContextMenuComponent', () => {
       fixture.detectChanges();
       clickItem(6);
       expect(share.shareToFacebook).toHaveBeenCalledOnceWith(button);
-      expect(ctxSpy.closeAll).toHaveBeenCalled();
+      expect(comp.animationState).toBe('exit');
     });
   });
 });

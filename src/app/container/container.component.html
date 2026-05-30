@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="d-flex flex-wrap" *ngIf="config">
+  @if (config) {
+  <div class="d-flex flex-wrap">
     <div class="side">
       <app-introduction
         [imgs]="config.imgSrc"
@@ -9,12 +10,12 @@
       ></app-introduction>
     </div>
     <div class="main flex-grow-1">
-      <app-sound-buttons
-        *ngIf="config.buttonGroups"
-        [buttonGroups]="config.buttonGroups"
-      ></app-sound-buttons>
+      @if (config.buttonGroups) {
+      <app-sound-buttons [buttonGroups]="config.buttonGroups"></app-sound-buttons>
+      }
     </div>
   </div>
+  }
 </div>
 <app-audio-control></app-audio-control>
 <app-scroll-to-top-button [bottom]="'68px'"></app-scroll-to-top-button>

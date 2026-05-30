@@ -6,10 +6,7 @@
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 
 import { UploadComponent } from './upload.component';
@@ -18,6 +15,7 @@ import { DialogService } from '../services/dialog.service';
 import { EnvironmentToken } from '../environment.token';
 import { translateTestingImports, makeDialogServiceSpy } from '../../testing/angular';
 import { makeFullConfig } from '../../testing/fixtures';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const ENV = { origin: 'https://x', api: 'https://api.example', version: 'v' };
 const API = 'https://api.example/sound-buttons';
@@ -44,25 +42,24 @@ describe('UploadComponent (audio-submission)', () => {
     routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [UploadComponent],
-      imports: [
-        HttpClientTestingModule,
-        ReactiveFormsModule,
+    declarations: [UploadComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [ReactiveFormsModule,
         FormsModule,
-        ...translateTestingImports(),
-      ],
-      providers: [
+        ...translateTestingImports()],
+    providers: [
         { provide: ConfigService, useValue: configSpy },
         { provide: DialogService, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
         {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: convertToParamMap({ name: 'template' }) } },
+            provide: ActivatedRoute,
+            useValue: { snapshot: { paramMap: convertToParamMap({ name: 'template' }) } },
         },
         { provide: EnvironmentToken, useValue: ENV },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(UploadComponent);
     component = fixture.componentInstance;

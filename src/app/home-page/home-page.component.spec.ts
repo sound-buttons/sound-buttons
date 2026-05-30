@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RouterLink } from '@angular/router';
 import { of } from 'rxjs';
 
 import { HomePageComponent } from './home-page.component';
@@ -81,15 +82,18 @@ describe('HomePageComponent', () => {
       fixture.detectChanges();
 
       // The contribute card has no routerLink, so router-linked cards == config count.
-      const linkedCards = fixture.debugElement.queryAll(
-        By.css('.chara-card[ng-reflect-router-link]')
-      );
+      const linkedCards = fixture.debugElement.queryAll(By.directive(RouterLink));
       expect(linkedCards.length).toBe(2);
-      expect(linkedCards[0].attributes['ng-reflect-router-link']).toContain('alpha');
-      expect(linkedCards[1].attributes['ng-reflect-router-link']).toContain('beta');
+      // ng-reflect-* attributes were removed in Angular 20; read the bound commands
+      // directly from the RouterLink directive instance instead. In Angular 21 the
+      // bound commands are exposed through the `routerLinkInput` signal.
+      const routerLinkOf = (card: (typeof linkedCards)[number]): unknown[] =>
+        (card.injector.get(RouterLink) as unknown as { routerLinkInput: () => unknown[] }).routerLinkInput();
+      expect(routerLinkOf(linkedCards[0])).toContain('alpha');
+      expect(routerLinkOf(linkedCards[1])).toContain('beta');
 
-      const headings = fixture.debugElement
-        .queryAll(By.css('.chara-card[ng-reflect-router-link] h2'))
+      const headings = linkedCards
+        .map((card) => card.query(By.css('h2')))
         .map((h) => (h.nativeElement as HTMLElement).textContent?.trim());
       expect(headings).toEqual(['Alpha Chara', 'Beta Chara']);
 
@@ -107,7 +111,7 @@ describe('HomePageComponent', () => {
       setup([withColor, noColor]);
       fixture.detectChanges();
 
-      const cards = fixture.debugElement.queryAll(By.css('.chara-card[ng-reflect-router-link]'));
+      const cards = fixture.debugElement.queryAll(By.directive(RouterLink));
       const firstBg = cards[0].query(By.css('.background'));
       const secondBg = cards[1].query(By.css('.background'));
 
