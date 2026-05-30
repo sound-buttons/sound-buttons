@@ -200,11 +200,11 @@ can be unit-tested in isolation. A static GPC signal is also served at
   `CHROME_BIN=$(which chromium-browser) npm run test:ci`.
 - **Coverage gate** (`karma.conf.js`): **70%** global floor for
   statements/branches/functions/lines, plus stricter per-file overrides for
-  migration-critical units (`context-menu.component`, `share.service`,
+  behaviour-critical units (`context-menu.component`, `share.service`,
   `audio.service`, `config.service`, `upload.component`). The run fails if a
   threshold is unmet.
-- `TESTING.md` documents the behaviour-preservation harness (built for the
-  Angular 14 → 21 migration) and spec → test traceability.
+- `TESTING.md` documents the behaviour-preservation harness and spec → test
+  traceability.
 
 ## CI/CD
 

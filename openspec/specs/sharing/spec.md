@@ -8,9 +8,7 @@ invoked from the right-click context menu and back its share/copy items.
 
 Implemented in `src/app/services/share.service.ts`. The site origin is injected from the environment
 (`env.origin`).
-
 ## Requirements
-
 ### Requirement: Copy button deep link
 
 The system SHALL copy a button's deep link `${origin}${location.pathname}/${button.id}` to the
@@ -62,7 +60,7 @@ For Mastodon and 𝕏 the system SHALL open a share intent in a new window whose
 Because `+` binds tighter than `??`, the expression evaluates as
 `('#sound_buttons #' + config?.fullName) ?? name`, so when `config.fullName` is missing the text becomes
 literally `#sound_buttons #undefined` rather than falling back to the character name. This current
-behaviour SHALL be preserved (not "fixed") during migration.
+behaviour SHALL be preserved (not "fixed").
 
 #### Scenario: Share to Mastodon
 - **GIVEN** a button and a loaded config with `fullName`
@@ -89,3 +87,4 @@ the encoded URL and the fixed `hashtag` parameter.
 - **GIVEN** a button
 - **WHEN** `shareToFacebook(button)` is called
 - **THEN** the system SHALL open `https://www.facebook.com/sharer/sharer.php?u=<encodeURIComponent(url)>&hashtag=%23sound_buttons` with no share-text parameter
+

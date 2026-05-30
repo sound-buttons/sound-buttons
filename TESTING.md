@@ -1,10 +1,10 @@
 # Testing & Behaviour-Preservation Harness
 
 This project carries an automated test harness whose purpose is **behaviour
-preservation** for the Angular 14 → 21 migration. Each test pins the
+preservation**. Each test pins the
 *current* observable behaviour of the application (including a few known latent
 quirks, which are called out in comments) so that any change in behaviour
-introduced during the migration is caught by a failing test.
+is caught by a failing test.
 
 ## Running the tests
 
@@ -23,7 +23,7 @@ CHROME_BIN=$(which chromium-browser) npm run test:ci
   required.
 - `npm run test:ci` enforces coverage thresholds: a **70%** global floor
   (statements/branches/functions/lines) plus stricter per-file floors for the
-  migration-critical units (`context-menu`, `share.service`, `audio.service`,
+  behaviour-critical units (`context-menu`, `share.service`, `audio.service`,
   `config.service`, `upload.component`). The run fails if any threshold is unmet.
 
 ## Continuous integration gate
@@ -207,7 +207,7 @@ mirror the OpenSpec `### Requirement:` / `#### Scenario:` names.
 ## Known latent behaviours pinned by the harness
 
 These are pre-existing quirks captured as current behaviour (not "fixed", to
-avoid silently changing the live site during the migration):
+avoid silently changing the live site):
 
 - **`ConfigService.getConfig` intro resolution** mutates `source.intro` but
   returns the shallow-copied `target`, so the resolved multilingual string never

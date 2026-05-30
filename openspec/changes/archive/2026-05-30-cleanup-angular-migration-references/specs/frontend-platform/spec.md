@@ -1,38 +1,4 @@
-# frontend-platform Specification
-
-## Purpose
-Defines the supported Angular major and compatible toolchain for the Sound Buttons frontend: the target
-Angular version, the Zone-based change-detection strategy, the webpack `:browser` build pipeline and
-Karma + Jasmine test runner, and the discipline that keeps framework-coupled dependencies on
-Angular-compatible versions and framework upgrades behaviour-preserving.
-## Requirements
-### Requirement: Supported Angular version and toolchain matrix
-
-The application SHALL target the latest stable Angular major version (Angular 21) and SHALL build and
-run on a toolchain compatible with it: Node.js ≥ 20.19 (or ≥ 22.12, or ≥ 24), TypeScript ≥ 5.9 and
-< 6.0, and zone.js ~0.15. Dependency versions in `package.json` SHALL satisfy the chosen Angular
-major's declared peer requirements.
-
-#### Scenario: Toolchain satisfies the Angular major
-- **WHEN** dependencies are installed and the app is built
-- **THEN** the installed `@angular/*`, `typescript`, and `zone.js` versions SHALL satisfy Angular 21's peer requirements and the build SHALL succeed
-
-#### Scenario: Unsupported Node is rejected
-- **WHEN** the project is built or tested on a Node version below the Angular major's minimum (e.g. Node 16)
-- **THEN** the Angular CLI SHALL report an unsupported-engine error rather than silently producing an unsupported build
-
-### Requirement: Zone-based change detection retained
-
-Because the targeted Angular major defaults to zoneless change detection, the application SHALL
-explicitly opt into Zone-based change detection by providing `provideZoneChangeDetection()` for the
-`AppModule` bootstrap — supplied via the `applicationProviders` option of `bootstrapModule()` in
-`main.ts`, the placement Angular's NgModule bootstrap API requires (it rejects
-`provideZoneChangeDetection()` in `AppModule.providers`) — and SHALL keep `zone.js` loaded as a
-polyfill. Migrating to zoneless change detection is out of scope for this capability.
-
-#### Scenario: Change detection runs under ZoneJS
-- **WHEN** the application bootstraps
-- **THEN** `provideZoneChangeDetection()` SHALL be supplied to the `AppModule` bootstrap via `bootstrapModule()`'s `applicationProviders` and `zone.js` SHALL be present in the polyfills, so view updates triggered by async work (events, HTTP, timers, RxJS) are detected without manual `markForCheck()` calls
+## MODIFIED Requirements
 
 ### Requirement: No framework-coupled dependency blocks the Angular target
 
@@ -79,4 +45,3 @@ SHALL NOT change observable application behaviour. After each major-version step
 #### Scenario: Observable behaviour is unchanged after an upgrade
 - **WHEN** a framework upgrade is complete
 - **THEN** the `automated-test-harness` suite — which pins the application's observable behaviour — SHALL pass without weakening its assertions or coverage thresholds
-

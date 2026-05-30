@@ -28,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          # Conservative Angular-14-verified Node version.
+          # Angular 21-compatible pinned Node version; 20.19.0 satisfies the Node 20 engine range.
           node-version: '20.19.0'
 
       - name: Install dependencies

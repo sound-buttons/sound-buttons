@@ -33,9 +33,9 @@ module.exports = function (config) {
         { type: 'json-summary' },
       ],
       // Behaviour-preservation gate: the suite must keep meaningful coverage so a
-      // regression introduced during the Angular 14 -> 21 migration is caught.
-      // The global floor is the 70% target from the change design; migration-critical
-      // units carry stricter per-file floors via `each.overrides`.
+      // regression in observable behaviour is caught. The global floor is the 70%
+      // target; behaviour-critical units carry stricter per-file floors via
+      // `each.overrides`.
       check: {
         global: {
           statements: 70,

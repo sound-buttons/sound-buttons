@@ -84,7 +84,7 @@ describe('ConfigService', () => {
     expect(result!.introButton instanceof Button).toBeTrue();
     expect(result!.buttonGroups![0] instanceof ButtonGroup).toBeTrue();
     expect(result!.buttonGroups![0].buttons[0] instanceof Button).toBeTrue();
-    // Known latent bug being pinned for the migration: getConfig resolves the
+    // Known latent bug pinned by the harness: getConfig resolves the
     // multilingual intro on `source.intro` but returns the shallow-copied `target`,
     // so the returned config keeps the original intro object rather than the string.
     // Behaviour preservation requires asserting the actual current output.

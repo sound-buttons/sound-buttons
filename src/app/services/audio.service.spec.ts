@@ -103,7 +103,7 @@ describe('AudioService', () => {
 
   // Preservation test: documents current behavior when play() rejects.
   // The service ignores the play() promise, so a rejection does NOT auto-recover
-  // the queue. Captured so a migration that changes media timing is caught.
+  // the queue. Captured so a change that alters media timing is caught.
   it('preserves current behavior when play() rejects (no auto-recovery)', async () => {
     service.add(makeButton());
     audioCtl.created[0].playShouldReject = true;

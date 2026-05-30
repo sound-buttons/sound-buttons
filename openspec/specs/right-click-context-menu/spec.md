@@ -5,9 +5,7 @@
 Every sound button (and the introduction sample button) exposes a right-click (context) menu that
 lets users copy the button's share URL, download the audio file, jump to or copy the original YouTube
 source, and share the button to social networks. This capability captures the **exact current
-behaviour** of that menu because its implementation currently depends on the abandoned
-`@ctrl/ngx-rightclick` library and must be re-implemented behaviour-compatibly during the framework
-migration.
+behaviour** of that menu, which is implemented in-repo on Angular CDK Overlay.
 
 Implemented in `src/app/sound-buttons/context-menu/context-menu.component.ts` and
 `context-menu.component.html`, wired through `sound-buttons.component.html`, and backed by
@@ -17,10 +15,10 @@ Implemented in `src/app/sound-buttons/context-menu/context-menu.component.ts` an
 
 The system SHALL open the context menu when a sound button (or other trigger source) is right-clicked,
 passing the right-clicked button as the menu context. The trigger SHALL be provided by an in-repo
-Angular CDK Overlay-based mechanism (replacing the abandoned `@ctrl/ngx-rightclick` trigger directive):
-right-clicking a bound element SHALL suppress the native browser context menu, open an overlay-hosted
-`ContextMenuComponent` positioned at the cursor, and set that component's target button. The same
-trigger mechanism SHALL be reusable by every source that previously bound the menu.
+Angular CDK Overlay-based mechanism: right-clicking a bound element SHALL suppress the native browser
+context menu, open an overlay-hosted `ContextMenuComponent` positioned at the cursor, and set that
+component's target button. The same trigger mechanism SHALL be reusable by every source that binds the
+menu.
 
 #### Scenario: Right-clicking a sound button
 - **GIVEN** a rendered sound button bound to the context-menu trigger with its button as the menu context
@@ -57,8 +55,8 @@ third-party menu base class.
 ### Requirement: Closing behaviour after actions
 
 The system SHALL close the open context menu after every menu action, and SHALL also close it on
-outside-click and on Escape. Closing SHALL be performed by the in-repo overlay close mechanism
-(replacing `ContextMenuService.closeAll()`), which disposes the overlay that hosts the menu.
+outside-click and on Escape. Closing SHALL be performed by the in-repo overlay close mechanism, which
+disposes the overlay that hosts the menu.
 
 #### Scenario: Action closes the menu
 - **GIVEN** the context menu is open
