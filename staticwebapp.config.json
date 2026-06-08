@@ -1,0 +1,34 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*.{png,jpg,gif,ico,avif,webp,json}",
+      "/*.{css,js,map}",
+      "/.well-known/*"
+    ]
+  },
+  "routes": [
+    {
+      "route": "/assets/*.json",
+      "headers": {
+        "cache-control": "no-cache, no-store"
+      }
+    },
+    {
+      "route": "/assets/*",
+      "headers": {
+        "cache-control": "public, must-revalidate, max-age=2592000"
+      }
+    },
+    {
+      "route": "/*",
+      "headers": {
+        "cache-control": "public, must-revalidate, max-age=86400"
+      }
+    }
+  ],
+  "mimeTypes": {
+    ".map": "application/json",
+    ".md": "text/markdown"
+  }
+}
