@@ -13,9 +13,9 @@ import { UploadComponent } from './upload.component';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { DialogService } from '../services/dialog.service';
 import { EnvironmentToken } from '../environment.token';
-import { translateTestingImports, makeDialogServiceSpy } from '../../testing/angular';
+import { translateTestingImports, translateTestingProviders, makeDialogServiceSpy } from '../../testing/angular';
 import { makeFullConfig } from '../../testing/fixtures';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 const ENV = { origin: 'https://x', api: 'https://api.example', version: 'v' };
 const API = 'https://api.example/sound-buttons';
@@ -54,8 +54,9 @@ describe('UploadComponent (audio-submission)', () => {
           useValue: { snapshot: { paramMap: convertToParamMap({ name: 'template' }) } },
         },
         { provide: EnvironmentToken, useValue: ENV },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
+        ...translateTestingProviders(),
       ],
     }).compileComponents();
 

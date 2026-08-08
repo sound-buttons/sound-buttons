@@ -18,7 +18,7 @@ import { ConfigService } from '../services/config.service';
 import { AudioService } from '../services/audio.service';
 import { EnvironmentToken } from '../environment.token';
 import { IFullConfig } from '../services/config.service';
-import { translateTestingImports } from '../../testing/angular';
+import { translateTestingImports, translateTestingProviders } from '../../testing/angular';
 import { makeButton, makeIButtonGroup } from '../../testing/fixtures';
 
 describe('SoundButtonsComponent', () => {
@@ -71,6 +71,7 @@ describe('SoundButtonsComponent', () => {
           provide: EnvironmentToken,
           useValue: { origin: 'https://x', api: 'https://api', version: 'v' },
         },
+        ...translateTestingProviders(),
       ],
     });
 

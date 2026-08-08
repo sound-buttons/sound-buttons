@@ -1,6 +1,6 @@
 import { from } from 'rxjs';
 import { filter, last, mergeMap, reduce, switchMap, tap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import random from 'random';
 import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
 import { ConfigService } from './../services/config.service';
@@ -11,6 +11,7 @@ import { IButton } from '../sound-buttons/Buttons';
   selector: 'app-audio-control',
   templateUrl: './audio-control.component.html',
   styleUrls: ['./audio-control.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AudioControlComponent implements OnInit {

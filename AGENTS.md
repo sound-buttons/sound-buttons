@@ -16,15 +16,17 @@ URLs, or direct audio/video file uploads, generating buttons automatically.
 
 ## Tech Stack
 
-- **Framework**: Angular 21 (`@angular/*` `^21.2.0`) with TypeScript `^5.9.0`
-- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `^21.2`,
-  `bootstrap-icons`, `ngx-toastr` for toasts, a CDK Overlay based directive for the
-  right-click context menu, `tocbot` for table-of-contents
+- **Framework**: Angular 22 (`@angular/*` `^22.1.1`) with TypeScript `~6.0.3`
+- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `21.2.2` (peer
+  range pinned via `overrides` until upstream ships an Angular 22 release),
+  `bootstrap-icons`, `ngx-toastr` (archived upstream; same overrides approach),
+  a CDK Overlay based directive for the right-click context menu, `tocbot` for
+  table-of-contents
 - **i18n**: `@ngx-translate/core` + `@ngx-translate/http-loader`
 - **Styling**: SCSS (component styles and global `src/styles.scss`); a Bootswatch
   theme lives in `src/assets/style/`
 - **Reactive**: RxJS `~7.8`
-- **Build/test tooling**: Angular CLI 21, ESLint + Prettier, Karma + Jasmine,
+- **Build/test tooling**: Angular CLI 22, ESLint + Prettier, Karma + Jasmine,
   `ts-node` (for the env config script), `wrangler` (Cloudflare Worker)
 - **Backend (separate repos)**: Azure Functions API; audio stored in Azure Blob
   Storage. Hosting: GitHub Pages + Cloudflare Workers.
@@ -155,7 +157,9 @@ toggled via the `isLiveUpdate` flag (e.g. `?liveUpdate=1`) without a page reload
 
 - Languages: `zh` (Traditional Chinese, default) and `ja` (Japanese).
 - Translation files: `src/assets/i18n/zh.json`, `ja.json`.
-- `defaultLanguage: 'zh'` configured in `AppModule`.
+- `fallbackLang: 'zh'` configured via `provideTranslateService()` in `AppModule`
+  (v18 removed `TranslateModule`; the standalone `TranslatePipe` is imported
+  directly and tests use `translateTestingImports()`/`translateTestingProviders()`).
 - Multi-language text in configs is resolved via
   `LanguageService.GetTextFromObject`.
 

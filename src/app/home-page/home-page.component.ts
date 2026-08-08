@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ColorService } from '../services/color.service';
 import { ConfigService, IConfig } from '../services/config.service';
@@ -10,6 +10,7 @@ import { EnvironmentToken } from '../environment.token';
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomePageComponent implements OnInit {

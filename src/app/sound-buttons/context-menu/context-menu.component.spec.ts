@@ -18,6 +18,7 @@ import { IButton } from '../Buttons';
 import { makeButton, makeSource } from '../../../testing/fixtures';
 import {
   translateTestingImports,
+  translateTestingProviders,
   makeDialogServiceSpy,
   DialogServiceSpy,
 } from '../../../testing/angular';
@@ -54,6 +55,7 @@ describe('ContextMenuComponent', () => {
         { provide: ContextMenuRef, useValue: menuRef },
         { provide: DialogService, useValue: dialog },
         { provide: ShareService, useValue: share },
+        ...translateTestingProviders(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     });

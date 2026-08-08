@@ -1,10 +1,16 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostBinding, HostListener, Inject } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  HostListener,
+  Inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import mime from 'mime';
 import { IButton } from '../Buttons';
-import { DialogService } from 'src/app/services/dialog.service';
-import { ShareService } from 'src/app/services/share.service';
+import { DialogService } from '../../services/dialog.service';
+import { ShareService } from '../../services/share.service';
 import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
 
 @Component({
@@ -18,6 +24,7 @@ import { CONTEXT_MENU_DATA, ContextMenuRef } from './context-menu.tokens';
       transition('* => *', animate(250)),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ContextMenuComponent {

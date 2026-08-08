@@ -6,7 +6,7 @@ import { AudioService } from './audio.service';
 import { Button } from '../sound-buttons/Buttons';
 import { ButtonGroup } from '../sound-buttons/ButtonGroup';
 import { makeBriefConfig } from '../../testing/fixtures';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 const MAIN_URL = 'assets/configs/main.json';
 
@@ -24,7 +24,7 @@ describe('ConfigService', () => {
         ConfigService,
         ColorService,
         { provide: AudioService, useValue: audioSpy },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
       ],
     });

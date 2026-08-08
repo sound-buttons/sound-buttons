@@ -1,5 +1,5 @@
 import { LanguageService } from './services/language.service';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, Event, RouterEvent } from '@angular/router';
 import { catchError, distinctUntilChanged } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { Subscription, of } from 'rxjs';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {

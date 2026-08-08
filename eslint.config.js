@@ -45,6 +45,10 @@ module.exports = tseslint.config(
       '@angular-eslint/no-empty-lifecycle-method': ['off'],
       '@angular-eslint/prefer-standalone': ['off'],
       '@angular-eslint/prefer-inject': ['off'],
+      // Angular 22 defaults new components to OnPush; this zone.js-based app
+      // deliberately keeps the pre-v22 default (Eager) behaviour, so the
+      // explicit `ChangeDetectionStrategy.Eager` entries must stay lint-clean.
+      '@angular-eslint/prefer-on-push-component-change-detection': ['off'],
     },
   },
   {

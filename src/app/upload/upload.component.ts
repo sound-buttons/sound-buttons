@@ -1,7 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DialogService } from './../services/dialog.service';
@@ -15,6 +15,7 @@ import { EnvironmentToken } from '../environment.token';
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UploadComponent implements OnInit, OnDestroy {

@@ -1,5 +1,12 @@
 import { Subscription } from 'rxjs';
-import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DialogService } from '../services/dialog.service';
@@ -8,6 +15,7 @@ import { DialogService } from '../services/dialog.service';
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DialogComponent implements AfterViewInit, OnDestroy {

@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import tocbot from 'tocbot';
@@ -15,6 +23,7 @@ import { AudioService } from '../services/audio.service';
   selector: 'app-sound-buttons',
   templateUrl: './sound-buttons.component.html',
   styleUrls: ['./sound-buttons.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SoundButtonsComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-scroll-to-top-button',
@@ -13,6 +13,7 @@ import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
   >
     <i class="bi bi-chevron-up"></i>
   </button>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./scroll-to-top-button.component.scss'],
 })
 export class ScrollToTopButtonComponent implements AfterViewInit, OnDestroy {

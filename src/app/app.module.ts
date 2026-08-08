@@ -2,7 +2,7 @@
 import { Inject, NgModule } from '@angular/core';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,7 +28,7 @@ import { DialogService } from './services/dialog.service';
 import { ShareService } from './services/share.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AudioControlComponent } from './audio-control/audio-control.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe, provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ButtonFilterPipe } from './pipe/button-filter.pipe';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -83,9 +83,7 @@ declare global {
     CollapseModule,
     ToastrModule.forRoot(TOASTR_CONFIG),
     TypeaheadModule,
-    TranslateModule.forRoot({
-      fallbackLang: 'zh',
-    }),
+    TranslatePipe,
     ScrollToTopButtonComponent,
   ],
   providers: [
@@ -97,8 +95,9 @@ declare global {
     DialogService,
     ShareService,
     ButtonFilterPipe,
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     provideTranslateHttpLoader(),
+    provideTranslateService({ fallbackLang: 'zh' }),
   ],
 })
 export class AppModule {

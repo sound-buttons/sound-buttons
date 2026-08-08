@@ -9,6 +9,7 @@ import {
   makeDialogServiceSpy,
   DialogServiceSpy,
   translateTestingImports,
+  translateTestingProviders,
 } from '../../testing/angular';
 
 // Capability: click-counter (footer display + AGPL modal + version link).
@@ -32,6 +33,7 @@ describe('FooterComponent', () => {
       providers: [
         { provide: ClickService, useValue: clickService },
         { provide: DialogService, useValue: dialogService },
+        ...translateTestingProviders(),
       ],
     });
 

@@ -1,13 +1,18 @@
 import { EventEmitter } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe, provideTranslateService } from '@ngx-translate/core';
 import { DialogService } from '../app/services/dialog.service';
 
 /**
- * TranslateModule for tests. With no loader, `instant`/`get` echo the key,
+ * TranslatePipe for tests. With no loader, `instant`/`get` echo the key,
  * which keeps assertions on translated text deterministic.
  */
 export function translateTestingImports() {
-  return [TranslateModule.forRoot()];
+  return [TranslatePipe];
+}
+
+/** Providers for a root TranslateService that echoes keys (no loader). */
+export function translateTestingProviders() {
+  return provideTranslateService();
 }
 
 export type DialogServiceSpy = jasmine.SpyObj<DialogService>;

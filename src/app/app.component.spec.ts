@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { EnvironmentToken } from './environment.token';
-import { translateTestingImports } from '../testing/angular';
+import { translateTestingImports, translateTestingProviders } from '../testing/angular';
 import { installGtagSpy } from '../testing/fakes';
 
 // Capabilities: internationalization (default lang + browser lang), privacy-and-analytics (page_view).
@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, ...translateTestingImports()],
       declarations: [AppComponent],
-      providers: [{ provide: EnvironmentToken, useValue: env }],
+      providers: [{ provide: EnvironmentToken, useValue: env }, ...translateTestingProviders()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
     // Patch the router's events stream so we can drive navigation.
@@ -33,7 +33,7 @@ describe('AppComponent', () => {
     const fixture = setup();
     const translate = TestBed.inject(TranslateService);
     expect(fixture.componentInstance).toBeTruthy();
-    expect(translate.getDefaultLang()).toBe('zh');
+    expect(translate.getFallbackLang()).toBe('zh');
   });
 
   it('exposes the version from the environment', () => {

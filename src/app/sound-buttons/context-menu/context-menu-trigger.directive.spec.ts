@@ -3,7 +3,7 @@
 // Mirrors the "Context menu trigger and context binding" and "Closing behaviour" scenarios
 // in openspec/specs/right-click-context-menu/spec.md.
 
-import { ApplicationRef, Component, Inject } from '@angular/core';
+import { ApplicationRef, Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
@@ -18,6 +18,7 @@ interface TestContext {
 @Component({
   selector: 'app-test-menu',
   template: `<div class="test-menu">{{ data.id }}</div>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class TestMenuComponent {
@@ -26,6 +27,7 @@ class TestMenuComponent {
 
 @Component({
   template: `<button type="button" [contextMenuTrigger]="menu" [menuContext]="ctx"></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class HostComponent {

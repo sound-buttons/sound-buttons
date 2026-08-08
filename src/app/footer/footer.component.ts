@@ -1,12 +1,13 @@
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from './../services/dialog.service';
 import { ClickService } from './../services/click.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FooterComponent implements OnInit {

@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from './header.component';
 import { ConfigService, IFullConfig } from '../services/config.service';
 import { DisplayService } from '../services/display.service';
-import { translateTestingImports } from '../../testing/angular';
+import { translateTestingImports, translateTestingProviders } from '../../testing/angular';
 import { makeButton, makeFullConfig, makeIButtonGroup } from '../../testing/fixtures';
 
 // Capabilities: sound-button-grid (search input), configuration-loading (config-driven nav).
@@ -53,6 +53,7 @@ describe('HeaderComponent', () => {
       providers: [
         { provide: ConfigService, useValue: configService },
         { provide: DisplayService, useValue: displayService },
+        ...translateTestingProviders(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     });

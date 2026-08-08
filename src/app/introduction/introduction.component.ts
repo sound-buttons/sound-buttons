@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from './../sound-buttons/Buttons';
 import { ContextMenuComponent } from '../sound-buttons/context-menu/context-menu.component';
 import { ILink, ConfigService } from './../services/config.service';
@@ -9,6 +9,7 @@ import { AudioService } from '../services/audio.service';
   selector: 'app-introduction',
   templateUrl: './introduction.component.html',
   styleUrls: ['./introduction.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class IntroductionComponent implements OnInit {
