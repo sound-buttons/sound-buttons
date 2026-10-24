@@ -16,12 +16,11 @@ URLs, or direct audio/video file uploads, generating buttons automatically.
 
 ## Tech Stack
 
-- **Framework**: Angular 22 (`@angular/*` `^22.1.1`) with TypeScript `~6.0.3`
-- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `21.2.2` (peer
-  range pinned via `overrides` until upstream ships an Angular 22 release),
-  `bootstrap-icons`, `ngx-toastr` (archived upstream; same overrides approach),
-  a CDK Overlay based directive for the right-click context menu, `tocbot` for
-  table-of-contents
+- **Framework**: Angular 22 (`@angular/*` `^22.2.3`) with TypeScript `~6.0.3`
+- **UI**: Bootstrap 5 (`bootstrap` `^5.3.8`), `ngx-bootstrap` `^22.0.0`,
+  `bootstrap-icons`, `ngx-toastr` `20.0.5` (archived upstream, so its Angular
+  peer range is forced via `overrides`), a CDK Overlay based directive for the
+  right-click context menu, `tocbot` for table-of-contents
 - **i18n**: `@ngx-translate/core` + `@ngx-translate/http-loader`
 - **Styling**: SCSS (component styles and global `src/styles.scss`); a Bootswatch
   theme lives in `src/assets/style/`
