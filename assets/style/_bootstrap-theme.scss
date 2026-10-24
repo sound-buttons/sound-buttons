@@ -1,0 +1,15 @@
+// Bootstrap theme entrypoint.
+//
+// Loaded from styles.scss via `@use` so it resolves through the configured
+// Sass load path (stylePreprocessorOptions.includePaths). Because the Sass
+// compiler treats load-path stylesheets as dependencies (quietDeps), the
+// `@import` rules below do not emit `@import`-deprecation warnings. Bootstrap 5
+// still relies on the global `@import` cascade for its `!default` variable
+// overrides, so this file keeps the override ordering intact:
+// set overrides -> load Bootstrap -> load add-ons.
+
+$enable-rounded: true;
+
+@import 'variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr';
